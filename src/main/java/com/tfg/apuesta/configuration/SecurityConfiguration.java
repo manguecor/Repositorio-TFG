@@ -18,15 +18,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	DataSource dataSource;
+	private DataSource dataSource;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
+				.antMatchers("/resources/","/webjars/","/h2-console/**").permitAll()
 				.antMatchers("/users/new").permitAll()
-				.antMatchers("/admin/**").hasAnyAuthority("admin")
-				.antMatchers("/users/**").hasAnyAuthority("user, admin")				
+				.antMatchers("/users/neww").permitAll()
+				.antMatchers("/hola").permitAll()
+				.antMatchers("/prueba").permitAll()
+				.antMatchers("/admin/**").hasAnyAuthority("admin")				
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
@@ -35,6 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 					.logout()
 						.logoutSuccessUrl("/"); 
+		  		http.csrf().ignoringAntMatchers("/h2-console/**");
+		  		http.headers().frameOptions().sameOrigin();
 	}
 
 	@Override
