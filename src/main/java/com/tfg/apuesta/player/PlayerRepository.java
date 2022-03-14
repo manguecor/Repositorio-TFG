@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface PlayerRepository extends JpaRepository<Player, Integer> {
 	
-	@Query("select distinct player from Player player where match.id=:id")
+	@Query("SELECT DISTINCT player from Player player WHERE player.id=:id")
 	public Player findPlayerById(@Param("id") int id);
 
 }
