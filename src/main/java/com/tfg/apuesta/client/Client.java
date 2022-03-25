@@ -1,14 +1,18 @@
 package com.tfg.apuesta.client;
 
 import java.util.Date;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.tfg.apuesta.bet.Bet;
 import com.tfg.apuesta.configuration.BaseEntity;
+import com.tfg.apuesta.league.League;
+import com.tfg.apuesta.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "clients")
+@Table(name="clients")
 public class Client extends BaseEntity{
 	
 	@NotNull
@@ -39,6 +43,17 @@ public class Client extends BaseEntity{
 	
 	@NotNull
 	private String fav_team;
+	
+	@Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username", referencedColumnName = "username")
+    private User user;
+	
+	@ManyToMany(mappedBy="clients")
+    private Set<League> leagues;
+	
+	@ManyToMany(mappedBy="clients")
+    private Set<Bet> bets;
 
 	@Override
 	public String toString() {
