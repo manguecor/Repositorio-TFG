@@ -1,9 +1,12 @@
 package com.tfg.apuesta.league;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.util.Set;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.tfg.apuesta.bet.Bet;
+import com.tfg.apuesta.client.Client;
 import com.tfg.apuesta.configuration.BaseEntity;
 
 import lombok.Getter;
@@ -23,6 +26,12 @@ public class League extends BaseEntity{
 	
 	@NotNull
 	private Integer points;
+	
+	@ManyToMany
+    private Set<Client> clients;
+	
+	@ManyToMany(mappedBy="leagues")
+    private Set<Bet> bets;
 
 	@Override
 	public String toString() {
