@@ -22,5 +22,7 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
           cache: maven
+      - name: Change wrapper permissions
+        run: chmod +x mvnw
       - name: Build with Maven Wrapper
         run: ./mvnw -B package
