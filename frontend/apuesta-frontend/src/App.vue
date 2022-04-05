@@ -1,18 +1,22 @@
 <template>
   <div id="app">
+  <Footer/>
   <Competitions/>
+  
   </div>
 </template>
 
 <script>
 //import HelloWorld from './components/HelloWorld.vue'
-import Competitions from './components/Competitions.vue'
+import Competitions from './components/MyCompetitions.vue'
+import Footer from './components/MyFooter.vue'
 
 export default {
   name: 'App',
   components: {
     //HelloWorld,
-    Competitions
+    Competitions,
+    Footer
   }
 }
 </script>
