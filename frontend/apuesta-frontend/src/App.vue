@@ -2,21 +2,23 @@
   <div id="app">
   <Footer/>
   <Competitions/>
+  <Header/>
   
   </div>
 </template>
-
+  
 <script>
-//import HelloWorld from './components/HelloWorld.vue'
+// @ is an alias to /src
+import Header from '@/components/Header.vue'
 import Competitions from './components/MyCompetitions.vue'
 import Footer from './components/MyFooter.vue'
 
 export default {
-  name: 'App',
+  name: 'HomeView',
   components: {
-    //HelloWorld,
     Competitions,
-    Footer
+    Footer,
+    Header
   }
 }
 </script>
@@ -28,6 +30,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
