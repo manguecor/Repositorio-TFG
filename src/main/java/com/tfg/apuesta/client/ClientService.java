@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.tfg.apuesta.user.User;
+
 
 @Service
 public class ClientService {
@@ -15,6 +17,11 @@ public class ClientService {
 	@Autowired
 	public ClientService(ClientRepository clientRepository) {
 		this.clientRepository = clientRepository;
+	}
+	
+	public Client save(Client client) throws DataAccessException {
+		Client c = this.clientRepository.save(client);
+		return c;
 	}
 	
 	public Client findClientById(Integer id) throws DataAccessException {
