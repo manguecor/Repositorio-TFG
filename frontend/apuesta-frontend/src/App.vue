@@ -1,14 +1,20 @@
 <template>
+  <div id="app">
+  <Footer/>
   <Header/>
+  
+  </div>
 </template>
-
+  
 <script>
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
+import Footer from './components/MyFooter.vue'
 
 export default {
   name: 'HomeView',
   components: {
+    Footer,
     Header
   }
 }
