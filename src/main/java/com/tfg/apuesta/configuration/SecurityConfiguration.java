@@ -22,27 +22,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.csrf().disable();
+		http.httpBasic().disable();
 		http.authorizeRequests()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
 				.antMatchers("/resources/","/webjars/","/h2-console/**").permitAll()
-				.antMatchers("/users/new").permitAll()
-				.antMatchers("/users/neww").permitAll()
+				.antMatchers("/users/**").permitAll()
+				.antMatchers("/clients/**").permitAll()
 				.antMatchers("/hola").permitAll()
 				.antMatchers("/prueba").permitAll()
 				.antMatchers("/competitions").permitAll()
 				.antMatchers("/competition/{competitionId}").permitAll()
 				.antMatchers("/scorers/{competitionId}").permitAll()
-				.antMatchers("/admin/**").hasAnyAuthority("admin")				
-				.anyRequest().denyAll()
+				.antMatchers("/admin/**").hasAnyAuthority("admin");				
+				/*.anyRequest().denyAll()
 				.and()
-				 	.formLogin()
-				 	/*.loginPage("/login")*/
+				 	.formLogin().disable()
+				 	.loginPage("/login")
 				 	.failureUrl("/login-error")
 				.and()
 					.logout()
 						.logoutSuccessUrl("/"); 
 		  		http.csrf().ignoringAntMatchers("/h2-console/**");
-		  		http.headers().frameOptions().sameOrigin();
+		  		http.headers().frameOptions().sameOrigin();*/
 	}
 
 	@Override

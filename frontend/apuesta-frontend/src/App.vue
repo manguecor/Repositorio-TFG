@@ -1,7 +1,6 @@
 <template>
   <div id="app">
   <Footer/>
-  <Competitions/>
   <Header/>
   
   </div>
@@ -10,13 +9,11 @@
 <script>
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
-import Competitions from './components/MyCompetitions.vue'
 import Footer from './components/MyFooter.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    Competitions,
     Footer,
     Header
   }

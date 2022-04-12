@@ -1,17 +1,25 @@
 package com.tfg.apuesta.client;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@CrossOrigin("http://localhost:8081/")
 public class ClientController {
 	
 	private final ClientService clientService;
+	
+	@Autowired
+	private ClientRepository repository;
 	
 	@Autowired
 	public ClientController(ClientService clientService) {
@@ -23,18 +31,24 @@ public class ClientController {
 		dataBinder.setDisallowedFields("id");
 	}
 	
-	@GetMapping("/client/{clientId}")
-	public ModelAndView showClient(@PathVariable("clientId") int clientId) {
-		ModelAndView mav = new ModelAndView("/welcome");
-		mav.addObject(this.clientService.findClientById(clientId));
-		return mav;
+	@GetMapping("/clients/{clientId}")
+	public Client showClient(@PathVariable("clientId") int clientId) {
+		return repository.findClientById(clientId);
+	}
+	
+	@GetMapping("/clients/{username}")
+	public Client findClientByUsername(@PathVariable("username") String username) {
+		return repository.findClientByUsername(username);
 	}
 	
 	@GetMapping("/clients")
-	public ModelAndView showAllClients() {
-		ModelAndView mav = new ModelAndView("/welcome");
-		mav.addObject(this.clientService.findAllClients());
-		return mav;
-	} 
+	public List<Client> allUsers(){
+		return repository.findAll();
+	}
+	
+	@PostMapping(value="/clients/save")
+	public Client saveClient(@RequestBody Client client) {
+		return this.clientService.save(client);
+	}
 
 }

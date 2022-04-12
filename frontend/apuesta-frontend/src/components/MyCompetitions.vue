@@ -12,7 +12,7 @@
                 
                 <td> {{competition.id}} </td>
                 <td> {{competition.name}} </td>
-                <td> {{competition.emblemUrl}} </td>
+                <td> <img :src="competition.emblemUrl" alt="" width="40" height="40"> </td>
             </tr>
             
         </tbody>

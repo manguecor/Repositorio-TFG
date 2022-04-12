@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import Competitions from '@/components/Competitions.vue'
+import MyCompetitions from '@/components/MyCompetitions.vue'
+import Register from '@/components/Register.vue'
 
 const routes = [
   {
@@ -11,7 +12,12 @@ const routes = [
   {
     path: '/competitions',
     name: 'competitions',
-    component: Competitions
+    component: MyCompetitions
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register
   }
 ]
 
