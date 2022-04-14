@@ -24,7 +24,7 @@ public class League extends BaseEntity{
 	@NotNull
 	private String code;
 	
-	@NotNull
+	
 	private Integer points;
 	
 	@ManyToMany

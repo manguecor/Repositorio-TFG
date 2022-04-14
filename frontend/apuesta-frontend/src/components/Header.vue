@@ -3,7 +3,7 @@
     <router-link to="/">Inicio</router-link>
     <router-link to="/competitions">Competiciones</router-link>
     <router-link to="/">Partidos</router-link>
-    <router-link to="/">Mis Ligas</router-link>
+    <router-link to="/leagues">Mis Ligas</router-link>
     <div class="nav2">
     <router-link to="/">Iniciar sesión</router-link>
     <router-link to="/register">Registrarse</router-link>

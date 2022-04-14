@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MyCompetitions from '@/components/MyCompetitions.vue'
 import Register from '@/components/Register.vue'
+import LeaguesC from '@/components/LeaguesC.vue'
+import MyLeagues from '@/components/MyLeagues.vue'
 
 const routes = [
   {
@@ -18,6 +20,16 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register
+  },
+  {
+    path: '/leagues/new',
+    name: 'leagueNew',
+    component: LeaguesC
+  },
+  {
+    path: '/leagues',
+    name: 'leagues',
+    component: MyLeagues
   }
 ]
 
