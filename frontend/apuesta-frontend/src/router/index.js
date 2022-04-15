@@ -4,6 +4,7 @@ import MyCompetitions from '@/components/MyCompetitions.vue'
 import Register from '@/components/Register.vue'
 import LeaguesC from '@/components/LeaguesC.vue'
 import MyLeagues from '@/components/MyLeagues.vue'
+import MyLeague from '@/components/MyLeague.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/leagues',
     name: 'leagues',
     component: MyLeagues
+  },
+  {
+    path: '/leagues/:leagueId',
+    name: 'league',
+    component: MyLeague
   }
 ]
 

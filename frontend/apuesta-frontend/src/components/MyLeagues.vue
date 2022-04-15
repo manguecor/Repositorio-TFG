@@ -3,16 +3,17 @@
     <h1 class="text-center"> Leagues list </h1>
     <table class="table table-striped">
         <thead>
-            <th> Leagues Id </th>
+
             <th> Name </th>
             <th> Code </th>
         </thead>
         <tbody>
             <tr v-for = "league in leagues" v-bind:key = "league.id">
                 
-                <td> {{league.id}} </td>
-                <td> {{league.name}} </td>
+                <!--<td> {{league.id}} </td>-->
+                <td> <router-link :to="'/leagues/'+ league.id">{{league.name}}</router-link> </td>
                 <td> {{league.code}} </td>
+                <td> <a href="/leagues" @click="delete_league(league.id)"  class="btn btn-success">Borrar liga</a> </td>
             </tr>
             
         </tbody>
@@ -41,6 +42,11 @@ export default {
         getLeagues(){
             LeagueService.listAll().then((response) =>{
                 this.leagues = response.data;
+            });
+        },
+        delete_league(leagueId){
+            LeagueService.deleteLeague(leagueId).then(data => {
+                console.log(data);
             });
         }
     },

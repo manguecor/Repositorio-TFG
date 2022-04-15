@@ -28,5 +28,9 @@ public class LeagueService {
 		League l = this.leagueRepository.save(league);
 		return l;
 	}
+	
+	public void delete(League league) throws DataAccessException {
+		this.leagueRepository.delete(league);
+	}
 
 }

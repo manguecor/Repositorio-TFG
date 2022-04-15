@@ -10,6 +10,14 @@ class LeagueService {
     listAll() {
         return axios.get(LEAGUES_API_BASE_URL);
     }
+
+    getLeague(leagueId) {
+        return axios.get(LEAGUES_API_BASE_URL+`/${leagueId}`);
+    }
+
+    deleteLeague(leagueId) {
+        return axios.delete(LEAGUES_API_BASE_URL+`/${leagueId}`);
+    }
  }
 
 export default new LeagueService()

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,11 @@ public class LeagueController {
 	@PostMapping("/leagues/save")
 	public League saveLeague(@RequestBody League league) {
 		return this.leagueService.save(league);
+	}
+	
+	@DeleteMapping("/leagues/{leagueId}")
+	public void deleteLeague(@PathVariable("leagueId") int leagueId) {
+		this.leagueService.delete(this.leagueService.findLeagueById(leagueId));
 	}
 
 
