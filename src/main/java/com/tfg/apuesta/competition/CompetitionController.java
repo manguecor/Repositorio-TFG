@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.tfg.apuesta.match.Match;
+import com.tfg.apuesta.team.Team;
+
 @RestController
 @CrossOrigin("http://localhost:8081/")
 public class CompetitionController {
@@ -56,5 +59,14 @@ public class CompetitionController {
 	public List<String> getScorers(@PathVariable("competitionId") int competitionId) {
 		return this.competitionService.showScorersByCompetition(competitionId);
 	}
-
+	
+	@GetMapping("/teams/{competitionId}")
+	public List<Team> getTeams(@PathVariable("competitionId") int competitionId) {
+		return this.competitionService.showTeamsByCompetitions(competitionId);
+	}
+	
+	@GetMapping("/teams/{teamId}/nextMatches")
+	public List<Match> getNexMatchesByTeam(@PathVariable("teamId") int teamId) {
+		return this.competitionService.showNextMatchesByTeam(teamId);
+	}
 }

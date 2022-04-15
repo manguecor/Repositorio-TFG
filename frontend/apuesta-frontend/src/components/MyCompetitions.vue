@@ -1,17 +1,16 @@
 <template>
 <div class="container">
-    <h1 class="text-center"> Competitions list </h1>
+    <br><h2 class="text-center"> Listado de competiciones </h2><br>
     <table class="table table-striped">
         <thead>
-            <th> Competitions Id </th>
-            <th> Name </th>
-            <th> EmblemUrl </th>
+            <!--<th> Competitions Id </th>-->
+            <th> Nombre </th>
+            <th> Logo </th>
         </thead>
         <tbody>
             <tr v-for = "competition in competitions" v-bind:key = "competition.id">
-                
-                <td> {{competition.id}} </td>
-                <td> {{competition.name}} </td>
+                <!--<td> {{competition.id}} </td>-->
+                <td><router-link :to="'/teams/' + competition.id">{{competition.name}}</router-link></td>
                 <td> <img :src="competition.emblemUrl" alt="" width="40" height="40"> </td>
             </tr>
             
@@ -23,10 +22,10 @@
 </template>
 
 <script>
-
 import CompetitionService from '../services/CompetitionService';    
 
 export default {
+    
     name: 'MyCompetitions',
     data(){
         return {
@@ -42,7 +41,7 @@ export default {
         }
     },
     created() {
-        this.getCompetitions()
+        this.getCompetitions();
     }
 }
 
