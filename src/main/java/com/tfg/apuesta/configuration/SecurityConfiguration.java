@@ -6,12 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.tfg.apuesta.user.JwtFilter;
+import com.tfg.apuesta.user.MyUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -20,34 +26,46 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
 	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable();
-		http.httpBasic().disable();
-		http.authorizeRequests()
-				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
-				.antMatchers("/resources/","/webjars/","/h2-console/**").permitAll()
-				.antMatchers("/users/**").permitAll()
-				.antMatchers("/clients/**").permitAll()
-				.antMatchers("/hola").permitAll()
-				.antMatchers("/prueba").permitAll()
-				.antMatchers("/competitions").permitAll()
-				.antMatchers("/competition/{competitionId}").permitAll()
-				.antMatchers("/scorers/{competitionId}").permitAll()
-				.antMatchers("/admin/**").hasAnyAuthority("admin");				
-				/*.anyRequest().denyAll()
-				.and()
-				 	.formLogin().disable()
-				 	.loginPage("/login")
-				 	.failureUrl("/login-error")
-				.and()
-					.logout()
-						.logoutSuccessUrl("/"); 
-		  		http.csrf().ignoringAntMatchers("/h2-console/**");
-		  		http.headers().frameOptions().sameOrigin();*/
+	@Autowired
+    private MyUserDetailsService myUserDetailsService;
+    
+	@Autowired
+    private JwtFilter jwtFilter;
+	
+	@Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception{
+        return super.authenticationManagerBean();
+    }
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {	    
+		PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();
+	    return encoder;
 	}
+	
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(myUserDetailsService).passwordEncoder(passwordEncoder());
+    }
+	
+	protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .cors().and()
+                .authorizeRequests()
+                    .antMatchers("/login")
+                    .permitAll()
+                    .antMatchers("/competitions").authenticated()
+                    .anyRequest()
+                    .authenticated()
+                .and()
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-	@Override
+        // We set our filter
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+	
+
+	/*@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication()
 	      .dataSource(dataSource)
@@ -60,12 +78,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	        + "from authorities "
 	        + "where username = ?")	      	      
 	      .passwordEncoder(passwordEncoder());	
-	}
+	}*/
 	
-	@Bean
-	public PasswordEncoder passwordEncoder() {	    
-		PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();
-	    return encoder;
-	}
+	
 	
 }

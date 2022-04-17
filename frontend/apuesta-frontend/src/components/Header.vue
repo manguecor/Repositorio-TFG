@@ -5,7 +5,7 @@
     <router-link to="/">Partidos</router-link>
     <router-link to="/">Mis Ligas</router-link>
     <div class="nav2">
-    <router-link to="/">Iniciar sesión</router-link>
+    <router-link to="/login">Iniciar sesión</router-link>
     <router-link to="/register">Registrarse</router-link>
     </div>
   </div>

@@ -2,7 +2,6 @@
   <div id="app">
   <Footer/>
   <Header/>
-  
   </div>
 </template>
   
@@ -11,11 +10,21 @@
 import Header from '@/components/Header.vue'
 import Footer from './components/MyFooter.vue'
 
+import { mapActions } from 'vuex';
+
 export default {
   name: 'HomeView',
   components: {
     Footer,
     Header
+  },
+  methods: {
+    ...mapActions([
+      'fetchAccessToken'
+    ]),
+  },
+  created() {
+    this.fetchAccessToken();
   }
 }
 </script>
