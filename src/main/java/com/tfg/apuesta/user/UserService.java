@@ -29,4 +29,26 @@ public class UserService {
 	public Optional<User> findUser(String username) {
 		return userRepository.findById(username);
 	}
+
+    @Transactional(readOnly = true)
+    public User findUserByUserName(String username) {
+        return userRepository.findUserByUserName(username).orElse(null);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean existUserByUsername(String username) {
+        return userRepository.existsUserByUserName(username);
+    }
+
+    /*@Transactional(readOnly = false)
+    public void deleteUserById(Integer idUser) {
+        userRepository.deleteById(idUser);
+    }*/
+
+    @Transactional(readOnly = true)
+    public boolean existUsername(String username) {
+        User user = userRepository.findUserByUserName(username).orElse(null);
+        return (user != null) ? true : false;
+    }
+
 }
