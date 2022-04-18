@@ -4,7 +4,8 @@ import Vuex from 'vuex'
 export default new Vuex.Store({
   
   state: {
-    token: null
+    token: null,
+    username: null
   },
   
   mutations: {
@@ -14,6 +15,10 @@ export default new Vuex.Store({
 
     updateAccessToken: (state, token) => {
       state.token = token;
+    },
+
+    setUsername(state, payload){
+      state.username = payload
     }
   },
   
@@ -29,7 +34,15 @@ export default new Vuex.Store({
 
     fetchAccessToken({ commit }) {
       commit('updateAccessToken', localStorage.getItem('token'));
-    }
+    },
+
+    getUsername({commit}) {
+      if(localStorage.getItem('username')) {
+        commit('setUsername', localStorage.getItem('username'))
+      } else {
+        commit('setUsername', null)
+      }
+    },
   },
 
   modules: {

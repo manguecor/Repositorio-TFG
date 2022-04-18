@@ -6,6 +6,21 @@ class LoginService{
     postLogin(user){
         return axios.post(LOGIN_API_BASE_URL,user);
     }
+
+    isUserLoggedIn() {
+        let user = localStorage.getItem('token')
+        if (user === null) return false
+        return true
+    }
+
+    logout() {
+        localStorage.removeItem('token');
+    }
+
+    getUser(){
+        let user = localStorage.getItem('user')
+        return user
+    }
 }
 
 export default new LoginService()
