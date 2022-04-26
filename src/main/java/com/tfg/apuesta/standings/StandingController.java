@@ -1,4 +1,4 @@
-package com.tfg.apuesta.team;
+package com.tfg.apuesta.standings;
 
 import java.util.List;
 
@@ -10,15 +10,16 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @CrossOrigin("http://localhost:8081/")
-public class TeamController {
+public class StandingController {
 	
-	private final TeamService teamService;
+private final StandingService standingService;
 	
 	@Autowired
-	public TeamController(TeamService teamService) {
-		this.teamService = teamService;
+	public StandingController(StandingService standingService) {
+		this.standingService = standingService;
 	}
 	
 	@InitBinder
@@ -26,10 +27,9 @@ public class TeamController {
 		dataBinder.setDisallowedFields("id");
 	}
 	
-	@GetMapping("/teams/{competitionId}")
-	public List<Team> getTeamsByCompetition(@PathVariable("competitionId") int competitionId) {
-		return this.teamService.showTeamsByCompetitions(competitionId);
+	@GetMapping("/standings/{competitionId}")
+	public List<Standing> getClasification(@PathVariable("competitionId") int competitionId) {
+		return this.standingService.showClasificationByCompetition(competitionId);
 	}
-
 
 }

@@ -2,7 +2,7 @@
   <div class="nav">
     <router-link to="/">Inicio</router-link>
     <router-link to="/competitions">Competiciones</router-link>
-    <router-link to="/">Partidos</router-link>
+    <router-link to="/matches/today">Partidos</router-link>
     <router-link to="/">Mis Ligas</router-link>
     <div class="nav2">
         <router-link v-if="!isAuthenticated" to="/login">Iniciar sesión</router-link>
