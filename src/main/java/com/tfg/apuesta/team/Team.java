@@ -17,6 +17,7 @@ import com.tfg.apuesta.competition.Competition;
 import com.tfg.apuesta.configuration.BaseEntity;
 import com.tfg.apuesta.match.Match;
 import com.tfg.apuesta.player.Player;
+import com.tfg.apuesta.standings.Standing;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -46,6 +47,9 @@ public class Team extends BaseEntity {
 	
 	@ManyToOne
 	private Match match;
+	
+	@ManyToOne
+	private Standing standing;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
     private Set<Player> players;

@@ -2,8 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MyCompetitions from '@/components/MyCompetitions.vue'
 import Register from '@/components/Register.vue'
-import MyTeamsList from '@/components/MyTeamsList.vue'
-import MyMatchesList from '@/components/MyMatchesList.vue'
+import MyCompetitionDetails from '@/components/MyCompetitionDetails.vue'
+import MyNextMatches from '@/components/MyNextMatches.vue'
+import MyMatchesToday from '@/components/MyMatchesToday.vue'
+import MyLastMatches from '@/components/MyLastMatches.vue'
 
 const routes = [
   {
@@ -23,13 +25,23 @@ const routes = [
   },
   {
     path: '/teams/:competitionId',
-    name: 'teams',
-    component: MyTeamsList
+    name: 'MyCompetitionDetails',
+    component: MyCompetitionDetails
   },
   {
     path: '/teams/:teamId/nextMatches',
-    name: 'matches',
-    component: MyMatchesList
+    name: 'MyNextMatches',
+    component: MyNextMatches
+  },
+  {
+    path: '/matches/today',
+    name: 'MyMatchesToday',
+    component: MyMatchesToday
+  },
+  {
+    path: '/matches/:teamId/results',
+    name: 'MyLastMatches',
+    component: MyLastMatches
   }
 ]
 

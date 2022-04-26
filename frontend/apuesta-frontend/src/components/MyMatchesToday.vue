@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <br><h2 class="text-center"> Próximos partidos del equipo </h2><br>
+    <br><h2 class="text-center"> Partidos de hoy </h2><br>
     <table class="table table-striped">
         <thead>
             <!--<th> Match Id </th>-->
@@ -28,10 +28,10 @@
 
 <script>
 
-import CompetitionService from '../services/CompetitionService';    
+import MatchService from '../services/MatchService';    
 
 export default {
-    name: 'MyMatches',
+    name: 'MyMatchesToday',
     data(){
         return {
             matches: []
@@ -39,14 +39,14 @@ export default {
         
     },
     methods: {
-        getNextMatchesByTeam(){
-            CompetitionService.getNextMatchesByTeam(this.$route.params.teamId).then((response) => {
+        getMatchesToday(){
+            MatchService.getMatchesToday().then((response) => {
                 this.matches = response.data;
             })
         }
     },
     created() {
-        this.getNextMatchesByTeam()
+        this.getMatchesToday()
     }
 }
 </script>
