@@ -27,7 +27,7 @@ private final StandingService standingService;
 		dataBinder.setDisallowedFields("id");
 	}
 	
-	@GetMapping("/standing/{competitionId}")
+	@GetMapping("/standings/{competitionId}")
 	public List<Standing> getClasification(@PathVariable("competitionId") int competitionId) {
 		return this.standingService.showClasificationByCompetition(competitionId);
 	}

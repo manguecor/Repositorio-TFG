@@ -6,6 +6,9 @@ import MyCompetitionDetails from '@/components/MyCompetitionDetails.vue'
 import MyNextMatches from '@/components/MyNextMatches.vue'
 import MyMatchesToday from '@/components/MyMatchesToday.vue'
 import MyLastMatches from '@/components/MyLastMatches.vue'
+import Login from '@/components/MyLogin.vue'
+import Logout from '@/components/MyLogout.vue'
+import LoginService from '@/services/LoginService'
 
 const routes = [
   {
@@ -15,7 +18,7 @@ const routes = [
   },
   {
     path: '/competitions',
-    name: 'competitions',
+    name: 'MyCompetitions',
     component: MyCompetitions
   },
   {
@@ -42,6 +45,22 @@ const routes = [
     path: '/matches/:teamId/results',
     name: 'MyLastMatches',
     component: MyLastMatches
+  },
+  {
+    path: '/login',
+    name: 'MyLogin',
+    component: Login
+  },
+  {
+    path: "/logout",
+    name: "MyLogout",
+    component: Logout,
+    beforeEnter: (to, from, next) => {
+        if (LoginService.isUserLoggedIn()) {
+            LoginService.logout();
+        }
+        next();
+    },
   }
 ]
 
