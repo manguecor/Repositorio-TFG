@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.tfg.apuesta.client.Client;
+
 @Service
 public class BetService {
 
@@ -16,11 +18,7 @@ public class BetService {
 		this.betRepository = betRepository;
 	}
 	
-	public Bet findBetById(Integer id) throws DataAccessException {
-		return betRepository.findBetById(id);
-	}
-	
-	public List<Bet> findAllBets() throws DataAccessException {
-		return betRepository.findAll();
+	public void save(Bet bet) throws DataAccessException {
+		this.betRepository.save(bet);
 	}
 }

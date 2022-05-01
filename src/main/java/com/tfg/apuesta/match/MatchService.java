@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.tfg.apuesta.client.Client;
+
 @Service
 public class MatchService {
 	
@@ -110,6 +112,11 @@ public class MatchService {
 	    	res.add(m);
 	    }
 	    return res;
+	}
+	
+	public Match save(Match match) throws DataAccessException {
+		Match m = this.matchRepository.save(match);
+		return m;
 	}
 
 }

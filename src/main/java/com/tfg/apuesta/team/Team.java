@@ -51,9 +51,6 @@ public class Team extends BaseEntity {
 	@ManyToOne
 	private Standing standing;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
-    private Set<Player> players;
-	
 	@ManyToMany
     private Set<Competition> competitions;
 
@@ -115,17 +112,6 @@ public class Team extends BaseEntity {
 	public void setMatch(Match match) {
 		this.match = match;
 	}
-
-
-	public Set<Player> getPlayers() {
-		return players;
-	}
-
-
-	public void setPlayers(Set<Player> players) {
-		this.players = players;
-	}
-
 
 	public Set<Competition> getCompetitions() {
 		return competitions;

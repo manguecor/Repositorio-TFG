@@ -1,6 +1,7 @@
 package com.tfg.apuesta.player;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -22,6 +23,10 @@ public class PlayerService {
 	
 	public List<Player> findAllPlayers() throws DataAccessException {
 		return playerRepository.findAll();
+	}
+	
+	public Optional<Player> findPlayerByUsername(String username) throws DataAccessException{
+		return playerRepository.findPlayerByUsername(username);
 	}
 	
 	

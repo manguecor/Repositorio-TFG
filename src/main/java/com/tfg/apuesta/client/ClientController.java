@@ -1,6 +1,7 @@
 package com.tfg.apuesta.client;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
@@ -37,7 +38,7 @@ public class ClientController {
 	}
 	
 	@GetMapping("/clients/{username}")
-	public Client findClientByUsername(@PathVariable("username") String username) {
+	public Optional<Client> findClientByUsername(@PathVariable("username") String username) {
 		return repository.findClientByUsername(username);
 	}
 	

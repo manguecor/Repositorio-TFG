@@ -1,5 +1,7 @@
 package com.tfg.apuesta.client;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -9,5 +11,5 @@ public interface ClientRepository extends JpaRepository<Client,Integer>{
 	Client findClientById(int id);
 	
 	@Query("SELECT client FROM Client client WHERE client.user.username=:username")
-	Client findClientByUsername(String username);
+	Optional<Client> findClientByUsername(String username);
 }

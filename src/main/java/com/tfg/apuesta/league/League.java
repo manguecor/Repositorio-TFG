@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import com.tfg.apuesta.bet.Bet;
 import com.tfg.apuesta.client.Client;
 import com.tfg.apuesta.configuration.BaseEntity;
+import com.tfg.apuesta.player.Player;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,24 +19,21 @@ import lombok.Setter;
 @Table(name = "leagues")
 public class League extends BaseEntity{
 	
-	@NotNull
+	//@NotNull
 	private String name;
 	
-	@NotNull
+	//@NotNull
 	private String code;
 	
-	@NotNull
-	private Integer points;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "league")
+    private Set<Player> players;
 	
-	@ManyToMany
-    private Set<Client> clients;
-	
-	@ManyToMany(mappedBy="leagues")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "league")
     private Set<Bet> bets;
 
 	@Override
 	public String toString() {
-		return "League [name=" + name + ", code=" + code + ", points=" + points + "]";
+		return "League [name=" + name + ", code=" + code + "]";
 	}
 	
 	

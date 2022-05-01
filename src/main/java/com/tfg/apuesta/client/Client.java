@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.tfg.apuesta.bet.Bet;
 import com.tfg.apuesta.configuration.BaseEntity;
 import com.tfg.apuesta.league.League;
+import com.tfg.apuesta.player.Player;
 import com.tfg.apuesta.user.User;
 
 import lombok.Getter;
@@ -48,14 +49,6 @@ public class Client extends BaseEntity{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
-	
-	@ManyToMany(mappedBy="clients")
-    private Set<League> leagues;
-	
-	@ManyToMany(mappedBy="clients")
-    private Set<Bet> bets;
-	
-	
 
 	@Override
 	public String toString() {

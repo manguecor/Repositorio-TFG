@@ -33,14 +33,13 @@ public class Match extends BaseEntity {
 	private String match_date;
 	
 	//@NotNull
-	/* La consulta no lo da
-	private String stadium;*/
+	private String stadium;
 	
 	//@NotNull
 	private String result;
 	
-	@ManyToMany(mappedBy="matches")
-    private Set<Bet> bets;
+	@ManyToOne
+    private Bet bet;
 	
 	/*@ManyToOne
 	private Competition competition;*/
@@ -53,6 +52,8 @@ public class Match extends BaseEntity {
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "match")
     private Set<Team> teams;
+	
+	private Integer api_id;
 
 	public String getMatch_date() {
 		return match_date;
@@ -78,12 +79,12 @@ public class Match extends BaseEntity {
 		this.result = result;
 	}
 
-	public Set<Bet> getBets() {
-		return bets;
+	public Bet getBet() {
+		return bet;
 	}
 
-	public void setBets(Set<Bet> bets) {
-		this.bets = bets;
+	public void setBets(Bet bet) {
+		this.bet = bet;
 	}
 
 	public String getCompetition() {
@@ -118,8 +119,20 @@ public class Match extends BaseEntity {
 		this.awayTeam = awayTeam;
 	}
 
+	public Integer getApi_id() {
+		return api_id;
+	}
+
+	public void setApi_id(Integer api_id) {
+		this.api_id = api_id;
+	}
+
 	@Override
 	public String toString() {
-		return "Match [match_date=" + match_date + ", result=" + result + "]";
+		return "Match [match_date=" + match_date + ", stadium=" + stadium + ", result=" + result + ", bet=" + bet
+				+ ", competition=" + competition + ", homeTeam=" + homeTeam + ", awayTeam=" + awayTeam + ", teams="
+				+ teams + ", api_id=" + api_id + "]";
 	}
+
+	
 }
