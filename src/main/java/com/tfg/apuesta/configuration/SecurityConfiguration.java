@@ -41,13 +41,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {	    
 		PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();
 	    return encoder;
+
 	}
 	
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(myUserDetailsService).passwordEncoder(passwordEncoder());
     }
 	
-	protected void configure(HttpSecurity http) throws Exception {
+  protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .cors().and()
                 .authorizeRequests()
@@ -59,6 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     				.antMatchers("/teams/**").permitAll()
     				.antMatchers("/standings/**").permitAll()
     				.antMatchers("/bets/**").permitAll()
+    				.antMatchers("/leagues/**").permitAll()
     				.antMatchers("/admin/**").hasAnyAuthority("admin")
                     .anyRequest().authenticated()
                 .and()
@@ -68,22 +70,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // We set our filter
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
-	
-
-	/*@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication()
-	      .dataSource(dataSource)
-	      .usersByUsernameQuery(
-	       "select username,password,enabled "
-	        + "from users "
-	        + "where username = ?")
-	      .authoritiesByUsernameQuery(
-	       "select username, authority "
-	        + "from authorities "
-	        + "where username = ?")	      	      
-	      .passwordEncoder(passwordEncoder());	
-	}*/
 	
 	
 	

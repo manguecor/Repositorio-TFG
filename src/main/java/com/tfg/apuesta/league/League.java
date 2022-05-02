@@ -24,7 +24,7 @@ public class League extends BaseEntity{
 	
 	//@NotNull
 	private String code;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "league")
     private Set<Player> players;
 	
