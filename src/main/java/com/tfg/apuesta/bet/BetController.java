@@ -27,6 +27,7 @@ import com.tfg.apuesta.match.Match;
 import com.tfg.apuesta.match.MatchService;
 import com.tfg.apuesta.player.Player;
 import com.tfg.apuesta.player.PlayerService;
+import com.tfg.apuesta.user.MyUserDetails;
 import com.tfg.apuesta.user.UserService;
 
 @RestController
@@ -58,19 +59,24 @@ public class BetController {
 	}
 	
 	@PostMapping(value="/bets/save")
-	public void saveBet(@RequestBody List<Integer> matchesAPIId) {
+	public void saveBet(@RequestBody List<String> response) {
 		/*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User currentUser = (User) authentication.getPrincipal();
 		String username = currentUser.getUsername();*/
-		String username = "client1";
+		//String username = "client1";
+		String username = response.get(0);
+		List<Integer> matchesAPIId = new ArrayList<>();
+		for(int i=1;i<response.size();i++) {
+			matchesAPIId.add(Integer.valueOf(response.get(i)));
+		}
 		Bet bet = new Bet();
 		Player p = playerService.findPlayerByUsername(username).get();
 		bet.setPlayer(p);
 		bet.setLeague(p.getLeague());
 		this.betService.save(bet);
-		for(int i=0;i<matchesAPIId.size();i++) {
+		for(int j=0;j<matchesAPIId.size();j++) {
 			Match m = new Match();
-			m.setApi_id(matchesAPIId.get(i));
+			m.setApi_id(matchesAPIId.get(j));
 			m.setBets(bet);
 			this.matchService.save(m);
 		}	

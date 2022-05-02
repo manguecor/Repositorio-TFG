@@ -13,14 +13,13 @@
         </thead>
         <tbody>
             <tr v-for = "match in matches" v-bind:key = "match.id">
-                
                 <!--<td> {{match.id}} </td>-->
                 <td> {{match.homeTeam}}</td>
                 <td> {{match.awayTeam}}</td>
                 <td> {{match.competition}} </td>
                 <td> {{match.match_date}} </td>
                 <td> <a class="btn btn-success" v-on:click="addMatch(match.id)">Añadir partido</a></td>
-                <td>  <a href="/" class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a></td>
+                <td> <a href="/" class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a></td>
             </tr>
             
         </tbody>
@@ -54,17 +53,20 @@ export default {
         
         addMatch(matchId){
             let matchesId = this.matchesId;
-            matchesId[matchesId.length]=matchId;
-            //matches.push(this.$route.params.matchId)
-            console.log(matchesId);     
+            if(!matchesId.includes(matchId) && matchesId.length<=5){
+                matchesId[0]=localStorage.getItem("username");
+                matchesId[matchesId.length]=matchId;
+                console.log(matchesId);
+            }
+                 
         },
 
         saveBet() {
-        
-        BetService.postBet(this.matchesId).then((response) => {
+            BetService.postBet(this.matchesId).then((response) => {
             console.log(response);
-        })
-    }
+            console.log(localStorage.getItem("username"));
+            })
+        }
     },
     created() {
         this.getMatchesToday()
