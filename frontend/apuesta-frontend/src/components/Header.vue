@@ -2,20 +2,35 @@
   <div class="nav">
     <router-link to="/">Inicio</router-link>
     <router-link to="/competitions">Competiciones</router-link>
-    <router-link to="/">Partidos</router-link>
     <router-link to="/leagues">Mis Ligas</router-link>
+    <router-link to="/matches/today">Partidos</router-link>
     <div class="nav2">
-    <router-link to="/">Iniciar sesión</router-link>
-    <router-link to="/register">Registrarse</router-link>
+        <router-link v-if="!isAuthenticated" to="/login">Iniciar sesión</router-link>
+        <router-link v-if="!isAuthenticated" to="/register">Registrarse</router-link>
+        <router-link v-if="isAuthenticated" to="/" ><i class="fa-solid fa-user"></i>{{ currentUser }}</router-link>
+        <router-link v-if="isAuthenticated" to="/logout">Cerrar sesión</router-link>
     </div>
   </div>
   <router-view/>
 </template>
 
 <script>
+import LoginService from '../services/LoginService';
+
 export default {
-    name: 'MyHeader'
+    name: 'MyHeader',
+    computed: {
+        currentUser(){
+            return localStorage.getItem('username')
+        }
+    },
+    data() {
+        return {
+            isAuthenticated: LoginService.isUserLoggedIn()
+        };
+    }
 }
+
 </script>
 
 

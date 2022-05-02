@@ -1,14 +1,17 @@
 package com.tfg.apuesta.match;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@CrossOrigin("http://localhost:8081/")
 public class MatchController {
 	
 	private final MatchService matchService;
@@ -23,19 +26,18 @@ public class MatchController {
 		dataBinder.setAllowedFields("id");
 	}
 	
-	@GetMapping("/match/{matchId}")
-	public ModelAndView showMatch(@PathVariable("matchId") int matchId) {
-		ModelAndView mav = new ModelAndView("/welcome");
-		mav.addObject(this.matchService.findMatchById(matchId));
-		return mav;
+	@GetMapping("/matches/today")
+	public List<Match> getMatchesToday() {
+		return this.matchService.showMatchesToday();
 	}
 	
-	@GetMapping("/matches")
-	public ModelAndView showAllMatches() {
-		ModelAndView mav = new ModelAndView("/welcome");
-		mav.addObject(this.matchService.findAllMatches());
-		return mav;
+	@GetMapping("/matches/{teamId}/results")
+	public List<Match> getLastMatches(@PathVariable("teamId") int teamId) {
+		return this.matchService.showLastMatchesByTeam(teamId);
 	}
 	
-
+	@GetMapping("/matches/{teamId}/nextMatches")
+	public List<Match> getNexMatchesByTeam(@PathVariable("teamId") int teamId) {
+		return this.matchService.showNextMatchesByTeam(teamId);
+	}
 }
