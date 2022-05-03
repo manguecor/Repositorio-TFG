@@ -5,12 +5,12 @@
                 <br>
                 <div class="form-group">
                     <label for="username">Usuario:</label>
-                    <input id="username" v-model="user.username" placeholder="Username" type="text" class="form">
+                    <input id="username" v-model="client.user.username" placeholder="Username" type="text" class="form">
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="price">Contraseña:</label>
-                    <input id="password" v-model="user.password" placeholder="Password" type="password" class="form">
+                    <input id="password" v-model="client.user.password" placeholder="Password" type="password" class="form">
                 </div>
                 <br>
                 <div class="form-group">
@@ -24,23 +24,8 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="dni">DNI:</label>
-                    <input id="dni" v-model="client.dni" placeholder="DNI" type="text" class="form">
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="birthday">Fecha de nacimiento:</label>
-                    <input id="birthday" v-model="client.birthday" placeholder="Birthday" type="date" class="form">
-                </div>
-                <br>
-                <div class="form-group">
                     <label for="email">Email:</label>
                     <input id="email" v-model="client.email" placeholder="Email" type="email" class="form">
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="phone">Telefono:</label>
-                    <input id="phone" v-model="client.phone" placeholder="Phone" type="tel" class="form">
                 </div>
                 <br>
                 <div class="form-group">
@@ -49,7 +34,7 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <a href="/" @click="register" class="btn btn-success">Registrarse</a>
+                    <a href="/login" @click="register" class="btn btn-success">Registrarse</a>
                     <br>
                     <br>
                     <a href="/" class="btn btn-info">Volver</a>
@@ -66,27 +51,21 @@ export default {
     name: 'MyRegister',
     data() {
         return {
-            user: {
-                username: null,
-                password: null
-            },
+            
             client: {
                 name: null,
                 surname: null,
-                dni: null,
-                birthday: null,
                 email: null,
-                phone: null,
                 fav_team: null,
-                user: this.user
+                user: {
+                    username: null,
+                    password: null
+                }
             }
         };
     },
     methods: {
         register(){
-            RegisterService.postRegisterUser(this.user).then(data => {
-                console.log(data);
-            });
             RegisterService.postRegisterClient(this.client).then(data => {
                 console.log(data);
             });

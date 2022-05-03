@@ -27,8 +27,8 @@ public class Player extends BaseEntity {
 	//@NotNull
 	private Integer points;
 	
-	@ManyToOne
-    private League league;
+	/*@ManyToOne
+    private League league;*/
 	
 	@OneToOne(cascade = CascadeType.ALL)
     private Client client;
@@ -44,13 +44,13 @@ public class Player extends BaseEntity {
 		this.points = points;
 	}
 
-	public League getLeague() {
+	/*public League getLeague() {
 		return league;
 	}
 
 	public void setLeague(League league) {
 		this.league = league;
-	}
+	}*/
 
 	public Client getClient() {
 		return client;

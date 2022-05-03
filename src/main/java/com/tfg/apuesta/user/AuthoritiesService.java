@@ -1,6 +1,8 @@
 package com.tfg.apuesta.user;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -30,9 +32,11 @@ public class AuthoritiesService {
 		Authorities authority = new Authorities();
 		Optional<User> user = userService.findUser(username);
 		if(user.isPresent()) {
-			authority.setUser(user.get());
+			//authority.setUser(user.get());
 			authority.setAuthority(role);
-			//user.get().getAuthorities().add(authority);
+			Set<Authorities> auth = new HashSet<>();
+			auth.add(authority);
+			user.get().setAuthorities(auth);
 			authoritiesRepository.save(authority);
 		}else
 			throw new DataAccessException("User '"+username+"' not found!") {};

@@ -21,7 +21,7 @@ public class LeagueService {
 	}
 	
 	public List<League> findAllLeagues() throws DataAccessException {
-		return leagueRepository.findAll();
+		return this.leagueRepository.findAllLeagues();
 	}
 	
 	public League save(League league) throws DataAccessException {

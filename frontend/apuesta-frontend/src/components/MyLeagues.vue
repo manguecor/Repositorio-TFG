@@ -42,6 +42,7 @@ export default {
         getLeagues(){
             LeagueService.listAll().then((response) =>{
                 this.leagues = response.data;
+                console.log(this.leagues)
             });
         },
         delete_league(leagueId){

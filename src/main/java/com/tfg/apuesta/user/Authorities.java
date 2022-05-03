@@ -17,20 +17,20 @@ import lombok.Setter;
 @Table(name = "authorities")
 public class Authorities extends BaseEntity{
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name = "username")
-	User user;
+	User user;*/
 	
 	@Size(min = 3, max = 50)
 	String authority;
 
-	public User getUser() {
+	/*public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
-	}
+	}*/
 
 	public String getAuthority() {
 		return authority;

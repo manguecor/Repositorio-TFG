@@ -72,7 +72,7 @@ public class BetController {
 		Bet bet = new Bet();
 		Player p = playerService.findPlayerByUsername(username).get();
 		bet.setPlayer(p);
-		bet.setLeague(p.getLeague());
+		//bet.setLeague(p.getLeague());
 		this.betService.save(bet);
 		for(int j=0;j<matchesAPIId.size();j++) {
 			Match m = new Match();

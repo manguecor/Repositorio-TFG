@@ -1,5 +1,5 @@
 <template>
-   <div class="row">
+   <div class="row3">
             <div class="col-12">
                 <h2>Liga</h2>
                 <br>

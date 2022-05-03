@@ -31,16 +31,7 @@ public class Client extends BaseEntity{
 	private String surname;
 	
 	@NotNull
-	private String DNI;
-	
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date birthday;
-	
-	@NotNull
 	private String email;
-	
-	@NotNull
-	private String phone;
 	
 	@NotNull
 	private String fav_team;
@@ -49,12 +40,6 @@ public class Client extends BaseEntity{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
-
-	@Override
-	public String toString() {
-		return "Client [name=" + name + ", surname=" + surname + ", DNI=" + DNI + ", birthday=" + birthday + ", email="
-				+ email + ", phone=" + phone + ", fav_team=" + fav_team + "]";
-	}
 
 	public String getName() {
 		return name;
@@ -72,36 +57,12 @@ public class Client extends BaseEntity{
 		this.surname = surname;
 	}
 
-	public String getDNI() {
-		return DNI;
-	}
-
-	public void setDNI(String dNI) {
-		DNI = dNI;
-	}
-
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
 	}
 
 	public String getFav_team() {
@@ -119,4 +80,12 @@ public class Client extends BaseEntity{
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	@Override
+	public String toString() {
+		return "Client [name=" + name + ", surname=" + surname + ", email=" + email + ", fav_team=" + fav_team
+				+ ", user=" + user + "]";
+	}
+	
+	
 }
