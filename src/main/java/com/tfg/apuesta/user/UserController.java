@@ -23,6 +23,8 @@ public class UserController {
 
 	private final UserService userService;
 	
+	private AuthoritiesService authoritiesService;
+	
 	@Autowired
 	private UserRepository repository;
     
@@ -36,8 +38,9 @@ public class UserController {
     private JwtUtil jwtUtil;
 
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, AuthoritiesService authoritiesService) {
 		this.userService = userService;
+		this.authoritiesService = authoritiesService;
 	}
 
 	@InitBinder
@@ -50,10 +53,12 @@ public class UserController {
 		return repository.findAll();
 	}
 	
-	@PostMapping(value="/users/save")
+	/*@PostMapping(value="/users/save")
 	public User saveUser(@RequestBody User user) {
-		return this.userService.save(user);
-	}
+		User u = this.userService.save(user);
+		this.authoritiesService.saveAuthorities(user.getUsername(), "client");
+		return u;
+	}*/
 	
 	@PostMapping("/login")
     public ResponseEntity<?> signIn(@RequestBody AuthenticationRequest authRequest) throws Exception{

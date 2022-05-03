@@ -12,6 +12,7 @@ import MyLastMatches from '@/components/MyLastMatches.vue'
 import Login from '@/components/MyLogin.vue'
 import Logout from '@/components/MyLogout.vue'
 import LoginService from '@/services/LoginService'
+import MyBet from '@/components/MyBet.vue'
 
 const routes = [
   {
@@ -79,7 +80,12 @@ const routes = [
         }
         next();
     },
-  }
+  },
+  {
+    path: '/bet',
+    name: 'MyBet',
+    component: MyBet
+  },
 ]
 
 const router = createRouter({
