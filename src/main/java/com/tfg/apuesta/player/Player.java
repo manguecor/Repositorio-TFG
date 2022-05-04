@@ -30,7 +30,7 @@ public class Player extends BaseEntity {
 	/*@ManyToOne
     private League league;*/
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(optional = true, cascade = CascadeType.ALL)
     private Client client;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
@@ -51,6 +51,13 @@ public class Player extends BaseEntity {
 	public void setLeague(League league) {
 		this.league = league;
 	}*/
+	
+	
+	
+
+	public Set<Bet> getBets() {
+		return bets;
+	}
 
 	public Client getClient() {
 		return client;
@@ -58,10 +65,6 @@ public class Player extends BaseEntity {
 
 	public void setClient(Client client) {
 		this.client = client;
-	}
-
-	public Set<Bet> getBets() {
-		return bets;
 	}
 
 	public void setBets(Set<Bet> bets) {

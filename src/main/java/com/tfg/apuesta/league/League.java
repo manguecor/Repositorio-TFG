@@ -26,8 +26,8 @@ public class League extends BaseEntity{
 	@OneToMany(cascade = CascadeType.ALL)
     private Set<Player> players;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "league")
-    private Set<Bet> bets;
+	/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "league")
+    private Set<Bet> bets;*/
 
 	public String getName() {
 		return name;
@@ -53,17 +53,17 @@ public class League extends BaseEntity{
 		this.players = players;
 	}
 
-	public Set<Bet> getBets() {
+	/*public Set<Bet> getBets() {
 		return bets;
 	}
 
 	public void setBets(Set<Bet> bets) {
 		this.bets = bets;
-	}
+	}*/
 
 	@Override
 	public String toString() {
-		return "League [name=" + name + ", code=" + code + ", players=" + players + ", bets=" + bets + "]";
+		return "League [name=" + name + ", code=" + code + ", players=" + players + "]";
 	}
 
 	

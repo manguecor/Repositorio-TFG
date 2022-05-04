@@ -21,6 +21,10 @@ class LoginService{
         let user = localStorage.getItem('user')
         return user
     }
+
+    getUsername(username) {
+        return axios.post('http://localhost:8080/username', username);
+    }
 }
 
 export default new LoginService()
