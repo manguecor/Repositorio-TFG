@@ -14,6 +14,10 @@ class MatchService{
     getNextMatchesByTeam(teamId){
         return axios.get(`http://localhost:8080/matches/${teamId}/nextMatches`)
     }
+
+    getMatchesByBetId(betId){
+        return axios.get(`http://localhost:8080/matches/${betId}`);
+    }
 }
 
 export default new MatchService()

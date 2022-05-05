@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.tfg.apuesta.bet.Bet;
 import com.tfg.apuesta.client.Client;
 
 @Service
@@ -117,6 +118,41 @@ public class MatchService {
 	public Match save(Match match) throws DataAccessException {
 		Match m = this.matchRepository.save(match);
 		return m;
+	}
+	
+	public List<Match> findAllMatches() throws DataAccessException {
+		return this.matchRepository.findAll();
+	}
+	
+	public List<Match> findMatchesByBetId(Integer betId) throws DataAccessException {
+		return this.matchRepository.findMatchesByBetId(betId);
+	}
+	
+	
+	public Match getMatchById(Integer matchId){
+		String uri = "http://api.football-data.org/v2/matches/" + matchId;
+		String auth = "X-Auth-Token";
+		String apiKey = "f3cafe6d1b40474992616dd3b183d801";
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(auth, apiKey);
+	    HttpEntity request = new HttpEntity(headers);
+	    ResponseEntity<String> response = new RestTemplate().exchange(uri, HttpMethod.GET, request, String.class);
+	    String json = response.getBody();
+	    JSONObject jsonObj = new JSONObject(json);
+	    JSONObject json2 = (JSONObject) jsonObj.get("head2head");
+	    JSONObject json3 = (JSONObject) jsonObj.get("match");
+	    //JSONArray arrayObject = (JSONArray) jsonObj.get("head2head");
+	    Match m = new Match();
+	    for(int i=0;i<json2.length();i++) {
+	    	m.setHomeTeam(json2.getJSONObject("homeTeam").get("name").toString());
+	    	m.setAwayTeam(json2.getJSONObject("awayTeam").get("name").toString());
+	    }
+	    for(int j=0;j<json3.length();j++) {
+	    	m.setResult(json3.getJSONObject("score").get("winner").toString());
+	    	m.setMatch_date(json3.get("utcDate").toString());
+	    	m.setStatus(json3.get("status").toString());
+	    }
+	    return m;
 	}
 
 }

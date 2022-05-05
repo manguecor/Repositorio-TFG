@@ -3,6 +3,7 @@ package com.tfg.apuesta.bet;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tfg.apuesta.client.Client;
 import com.tfg.apuesta.client.ClientService;
+import com.tfg.apuesta.league.League;
 import com.tfg.apuesta.match.Match;
 import com.tfg.apuesta.match.MatchService;
 import com.tfg.apuesta.player.Player;
@@ -72,16 +74,39 @@ public class BetController {
 		Bet bet = new Bet();
 		Player p = playerService.findPlayerByUsername(username).get();
 		bet.setPlayer(p);
-		//bet.setLeague(p.getLeague());
+		League league = new League();
+		league.setId(1);
+		bet.setLeague(league);
 		this.betService.save(bet);
 		for(int j=0;j<matchesAPIId.size();j++) {
-			Match m = new Match();
+			Match m = matchService.getMatchById(matchesAPIId.get(j));
 			m.setApi_id(matchesAPIId.get(j));
 			m.setBets(bet);
 			this.matchService.save(m);
 		}	
 		
 	}
+	
+	@GetMapping("/bets")
+	public List<Bet> showAllBets() {
+		return this.betService.findAllBets();
+	}
+	
+	
+	@PostMapping(value="/bets/playerBet")
+	public void savePlayerBet(@RequestBody List<String> response) {
+		List<Integer> matchesId = new ArrayList<>();
+		List<String> playerResults = new ArrayList<>();
+		for(int i=0;i<response.size();i++) {
+			if(i%2==0) {
+				matchesId.add(Integer.valueOf(response.get(i)));
+			} else {
+				playerResults.add(response.get(i));
+			}
+			
+		}
+	}
+	
 	
 	
 	/*@GetMapping(value="/bets/save")

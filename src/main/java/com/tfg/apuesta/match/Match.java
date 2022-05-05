@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tfg.apuesta.bet.Bet;
 import com.tfg.apuesta.competition.Competition;
 import com.tfg.apuesta.configuration.BaseEntity;
@@ -33,12 +34,13 @@ public class Match extends BaseEntity {
 	private String match_date;
 	
 	//@NotNull
-	private String stadium;
+	private String status;
 	
 	//@NotNull
 	private String result;
 	
 	@ManyToOne
+	@JsonManagedReference(value = "match-bet")
     private Bet bet;
 	
 	/*@ManyToOne
@@ -63,13 +65,13 @@ public class Match extends BaseEntity {
 		this.match_date = match_date;
 	}
 
-	/*public String getStadium() {
-		return stadium;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setStadium(String stadium) {
-		this.stadium = stadium;
-	}*/
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public String getResult() {
 		return result;
@@ -129,7 +131,7 @@ public class Match extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Match [match_date=" + match_date + ", stadium=" + stadium + ", result=" + result + ", bet=" + bet
+		return "Match [match_date=" + match_date + ", status=" + status + ", result=" + result + ", bet=" + bet
 				+ ", competition=" + competition + ", homeTeam=" + homeTeam + ", awayTeam=" + awayTeam + ", teams="
 				+ teams + ", api_id=" + api_id + "]";
 	}

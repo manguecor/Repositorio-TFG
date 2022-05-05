@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tfg.apuesta.bet.Bet;
 import com.tfg.apuesta.configuration.BaseEntity;
 import com.tfg.apuesta.player.Player;
@@ -27,6 +28,7 @@ public class League extends BaseEntity{
     private Set<Player> players;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "league")
+	@JsonManagedReference(value = "league-bet")
     private Set<Bet> bets;
 
 	public String getName() {

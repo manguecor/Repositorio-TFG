@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.tfg.apuesta.client.Client;
+import com.tfg.apuesta.league.League;
 
 @Service
 public class BetService {
@@ -20,5 +21,9 @@ public class BetService {
 	
 	public void save(Bet bet) throws DataAccessException {
 		this.betRepository.save(bet);
+	}
+	
+	public List<Bet> findAllBets() throws DataAccessException {
+		return this.betRepository.findAll();
 	}
 }
