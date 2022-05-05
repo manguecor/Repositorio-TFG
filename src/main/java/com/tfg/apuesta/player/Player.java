@@ -71,6 +71,5 @@ public class Player extends BaseEntity {
 		this.bets = bets;
 	}
 	
-	
 
 }
