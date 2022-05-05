@@ -20,6 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin("http://localhost:8081/")
 public class UserController {
+	
+	private String currentUsername;
+
+	public String getCurrentUsername() {
+		return currentUsername;
+	}
 
 	private final UserService userService;
 	
@@ -76,5 +82,11 @@ public class UserController {
 
         return ResponseEntity.ok(new AuthenticationResponse(token, user));
     }
+	
+	@PostMapping("/username")
+	public String getUsername(@RequestBody String username) {
+		System.out.println(username);
+		return this.currentUsername = username.substring(0, username.length()-1);
+	}
 
 }

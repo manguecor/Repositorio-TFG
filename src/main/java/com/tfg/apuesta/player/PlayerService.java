@@ -29,6 +29,10 @@ public class PlayerService {
 		return playerRepository.findPlayerByUsername(username);
 	}
 	
+	public void savePlayer(Player player) throws DataAccessException {
+		this.playerRepository.save(player);
+	}
+	
 	
 
 }

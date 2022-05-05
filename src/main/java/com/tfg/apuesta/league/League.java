@@ -2,9 +2,13 @@ package com.tfg.apuesta.league;
 
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
-import com.tfg.apuesta.bet.Bet;
 import com.tfg.apuesta.configuration.BaseEntity;
 import com.tfg.apuesta.player.Player;
 
@@ -17,17 +21,18 @@ import lombok.Setter;
 @Table(name = "leagues")
 public class League extends BaseEntity{
 	
-	//@NotNull
+	@NotBlank
 	private String name;
 	
-	//@NotNull
+	@NotBlank
+	@Column(unique=true)
 	private String code;
 
 	@OneToMany(cascade = CascadeType.ALL)
     private Set<Player> players;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "league")
-    private Set<Bet> bets;
+	/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "league")
+    private Set<Bet> bets;*/
 
 	public String getName() {
 		return name;
@@ -53,17 +58,17 @@ public class League extends BaseEntity{
 		this.players = players;
 	}
 
-	public Set<Bet> getBets() {
+	/*public Set<Bet> getBets() {
 		return bets;
 	}
 
 	public void setBets(Set<Bet> bets) {
 		this.bets = bets;
-	}
+	}*/
 
 	@Override
 	public String toString() {
-		return "League [name=" + name + ", code=" + code + ", players=" + players + ", bets=" + bets + "]";
+		return "League [name=" + name + ", code=" + code + ", players=" + players + "]";
 	}
 
 	
