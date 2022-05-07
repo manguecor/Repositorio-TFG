@@ -30,7 +30,7 @@ public class Player extends BaseEntity {
 	/*@ManyToOne
     private League league;*/
 	
-	@ManyToOne(optional = true, cascade = CascadeType.ALL)
+	@ManyToOne(optional = true)
     private Client client;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
@@ -70,7 +70,6 @@ public class Player extends BaseEntity {
 	public void setBets(Set<Bet> bets) {
 		this.bets = bets;
 	}
-	
 	
 
 }

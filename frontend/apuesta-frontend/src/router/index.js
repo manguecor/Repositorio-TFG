@@ -13,6 +13,7 @@ import Login from '@/components/MyLogin.vue'
 import Logout from '@/components/MyLogout.vue'
 import LoginService from '@/services/LoginService'
 import MyBet from '@/components/MyBet.vue'
+import LeagueJoin from '@/components/LeagueJoin.vue'
 
 const routes = [
   {
@@ -44,6 +45,11 @@ const routes = [
     path: '/leagues/:leagueId',
     name: 'league',
     component: MyLeague
+  },
+  {
+    path: '/leagues/join',
+    name: 'leagueJoin',
+    component: LeagueJoin
   },
   {
     path: '/teams/:competitionId',

@@ -58,7 +58,7 @@ public class LeagueController {
 	}
 	
 	@PostMapping("/leagues/save")
-	public League saveLeague(@RequestBody League league) {
+	public void saveLeague(@RequestBody League league) {
 		String username = userController.getCurrentUsername();
 		Optional<Client> result = this.clientService.findClientByUsername(username);
 		if(result.isPresent()) {
@@ -70,9 +70,9 @@ public class LeagueController {
 			Set<Player> players = new HashSet<>();
 			players.add(player);
 			league.setPlayers(players);
-			return this.leagueService.save(league);
+			this.leagueService.save(league);
 		} else {
-			return this.leagueService.save(league);
+			this.leagueService.save(league);
 		}
 		
 		
@@ -81,6 +81,28 @@ public class LeagueController {
 	@DeleteMapping("/leagues/{leagueId}")
 	public void deleteLeague(@PathVariable("leagueId") int leagueId) {
 		this.leagueService.delete(this.leagueService.findLeagueById(leagueId));
+	}
+	
+	@PostMapping("/leagues/join")
+	public void joinLeague(@RequestBody String code) {
+		String username = userController.getCurrentUsername();
+		Optional<Client> result = this.clientService.findClientByUsername(username);
+		if(result.isPresent()) {
+			Client client = result.get();
+			Optional<League> res = this.leagueService.findLeagueByCode(code.substring(0, code.length()-1));
+			if(res.isPresent()) {
+				League league = res.get();
+				Player player = new Player();
+				player.setPoints(500);
+				player.setClient(client);
+				Set<Player> players = league.getPlayers();
+				if(!this.leagueService.checkPlayerInLeague(league, player)) {
+					this.playerService.savePlayer(player);
+					players.add(player);
+					this.leagueService.save(league);
+				}
+			}
+		} 
 	}
 
 

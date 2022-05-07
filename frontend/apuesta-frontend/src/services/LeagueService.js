@@ -18,6 +18,10 @@ class LeagueService {
     deleteLeague(leagueId) {
         return axios.delete(LEAGUES_API_BASE_URL+`/${leagueId}`);
     }
+
+    joinLeague(code) {
+        return axios.post(LEAGUES_API_BASE_URL+"/join",code);
+    }
  }
 
 export default new LeagueService()

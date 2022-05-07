@@ -1,10 +1,13 @@
 package com.tfg.apuesta.league;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
+import com.tfg.apuesta.player.Player;
 
 @Service
 public class LeagueService {
@@ -24,13 +27,27 @@ public class LeagueService {
 		return this.leagueRepository.findAllLeagues();
 	}
 	
-	public League save(League league) throws DataAccessException {
-		League l = this.leagueRepository.save(league);
-		return l;
+	public void save(League league) throws DataAccessException {
+		this.leagueRepository.save(league);
 	}
 	
 	public void delete(League league) throws DataAccessException {
 		this.leagueRepository.delete(league);
+	}
+	
+	public Optional<League> findLeagueByCode(String code) throws DataAccessException {
+		return this.leagueRepository.findLeagueByCode(code);
+	}
+	
+	public Boolean checkPlayerInLeague(League league, Player player) {
+		Boolean res = false;
+		for(Player p: league.getPlayers()) {
+			res = p.getClient().equals(player.getClient());
+			if(res) {
+				break;
+			}
+		}
+		return res;
 	}
 
 }
