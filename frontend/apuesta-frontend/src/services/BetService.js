@@ -10,10 +10,6 @@ class BetService{
     getBets(){
         return axios.get(BET_API_BASE_URL);
     }
-
-    postPlayerBet(playerBet){
-        return axios.post(BET_API_BASE_URL+'/playerBet',playerBet);
-    }
 }
 
 export default new BetService()

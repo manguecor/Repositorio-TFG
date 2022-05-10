@@ -92,23 +92,6 @@ public class BetController {
 		return this.betService.findAllBets();
 	}
 	
-	
-	@PostMapping(value="/bets/playerBet")
-	public void savePlayerBet(@RequestBody List<String> response) {
-		List<Integer> matchesId = new ArrayList<>();
-		List<String> playerResults = new ArrayList<>();
-		for(int i=0;i<response.size();i++) {
-			if(i%2==0) {
-				matchesId.add(Integer.valueOf(response.get(i)));
-			} else {
-				playerResults.add(response.get(i));
-			}
-			
-		}
-	}
-	
-	
-	
 	/*@GetMapping(value="/bets/save")
 	public void saveBet() {
 		//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

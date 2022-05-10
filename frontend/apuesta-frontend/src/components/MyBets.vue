@@ -5,6 +5,7 @@
         <thead>
             <th> Id </th>
             <th> </th>
+            <th> </th>
         </thead>
         <tbody>
             <tr v-for = "bet in bets" v-bind:key = "bet.id">

@@ -15,3 +15,11 @@ INSERT INTO players(points,client_id) VALUES (500,1);
 INSERT INTO leagues_players(league_id,players_id) VALUES (1,1);
 INSERT INTO players(points,client_id) VALUES (500,2);
 INSERT INTO leagues_players(league_id,players_id) VALUES (1,2);
+
+INSERT INTO bets(league_id,player_id) VALUES (1,1);
+INSERT INTO matches(api_id,away_team,competition,home_team,match_date,result,status,bet_id) VALUES (391973,'CA Vélez Sarsfield','Copa Libertadores','RB Bragantino',null,'DRAW','FINISHED',1);
+INSERT INTO matches(api_id,away_team,competition,home_team,match_date,result,status,bet_id) VALUES (333587,'Venezia FC','Serie A','US Salernitana 1919',null,'HOME_TEAM','FINISHED',1);
+INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (391973,'HOME_TEAM',1,1);
+INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (333587,'HOME_TEAM',1,1);
+INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (391973,'DRAW',1,2);
+INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (333587,'HOME_TEAM',1,2);

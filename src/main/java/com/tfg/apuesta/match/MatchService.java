@@ -53,6 +53,7 @@ public class MatchService {
 	    	m.setMatch_date(object.get("utcDate").toString());
 	    	m.setHomeTeam(object.getJSONObject("homeTeam").get("name").toString());
 	    	m.setAwayTeam(object.getJSONObject("awayTeam").get("name").toString());
+	    	m.setStatus(object.get("status").toString());
 	    	res.add(m);
 	    }
 	    return res;
@@ -78,6 +79,7 @@ public class MatchService {
 	    	m.setMatch_date(object.get("utcDate").toString());
 	    	m.setHomeTeam(object.getJSONObject("homeTeam").get("name").toString());
 	    	m.setAwayTeam(object.getJSONObject("awayTeam").get("name").toString());
+	    	m.setStatus(object.get("status").toString());
 	    	JSONObject arrayObject2 = (JSONObject) object.get("score");
 	    	for(int j=0;j<arrayObject2.length();j++) {
 	    		String homeResult = arrayObject2.getJSONObject("fullTime").get("homeTeam").toString();
@@ -110,6 +112,7 @@ public class MatchService {
 	    	m.setMatch_date(object.get("utcDate").toString());
 	    	m.setHomeTeam(object.getJSONObject("homeTeam").get("name").toString());
 	    	m.setAwayTeam(object.getJSONObject("awayTeam").get("name").toString());
+	    	m.setStatus(object.get("status").toString());
 	    	res.add(m);
 	    }
 	    return res;

@@ -8,7 +8,7 @@
             <th> Equipo visitante </th>
             <th> Competición </th>
             <th> Fecha del partido </th>
-            <th> </th>
+            <th> Estado </th>
             <th> </th>
         </thead>
         <tbody>
@@ -18,12 +18,12 @@
                 <td> {{match.awayTeam}}</td>
                 <td> {{match.competition}} </td>
                 <td> {{match.match_date}} </td>
-                <td> <a class="btn btn-success" v-on:click="addMatch(match.id)">Añadir partido</a></td>
-                <td> <a href="/" class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a></td>
+                <td> {{match.status}}</td>
+                <td> <a class="btn btn-success" v-if="match.status=='SCHEDULED'" v-on:click="addMatch(match.id)">Añadir partido</a></td>
             </tr>
-            
         </tbody>
     </table>
+    <a href="/" class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a>
    
 </div>
 

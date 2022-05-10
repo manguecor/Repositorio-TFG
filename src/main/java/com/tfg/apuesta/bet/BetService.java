@@ -26,4 +26,8 @@ public class BetService {
 	public List<Bet> findAllBets() throws DataAccessException {
 		return this.betRepository.findAll();
 	}
+	
+	public Bet findBetById(Integer betId) throws DataAccessException {
+		return this.betRepository.findBetById(betId);
+	}
 }
