@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tfg.apuesta.client.Client;
 import com.tfg.apuesta.configuration.BaseEntity;
 import com.tfg.apuesta.league.League;
@@ -32,12 +34,15 @@ public class Bet extends BaseEntity{
 	private BetType betType;*/
 
 	@ManyToOne
+	@JsonBackReference(value = "player-bet")
     private Player player;
 	
 	@ManyToOne
+	@JsonBackReference(value = "league-bet")
     private League league;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bet")
+	@JsonManagedReference(value = "bet-match")
     private Set<Match> matches;
 
 	public Player getPlayer() {

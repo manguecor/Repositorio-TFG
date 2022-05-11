@@ -12,7 +12,9 @@ import MyLastMatches from '@/components/MyLastMatches.vue'
 import Login from '@/components/MyLogin.vue'
 import Logout from '@/components/MyLogout.vue'
 import LoginService from '@/services/LoginService'
-import MyBet from '@/components/MyBet.vue'
+import MyMatchesToBet from '@/components/MyMatchesToBet.vue'
+import MyBets from '@/components/MyBets.vue'
+import MyLoginSuccess from '@/components/MyLoginSuccess.vue'
 import LeagueJoin from '@/components/LeagueJoin.vue'
 
 const routes = [
@@ -77,6 +79,11 @@ const routes = [
     component: Login
   },
   {
+    path: '/loginSuccess',
+    name: 'MyLoginSuccess',
+    component: MyLoginSuccess
+  },
+  {
     path: "/logout",
     name: "MyLogout",
     component: Logout,
@@ -88,9 +95,14 @@ const routes = [
     },
   },
   {
-    path: '/bet',
-    name: 'MyBet',
-    component: MyBet
+    path: '/matches/:betId',
+    name: 'MyMatches',
+    component: MyMatchesToBet
+  },
+  {
+    path: '/bets',
+    name: 'MyBets',
+    component: MyBets
   },
 ]
 
