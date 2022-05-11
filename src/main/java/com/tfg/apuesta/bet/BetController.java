@@ -3,6 +3,7 @@ package com.tfg.apuesta.bet;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,11 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tfg.apuesta.client.Client;
 import com.tfg.apuesta.client.ClientService;
+import com.tfg.apuesta.league.League;
 import com.tfg.apuesta.match.Match;
 import com.tfg.apuesta.match.MatchService;
 import com.tfg.apuesta.player.Player;
 import com.tfg.apuesta.player.PlayerService;
 import com.tfg.apuesta.user.MyUserDetails;
+import com.tfg.apuesta.user.UserController;
 import com.tfg.apuesta.user.UserService;
 
 @RestController
@@ -44,13 +47,16 @@ public class BetController {
 	
 	private final MatchService matchService;
 	
+	private final UserController userController;
+	
 	@Autowired
-	public BetController(BetService betService,UserService userService, ClientService clientService,PlayerService playerService,MatchService matchService) {
+	public BetController(BetService betService,UserService userService, ClientService clientService,PlayerService playerService,MatchService matchService,UserController userController) {
 		this.betService = betService;
 		this.userService = userService;
 		this.clientService = clientService;
 		this.playerService = playerService;
 		this.matchService = matchService;
+		this.userController = userController;
 	}
 	
 	@InitBinder
@@ -60,54 +66,28 @@ public class BetController {
 	
 	@PostMapping(value="/bets/save")
 	public void saveBet(@RequestBody List<String> response) {
-		/*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User currentUser = (User) authentication.getPrincipal();
-		String username = currentUser.getUsername();*/
-		//String username = "client1";
-		String username = response.get(0);
+		String username = this.userController.getCurrentUsername();
 		List<Integer> matchesAPIId = new ArrayList<>();
-		for(int i=1;i<response.size();i++) {
+		for(int i=0;i<response.size();i++) {
 			matchesAPIId.add(Integer.valueOf(response.get(i)));
 		}
 		Bet bet = new Bet();
 		Player p = playerService.findPlayerByUsername(username).get();
 		bet.setPlayer(p);
-		//bet.setLeague(p.getLeague());
+		League league = new League();
+		league.setId(1);
+		bet.setLeague(league);
 		this.betService.save(bet);
 		for(int j=0;j<matchesAPIId.size();j++) {
-			Match m = new Match();
+			Match m = matchService.getMatchById(matchesAPIId.get(j));
 			m.setApi_id(matchesAPIId.get(j));
 			m.setBets(bet);
 			this.matchService.save(m);
 		}	
-		
 	}
 	
-	
-	/*@GetMapping(value="/bets/save")
-	public void saveBet() {
-		//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		//User currentUser = (User) authentication.getPrincipal();
-		//String username = currentUser.getUsername();
-		String username = "client1";
-		//Client c = clientService.findClientByUsername(username).get();
-		List<Integer> matchesId = new ArrayList<>();
-		matchesId.add(54);
-		matchesId.add(76);
-		Bet bet = new Bet();
-		Player p = playerService.findPlayerByUsername(username).get();
-		bet.setPlayer(p);
-		bet.setLeague(p.getLeague());
-		this.betService.save(bet);
-		for(int i=0;i<matchesId.size();i++) {
-			Match m = new Match();
-			m.setApi_id(matchesId.get(i));
-			m.setBets(bet);
-			this.matchService.save(m);
-		}	
-		
-	}*/
-	
-	
-
+	@GetMapping("/bets")
+	public List<Bet> showAllBets() {
+		return this.betService.findAllBets();
+	}
 }

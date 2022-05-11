@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tfg.apuesta.bet.Bet;
+
 @RestController
 @CrossOrigin("http://localhost:8081/")
 public class MatchController {
@@ -39,5 +41,10 @@ public class MatchController {
 	@GetMapping("/matches/{teamId}/nextMatches")
 	public List<Match> getNexMatchesByTeam(@PathVariable("teamId") int teamId) {
 		return this.matchService.showNextMatchesByTeam(teamId);
+	}
+	
+	@GetMapping("/matches/{betId}")
+	public List<Match> showAllMatchesByBetId(@PathVariable("betId") int betId) {
+		return this.matchService.findMatchesByBetId(betId);
 	}
 }

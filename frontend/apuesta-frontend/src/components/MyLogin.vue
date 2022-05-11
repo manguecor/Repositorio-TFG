@@ -14,7 +14,7 @@
         <input id="password" v-model="password" placeholder="Contraseña" type="text" class="form">
       </div>
       <br>
-      <a href="/" class="btn btn-success" v-on:click="login(); getUsername();">Iniciar sesión</a>
+      <button class="btn btn-success" v-on:click="login()">Iniciar sesión</button>
     </div>
   </section>
 </template>
@@ -46,13 +46,11 @@ export default {
             localStorage.setItem("token", 'Bearer ' + token);
             localStorage.setItem("username", username);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+
+            LoginService.getUsername(localStorage.getItem("username"));
             })
-    },
-    getUsername() {
-            LoginService.getUsername(localStorage.getItem("username")).then((response) => {
-            console.log(response);
-            })
-        }
+            this.$router.push("/loginSuccess");
+    }
   }
 };
 </script>

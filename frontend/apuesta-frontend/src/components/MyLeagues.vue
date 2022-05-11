@@ -11,7 +11,7 @@
             <tr v-for = "league in leagues" v-bind:key = "league.id">
                 
                 <!--<td> {{league.id}} </td>-->
-                <td> <router-link :to="'/leagues/'+ league.id">{{league.name}}</router-link> </td>
+                <td> <router-link :to="'/bets'">{{league.name}}</router-link> </td>
                 <td> {{league.code}} </td>
                 <td> <a href="/leagues" @click="delete_league(league.id)"  class="btn btn-success">Borrar liga</a> </td>
             </tr>
@@ -28,9 +28,7 @@
 </template>
 
 <script>
-
 import LeagueService from '../services/LeagueService.js';    
-
 export default {
     name: 'MyLeagues',
     data(){
@@ -56,7 +54,4 @@ export default {
         this.getLeagues()
     }
 }
-
-
 </script>
-

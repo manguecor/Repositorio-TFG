@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tfg.apuesta.bet.Bet;
 import com.tfg.apuesta.client.Client;
 import com.tfg.apuesta.configuration.BaseEntity;
@@ -34,6 +35,7 @@ public class Player extends BaseEntity {
     private Client client;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
+	@JsonManagedReference(value = "player-bet")
     private Set<Bet> bets;
 
 	public Integer getPoints() {
