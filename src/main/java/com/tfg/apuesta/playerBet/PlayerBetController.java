@@ -8,7 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,6 +82,7 @@ public class PlayerBetController {
 	@PostMapping(value="/playerBets/check/{betId}")
 	public void checkPlayerBet(@PathVariable("betId") Integer betId) {
 		List<PlayerBet> playerBets = this.playerBetService.findPlayerBetByBetId(betId);
+		Bet bet = this.betService.findBetById(betId);
 		for(int i=0;i<playerBets.size();i++) {
 			PlayerBet p = playerBets.get(i);
 			Player player = p.getPlayer();
@@ -91,9 +91,13 @@ public class PlayerBetController {
 			if(match.getStatus().equals("FINISHED")) {
 				if(match.getResult().equals(p.getPlayerResult())) {
 					player.setPoints(player.getPoints()+100);
+					bet.setEstado("COMPROBADA");
 				} else {
 					player.setPoints(player.getPoints()-100);
+					bet.setEstado("COMPROBADA");
 				}
+				this.playerService.savePlayer(player);
+				this.betService.save(bet);
 			}
 		}
 	}

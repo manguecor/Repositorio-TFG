@@ -10,6 +10,10 @@ class BetService{
     getBets(){
         return axios.get(BET_API_BASE_URL);
     }
+
+    getBetByBetId(betId){
+        return axios.get(BET_API_BASE_URL+`/${betId}`);
+    }
 }
 
 export default new BetService()

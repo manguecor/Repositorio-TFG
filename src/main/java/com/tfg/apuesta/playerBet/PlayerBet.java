@@ -62,7 +62,7 @@ public class PlayerBet extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "PlayerBet [playerResult=" + playerResult + ", matchId=" + matchId + ", bet=" + bet + ", player="
-				+ player + "]";
+		return "PlayerBet [playerResult=" + playerResult + ", matchId=" + matchId + ", bet="
+				+ bet + ", player=" + player + "]";
 	}
 }
