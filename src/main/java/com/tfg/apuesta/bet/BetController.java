@@ -77,6 +77,7 @@ public class BetController {
 		League league = new League();
 		league.setId(1);
 		bet.setLeague(league);
+		bet.setEstado("PENDIENTE");
 		this.betService.save(bet);
 		for(int j=0;j<matchesAPIId.size();j++) {
 			Match m = matchService.getMatchById(matchesAPIId.get(j));
@@ -89,5 +90,10 @@ public class BetController {
 	@GetMapping("/bets")
 	public List<Bet> showAllBets() {
 		return this.betService.findAllBets();
+	}
+	
+	@GetMapping("/bets/{betId}")
+	public Bet getBetByBetID(@PathVariable("betId") int betId) {
+		return this.betService.findBetById(betId);
 	}
 }

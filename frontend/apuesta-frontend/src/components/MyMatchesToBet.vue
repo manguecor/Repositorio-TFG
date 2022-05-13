@@ -21,26 +21,26 @@
                     <button type="checkbox" v-if="match.status=='SCHEDULED'" @click="saveAwayTeam(match.api_id)">{{match.awayTeam}}</button>
                     <a type="checkbox" v-else-if="match.status!='SCHEDULED'">{{match.awayTeam}}</a>
                 </td>
-                <!--<td> <button type="checkbox" @click="saveHomeTeam(match.api_id)">{{match.homeTeam}}</button></td>
-                <td> <button type="checkbox" @click="saveDraw(match.api_id)"> - </button></td>
-                <td> <button type="checkbox" @click="saveAwayTeam(match.api_id)">{{match.awayTeam}}</button></td>-->
-                <td> <a href="/" class="btn btn-success" v-if="match.status=='FINISHED'" @click="checkPlayerBet()">Comprobar apuesta</a></td>
             </tr>
         </tbody>
     </table>
     <a href="/" class="btn btn-success" @click="savePlayerBet()">Realizar apuesta</a>
+    <a href="/" class="btn btn-success" v-if="this.bets.estado=='PENDIENTE'" @click="checkPlayerBet()">Comprobar apuesta</a>
 </div>
 </template>
 
 <script>
 import MatchService from "../services/MatchService";
 import PlayerBetService from '../services/PlayerBetService';
+import BetService from "../services/BetService";
+
 export default {
   name: "MyMatches",
   data(){
     return {
       matches: [],
-      matchBet: []
+      matchBet: [],
+      bets: []
     }
   },
   methods: {
@@ -48,8 +48,17 @@ export default {
     getMatches() {
         MatchService.getMatchesByBetId(this.$route.params.betId).then((response) => {
             this.matches = response.data;
+            console.log(this.matches);
         })
     },
+
+    getBetByBetId(){
+        BetService.getBetByBetId(this.$route.params.betId).then((response) => {
+          this.bets = response.data;
+          console.log(this.bets.estado);
+        })
+    },
+
     saveHomeTeam(matchAPIId){
       let matchBet = this.matchBet;
       matchBet[0]=this.$route.params.betId;
@@ -59,6 +68,7 @@ export default {
           console.log(matchBet);
       }
     },
+    
     saveAwayTeam(matchAPIId){
       let matchBet = this.matchBet;
       matchBet[0]=this.$route.params.betId;
@@ -68,6 +78,7 @@ export default {
           console.log(matchBet);
       }
     },
+
     saveDraw(matchAPIId){
       let matchBet = this.matchBet;
       matchBet[0]=this.$route.params.betId;
@@ -77,11 +88,13 @@ export default {
           console.log(matchBet);
       }
     },
+
     savePlayerBet(){
       PlayerBetService.postPlayerBet(this.matchBet).then((response) => {
             console.log(response);
       })
     },
+
     checkPlayerBet(){
       PlayerBetService.checkPlayerBet(this.$route.params.betId).then((response) => {
             console.log(response);
@@ -90,6 +103,7 @@ export default {
   },
   created() {
         this.getMatches()
+        this.getBetByBetId()
     }
 }
 </script>

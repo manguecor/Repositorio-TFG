@@ -4,15 +4,12 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.tfg.apuesta.client.Client;
 import com.tfg.apuesta.configuration.BaseEntity;
 import com.tfg.apuesta.league.League;
 import com.tfg.apuesta.match.Match;
@@ -32,6 +29,8 @@ public class Bet extends BaseEntity{
 	
 	@NotNull
 	private BetType betType;*/
+	
+	private String estado;
 
 	@ManyToOne
 	@JsonBackReference(value = "player-bet")
@@ -69,14 +68,21 @@ public class Bet extends BaseEntity{
 		this.matches = matches;
 	}
 
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
 	public Bet() {
 		super();
 	}
 
 	@Override
 	public String toString() {
-		return "Bet [player=" + player + ", league=" + league + ", matches=" + matches + "]";
+		return "Bet [estado=" + estado + ", player=" + player + ", league=" + league + ", matches=" + matches + "]";
 	}
-	
-	
+
 }

@@ -4,12 +4,13 @@
     <table class="table table-striped">
         <thead>
             <th> Id </th>
-            <th> </th>
+            <th> Estado de la apuesta </th>
             <th> </th>
         </thead>
         <tbody>
             <tr v-for = "bet in bets" v-bind:key = "bet.id">
-                <td> {{bet.id}}</td>
+                <td> {{bet.id}} </td>
+                <td> {{bet.estado}} </td>
                 <td> <router-link :to="'/matches/' + bet.id" class="btn btn-success">Ver apuesta</router-link></td>
             </tr>
         </tbody>
@@ -20,6 +21,7 @@
 
 <script>
 import BetService from "../services/BetService";
+
 export default {
   name: "MyBets",
   data(){
