@@ -23,7 +23,18 @@
             </tr>
         </tbody>
     </table>
+    <div class="form-group">
+        <label for="description">Descripción de de la apuesta:</label>
+            <input id="description" v-model="name" placeholder="Descripción de la apuesta" type="text" class="form">
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="leagueId">Nombre de la liga:</label>
+            <input id="leagueId" v-model="leagueId" placeholder="Nombre de la liga" type="text" class="form">
+    </div>
+    <br>
     <a href="/" class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a>
+    
    
 </div>
 
@@ -38,7 +49,9 @@ export default {
     data(){
         return {
             matches: [],
-            matchesId: []
+            matchesId: [],
+            name: null,
+            leagueId: null
         }
         
     },
@@ -58,6 +71,11 @@ export default {
                  
         },
         saveBet() {
+            let matchesId = this.matchesId;
+            let name = this.name;
+            let leagueId = this.leagueId;
+            matchesId.unshift(leagueId);
+            matchesId.unshift(name);
             BetService.postBet(this.matchesId).then((response) => {
             console.log(response);
             console.log(localStorage.getItem("username"));
