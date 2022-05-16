@@ -7,7 +7,7 @@
     <div class="nav2">
         <router-link v-if="!isAuthenticated" to="/login">Iniciar sesión</router-link>
         <router-link v-if="!isAuthenticated" to="/register">Registrarse</router-link>
-        <router-link v-if="isAuthenticated" to="/" ><i class="fa-solid fa-user"></i>{{ currentUser }}</router-link>
+        <router-link v-if="isAuthenticated" to="/clients/profile" ><i class="fa-solid fa-user"></i>{{ currentUser }}</router-link>
         <router-link v-if="isAuthenticated" to="/logout">Cerrar sesión</router-link>
     </div>
   </div>
