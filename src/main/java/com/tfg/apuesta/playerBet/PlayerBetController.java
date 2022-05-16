@@ -79,6 +79,42 @@ public class PlayerBetController {
 		}
 	}
 	
+	@PostMapping(value="/playerBets/result/save")
+	public void savePlayerBetResult(@RequestBody List<String> response) {
+		Integer betId = Integer.valueOf(response.get(0));
+		Bet bet = this.betService.findBetById(betId);
+		List<String> playerResults = new ArrayList<>();
+		List<Match> matches = this.matchService.findMatchesByBetId(betId);
+		String username = this.userController.getCurrentUsername();
+		Player player = this.playerService.findPlayerByUsername(username).get();
+		List<String> awayGoals = new ArrayList<>();
+		List<String> homeGoals = new ArrayList<>();
+		for(int i=1;i<response.size();i++) {
+			if(i%2==0) {
+				awayGoals.add(response.get(i));
+			} else {
+				homeGoals.add(response.get(i));
+			}
+		}
+		Integer homeGoalsResult=0;
+		Integer awayGoalsResult=0;
+		for(int q=0;q<homeGoals.size();q++) {
+			if(homeGoals.size()==awayGoals.size()) {
+				homeGoalsResult = Integer.valueOf(homeGoals.get(q));
+				awayGoalsResult = Integer.valueOf(awayGoals.get(q));
+				playerResults.add(homeGoalsResult + "-" + awayGoalsResult);
+			}
+		}
+		for(int j=0;j<matches.size();j++) {
+			PlayerBet playerBet = new PlayerBet();
+		    playerBet.setBet(bet);
+			playerBet.setPlayerResult(playerResults.get(j)); 
+			playerBet.setPlayer(player);
+			playerBet.setMatchId(matches.get(j).getApi_id());
+			this.playerBetService.save(playerBet);
+		}
+	}
+	
 	@PostMapping(value="/playerBets/check/{betId}")
 	public void checkPlayerBet(@PathVariable("betId") Integer betId) {
 		List<PlayerBet> playerBets = this.playerBetService.findPlayerBetByBetId(betId);
@@ -87,10 +123,49 @@ public class PlayerBetController {
 			PlayerBet p = playerBets.get(i);
 			Player player = p.getPlayer();
 			Integer matchId = p.getMatchId();
-			Match match = this.matchService.getMatchById(matchId);
+			Match match = this.matchService.getMatchWinnerById(matchId);
 			if(match.getStatus().equals("FINISHED")) {
 				if(match.getResult().equals(p.getPlayerResult())) {
 					player.setPoints(player.getPoints()+100);
+					bet.setEstado("COMPROBADA");
+				} else {
+					player.setPoints(player.getPoints()-100);
+					bet.setEstado("COMPROBADA");
+				}
+				this.playerService.savePlayer(player);
+				this.betService.save(bet);
+			}
+		}
+	}
+	
+	
+	@PostMapping(value="/playerBets/check/result/{betId}")
+	public void checkPlayerBetResult(@PathVariable("betId") Integer betId) {
+		List<PlayerBet> playerBets = this.playerBetService.findPlayerBetByBetId(betId);
+		Bet bet = this.betService.findBetById(betId);
+		for(int i=0;i<playerBets.size();i++) {
+			PlayerBet p = playerBets.get(i);
+			Player player = p.getPlayer();
+			Integer matchId = p.getMatchId();
+			Match match = this.matchService.getMatchResultById(matchId);
+			Integer homeGoal = Integer.valueOf(match.getResult().split("-")[0]);
+			Integer awayGoal = Integer.valueOf(match.getResult().split("-")[1]);
+			Integer diffGoal = homeGoal-awayGoal;
+			Integer homePlayerResult = Integer.valueOf(p.getPlayerResult().split("-")[0]);
+			Integer awayPlayerResult = Integer.valueOf(p.getPlayerResult().split("-")[1]);
+			Integer diffPlayerResult = homePlayerResult-awayPlayerResult;
+			if(match.getStatus().equals("FINISHED")) {
+				if(match.getResult().equals(p.getPlayerResult())) { //Resultado exacto
+					player.setPoints(player.getPoints()+150);
+					bet.setEstado("COMPROBADA");
+				} else if(homeGoal==homePlayerResult) { //Goles equipos local
+					player.setPoints(player.getPoints()+50);
+					bet.setEstado("COMPROBADA");
+				} else if(awayGoal==awayPlayerResult) { //Goles equipo visitante
+					player.setPoints(player.getPoints()+50);
+					bet.setEstado("COMPROBADA");
+				} else if(diffGoal==diffPlayerResult) { //Goles equipo visitante
+					player.setPoints(player.getPoints()+75);
 					bet.setEstado("COMPROBADA");
 				} else {
 					player.setPoints(player.getPoints()-100);

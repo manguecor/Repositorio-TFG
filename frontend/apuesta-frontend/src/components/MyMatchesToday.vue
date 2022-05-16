@@ -23,7 +23,13 @@
             </tr>
         </tbody>
     </table>
-    <a href="/" class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a>
+    <label>Tipo de apuesta:</label>
+        <select name="betType" id="betType">
+            <option value="" disabled selected>Seleccione un tipo de apuesta...</option>
+            <option value="WINNER">Ganador del partido</option>
+            <option value="RESULT">Resultado exacto</option>
+        </select><br><br>
+    <a class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a>
    
 </div>
 
@@ -58,10 +64,13 @@ export default {
                  
         },
         saveBet() {
+            let betType = document.getElementById("betType");
+            let betTypeValue = betType.options[betType.selectedIndex].value;
+            this.matchesId[0] = betTypeValue;
             BetService.postBet(this.matchesId).then((response) => {
             console.log(response);
             console.log(localStorage.getItem("username"));
-            })
+            })      
         }
     },
     created() {
@@ -69,3 +78,10 @@ export default {
     }
 }
 </script>
+
+<style>
+    .container{
+        padding-bottom: 70px;
+    }
+
+</style>

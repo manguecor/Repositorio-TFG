@@ -65,13 +65,19 @@ public class BetController {
 	}
 	
 	@PostMapping(value="/bets/save")
-	public void saveBet(@RequestBody List<String> response) {
+	public void saveMatchBet(@RequestBody List<String> response) {
 		String username = this.userController.getCurrentUsername();
 		List<Integer> matchesAPIId = new ArrayList<>();
-		for(int i=0;i<response.size();i++) {
+		String betType = response.get(0);
+		for(int i=1;i<response.size();i++) {
 			matchesAPIId.add(Integer.valueOf(response.get(i)));
 		}
 		Bet bet = new Bet();
+		if(betType.equals("WINNER")) {
+			bet.setBetType(BetType.WINNER);
+		} else if(betType.equals("RESULT")) {
+			bet.setBetType(BetType.RESULT);	
+		}
 		Player p = playerService.findPlayerByUsername(username).get();
 		bet.setPlayer(p);
 		League league = new League();
@@ -80,7 +86,7 @@ public class BetController {
 		bet.setEstado("PENDIENTE");
 		this.betService.save(bet);
 		for(int j=0;j<matchesAPIId.size();j++) {
-			Match m = matchService.getMatchById(matchesAPIId.get(j));
+			Match m = matchService.getMatchWinnerById(matchesAPIId.get(j));
 			m.setApi_id(matchesAPIId.get(j));
 			m.setBets(bet);
 			this.matchService.save(m);
