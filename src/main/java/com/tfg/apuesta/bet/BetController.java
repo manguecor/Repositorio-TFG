@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tfg.apuesta.client.Client;
 import com.tfg.apuesta.client.ClientService;
 import com.tfg.apuesta.league.League;
+import com.tfg.apuesta.league.LeagueService;
 import com.tfg.apuesta.match.Match;
 import com.tfg.apuesta.match.MatchService;
 import com.tfg.apuesta.player.Player;
@@ -43,6 +44,8 @@ public class BetController {
 	
 	private final ClientService clientService;
 	
+	private final LeagueService leagueService;
+	
 	private final PlayerService playerService;
 	
 	private final MatchService matchService;
@@ -50,13 +53,15 @@ public class BetController {
 	private final UserController userController;
 	
 	@Autowired
-	public BetController(BetService betService,UserService userService, ClientService clientService,PlayerService playerService,MatchService matchService,UserController userController) {
+	public BetController(BetService betService,UserService userService, ClientService clientService,PlayerService playerService,MatchService matchService,
+			UserController userController, LeagueService leagueService) {
 		this.betService = betService;
 		this.userService = userService;
 		this.clientService = clientService;
 		this.playerService = playerService;
 		this.matchService = matchService;
 		this.userController = userController;
+		this.leagueService = leagueService;
 	}
 	
 	@InitBinder
@@ -66,25 +71,30 @@ public class BetController {
 	
 	@PostMapping(value="/bets/save")
 	public void saveBet(@RequestBody List<String> response) {
-		String username = this.userController.getCurrentUsername();
-		List<Integer> matchesAPIId = new ArrayList<>();
-		for(int i=0;i<response.size();i++) {
-			matchesAPIId.add(Integer.valueOf(response.get(i)));
+		Optional<League> result = this.leagueService.findLeagueByName(response.get(1));
+		if(result.isPresent()) {
+			String username = this.userController.getCurrentUsername();
+			List<Integer> matchesAPIId = new ArrayList<>();
+			for(int i=2;i<response.size();i++) {
+				matchesAPIId.add(Integer.valueOf(response.get(i)));
+			}
+			Bet bet = new Bet();
+			Player p = playerService.findPlayerByUsername(username).get();
+			bet.setPlayer(p);
+			String description = response.get(0);
+			League league = result.get();
+			bet.setDescription(description);
+			bet.setLeague(league);
+			bet.setEstado("PENDIENTE");
+			this.betService.save(bet);
+			for(int j=0;j<matchesAPIId.size();j++) {
+				Match m = matchService.getMatchById(matchesAPIId.get(j));
+				m.setApi_id(matchesAPIId.get(j));
+				m.setBets(bet);
+				this.matchService.save(m);
+			}	
 		}
-		Bet bet = new Bet();
-		Player p = playerService.findPlayerByUsername(username).get();
-		bet.setPlayer(p);
-		League league = new League();
-		league.setId(1);
-		bet.setLeague(league);
-		bet.setEstado("PENDIENTE");
-		this.betService.save(bet);
-		for(int j=0;j<matchesAPIId.size();j++) {
-			Match m = matchService.getMatchById(matchesAPIId.get(j));
-			m.setApi_id(matchesAPIId.get(j));
-			m.setBets(bet);
-			this.matchService.save(m);
-		}	
+		
 	}
 	
 	@GetMapping("/bets")

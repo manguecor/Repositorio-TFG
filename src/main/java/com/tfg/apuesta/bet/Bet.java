@@ -31,6 +31,8 @@ public class Bet extends BaseEntity{
 	private BetType betType;*/
 	
 	private String estado;
+	
+	private String description;
 
 	@ManyToOne
 	@JsonBackReference(value = "player-bet")
