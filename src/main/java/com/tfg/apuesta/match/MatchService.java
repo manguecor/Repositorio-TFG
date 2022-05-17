@@ -132,7 +132,7 @@ public class MatchService {
 	}
 	
 	
-	public Match getMatchById(Integer matchId){
+	public Match getMatchWinnerById(Integer matchId){
 		String uri = "http://api.football-data.org/v2/matches/" + matchId;
 		String auth = "X-Auth-Token";
 		String apiKey = "f3cafe6d1b40474992616dd3b183d801";
@@ -155,6 +155,34 @@ public class MatchService {
 	    	m.setMatch_date(json3.get("utcDate").toString());
 	    	m.setStatus(json3.get("status").toString());
 	    }
+	    return m;
+	}
+	
+	public Match getMatchResultById(Integer matchId){
+		String uri = "http://api.football-data.org/v2/matches/" + matchId;
+		String auth = "X-Auth-Token";
+		String apiKey = "f3cafe6d1b40474992616dd3b183d801";
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(auth, apiKey);
+	    HttpEntity request = new HttpEntity(headers);
+	    ResponseEntity<String> response = new RestTemplate().exchange(uri, HttpMethod.GET, request, String.class);
+	    String json = response.getBody();
+	    JSONObject jsonObj = new JSONObject(json);
+	    JSONObject head = (JSONObject) jsonObj.get("head2head");
+	    JSONObject match = (JSONObject) jsonObj.get("match");
+	    JSONObject fullTime = (JSONObject) match.getJSONObject("score").get("fullTime");
+	    //JSONArray arrayObject = (JSONArray) jsonObj.get("head2head");
+	    Match m = new Match();
+	    //Creo que este bucle no hace falta
+	    for(int i=0;i<head.length();i++) {
+	    	m.setHomeTeam(head.getJSONObject("homeTeam").get("name").toString());
+	    	m.setAwayTeam(head.getJSONObject("awayTeam").get("name").toString());
+	    }
+	    String homeTeamGoals = fullTime.get("homeTeam").toString();
+	    String awayTeamGoals = fullTime.get("awayTeam").toString();
+	    m.setResult(homeTeamGoals + "-" + awayTeamGoals);
+	    m.setMatch_date(match.get("utcDate").toString());
+	    m.setStatus(match.get("status").toString());
 	    return m;
 	}
 

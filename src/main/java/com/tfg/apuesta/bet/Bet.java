@@ -25,10 +25,9 @@ import lombok.Setter;
 public class Bet extends BaseEntity{
 	
 	/*@NotNull
-	private Integer betPoints;
+	private Integer betPoints;*/
 	
-	@NotNull
-	private BetType betType;*/
+	private BetType betType;
 	
 	private String estado;
 	
@@ -76,6 +75,22 @@ public class Bet extends BaseEntity{
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public BetType getBetType() {
+		return betType;
+	}
+
+	public void setBetType(BetType betType) {
+		this.betType = betType;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Bet() {

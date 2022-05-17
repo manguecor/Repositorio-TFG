@@ -3,13 +3,13 @@
     <br><h2 class="text-center"> Apuestas disponibles </h2><br>
     <table class="table table-striped">
         <thead>
-            <th> Id </th>
+            <th> Descripcion </th>
             <th> Estado de la apuesta </th>
             <th> </th>
         </thead>
         <tbody>
             <tr v-for = "bet in bets" v-bind:key = "bet.id">
-                <td> {{bet.id}} </td>
+                <td> {{bet.description}} </td>
                 <td> {{bet.estado}} </td>
                 <td> <router-link :to="'/matches/' + bet.id" class="btn btn-success">Ver apuesta</router-link></td>
             </tr>
