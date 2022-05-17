@@ -30,6 +30,8 @@ public class Bet extends BaseEntity{
 	private BetType betType;
 	
 	private String estado;
+	
+	private String description;
 
 	@ManyToOne
 	@JsonBackReference(value = "player-bet")
@@ -81,6 +83,14 @@ public class Bet extends BaseEntity{
 
 	public void setBetType(BetType betType) {
 		this.betType = betType;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Bet() {

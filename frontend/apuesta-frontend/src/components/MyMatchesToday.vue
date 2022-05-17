@@ -29,7 +29,19 @@
             <option value="WINNER">Ganador del partido</option>
             <option value="RESULT">Resultado exacto</option>
         </select><br><br>
-    <a class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a>
+    <div class="form-group">
+        <label for="description">Descripción de de la apuesta:</label>
+            <input id="description" v-model="name" placeholder="Descripción de la apuesta" type="text" class="form">
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="leagueId">Nombre de la liga:</label>
+            <input id="leagueId" v-model="leagueId" placeholder="Nombre de la liga" type="text" class="form">
+    </div>
+    <br>
+    <a href="/" class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a>
+    
+
    
 </div>
 
@@ -44,7 +56,9 @@ export default {
     data(){
         return {
             matches: [],
-            matchesId: []
+            matchesId: [],
+            name: null,
+            leagueId: null
         }
         
     },
@@ -64,12 +78,17 @@ export default {
                  
         },
         saveBet() {
+            let matchesId = this.matchesId;
             let betType = document.getElementById("betType");
             let betTypeValue = betType.options[betType.selectedIndex].value;
-            this.matchesId[0] = betTypeValue;
+            let name = this.name;
+            let leagueId = this.leagueId;
+            matchesId.unshift(leagueId);
+            matchesId.unshift(name);
+            matchesId.unshift(betTypeValue);
             BetService.postBet(this.matchesId).then((response) => {
+            console.log(this.matchesId);
             console.log(response);
-            console.log(localStorage.getItem("username"));
             })      
         }
     },

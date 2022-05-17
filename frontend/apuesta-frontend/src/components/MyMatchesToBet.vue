@@ -4,12 +4,14 @@
     <div v-if="this.bets.betType=='WINNER'">
     <table class="table table-striped">
         <thead>
+            <th> EQUIPO LOCAL </th>
             <th> </th>
-            <th> </th>
-            <th> </th>
+            <th> EQUIPO VISITANTE</th>
+            <th> RESULTADO</th>
+            <th> APUESTA</th>
         </thead>
         <tbody>
-            <tr v-for = "match in matches" v-bind:key = "match.id">
+            <tr v-for = "match in matches" v-bind:key = "match.id" >
                 <td> 
                     <button type="checkbox" v-if="match.status=='SCHEDULED'" @click="saveHomeTeam(match.api_id)">{{match.homeTeam}}</button>
                     <a type="checkbox" v-else-if="match.status!='SCHEDULED'">{{match.homeTeam}}</a>
@@ -22,6 +24,20 @@
                     <button type="checkbox" v-if="match.status=='SCHEDULED'" @click="saveAwayTeam(match.api_id)">{{match.awayTeam}}</button>
                     <a type="checkbox" v-else-if="match.status!='SCHEDULED'">{{match.awayTeam}}</a>
                 </td>
+                <td>
+                  <a type="checkbox" v-if="match.status!='SCHEDULED'">{{match.result}}</a>
+                </td>
+                <td>
+                  <div v-for= "playerBet in playerBets" v-bind:key= "playerBet.id">
+                    <span v-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result" class="acierto">
+                      {{playerBet.playerResult}}
+                    </span>
+                    <span v-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result" class="fallo">
+                      {{playerBet.playerResult}}
+                    </span>
+                  </div>
+                  
+                </td>
             </tr>
         </tbody>
     </table>
@@ -29,7 +45,6 @@
     <div v-if="this.bets.betType=='RESULT'">
       <table class="table table-striped">
         <thead>
-            <th> </th>
             <th> </th>
             <th> </th>
             <th> </th>
@@ -48,9 +63,6 @@
                     <input type="number" id="goalsAwayTeam" name="goalsAwayTeam" min="0" max="15" v-if="match.status=='SCHEDULED'">
                     <a type="checkbox" v-if="match.status=='SCHEDULED'">{{match.awayTeam}}</a>
                     <a type="checkbox" v-else-if="match.status!='SCHEDULED'">{{match.awayTeam}}</a>
-                </td>
-                <td>
-                    <button type="checkbox" v-if="match.status=='SCHEDULED'" @click="saveResult()">Guardar resultado</button>
                 </td>
             </tr>
         </tbody>
@@ -73,7 +85,8 @@ export default {
       matches: [],
       matchBet: [],
       bets: [],
-      result: []
+      result: [],
+      playerBets: []
     }
   },
   methods: {
@@ -90,6 +103,13 @@ export default {
           this.bets = response.data;
           console.log(this.bets);
         })
+    },
+
+    getPlayerBetByBetId(){
+      PlayerBetService.getPlayerBetByBetId(this.$route.params.betId).then((response) => {
+        this.playerBets = response.data;
+        console.log(this.playerBets);
+      })
     },
 
     saveHomeTeam(matchAPIId){
@@ -122,25 +142,24 @@ export default {
       }
     },
 
-    saveResult(){
-      let result = this.result;
-      result[0]=this.$route.params.betId;
-          let homeResult = document.getElementById("goalsHomeTeam").value;
-          let awayResult = document.getElementById("goalsAwayTeam").value;
-          result[result.length]=homeResult;
-          result[result.length]=awayResult;
-          //Falta que pille todos los resultados, ademas hay que mirar porque el ultimo partido no lo mete
-          console.log(result);
-    },
-
     savePlayerBet(){
       if(this.bets.betType=='WINNER'){
         PlayerBetService.postPlayerBet(this.matchBet).then((response) => {
             console.log(response);
       })
       } else if(this.bets.betType=='RESULT'){
+        let result = this.result;
+        result[0]=this.$route.params.betId;
+        for(let i=0;i<this.matches.length;i++){
+          let homeResult = document.getElementsByName("goalsHomeTeam").item(i).value;
+          let awayResult = document.getElementsByName("goalsAwayTeam").item(i).value;
+          result[result.length]=homeResult;
+          result[result.length]=awayResult;
+          console.log(this.result);
+        }
         PlayerBetService.postPlayerBetResult(this.result).then((response) => {
           console.log(response);
+          console.log(this.result);
         })
       }
       
@@ -161,6 +180,27 @@ export default {
   created() {
         this.getMatches()
         this.getBetByBetId()
+        this.getPlayerBetByBetId()
     }
 }
 </script>
+
+<style>
+.acierto {
+   font: rgb(0, 0, 0);
+   font-weight: bold;
+   width: 150px; 
+   height: 50px; 
+   border: 3px solid #555;
+   background-color: rgb(0, 255, 0);
+ }
+
+.fallo {
+   font: rgb(0, 0, 0);
+   font-weight: bold;
+   width: 150px; 
+   height: 50px; 
+   border: 3px solid #555;
+   background-color: rgb(255, 0, 0);
+ }
+</style>

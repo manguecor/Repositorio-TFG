@@ -19,6 +19,10 @@ class PlayerBetService{
     checkPlayerBetResult(betId){
         return axios.post(PLAYER_BET_API_BASE_URL+`/check/result/${betId}`);
     }
+
+    getPlayerBetByBetId(betId){
+        return axios.get(PLAYER_BET_API_BASE_URL+`/${betId}`);
+    }
 }
 
 export default new PlayerBetService()

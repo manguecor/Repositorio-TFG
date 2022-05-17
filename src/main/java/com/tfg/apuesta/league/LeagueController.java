@@ -57,6 +57,12 @@ public class LeagueController {
 		return this.leagueService.findAllLeagues();
 	}
 	
+	/*@GetMapping("/leagues")
+	public List<League> showLeaguesByUsername() {
+		String username = userController.getCurrentUsername();
+		return this.leagueService.findLeaguesByUsername(username);
+	}*/
+	
 	@PostMapping("/leagues/save")
 	public void saveLeague(@RequestBody League league) {
 		String username = userController.getCurrentUsername();

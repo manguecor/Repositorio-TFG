@@ -14,7 +14,13 @@ public interface LeagueRepository extends JpaRepository<League,Integer> {
 	@Query("SELECT league FROM League league")
 	List<League> findAllLeagues();
 	
+	/*@Query("SELECT league FROM League league WHERE league.players.client.username=:username")
+	List<League> findLeaguesByUsername(String username);*/
+	
 	@Query("SELECT league FROM League league WHERE league.code=:code")
 	Optional<League> findLeagueByCode(String code);
+	
+	@Query("SELECT league FROM League league WHERE league.name=:name")
+	Optional<League> findLeagueByName(String name);
 
 }

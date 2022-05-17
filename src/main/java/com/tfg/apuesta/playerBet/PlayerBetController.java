@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -127,11 +129,10 @@ public class PlayerBetController {
 			if(match.getStatus().equals("FINISHED")) {
 				if(match.getResult().equals(p.getPlayerResult())) {
 					player.setPoints(player.getPoints()+100);
-					bet.setEstado("COMPROBADA");
 				} else {
 					player.setPoints(player.getPoints()-100);
-					bet.setEstado("COMPROBADA");
 				}
+				bet.setEstado("COMPROBADA");
 				this.playerService.savePlayer(player);
 				this.betService.save(bet);
 			}
@@ -157,23 +158,33 @@ public class PlayerBetController {
 			if(match.getStatus().equals("FINISHED")) {
 				if(match.getResult().equals(p.getPlayerResult())) { //Resultado exacto
 					player.setPoints(player.getPoints()+150);
-					bet.setEstado("COMPROBADA");
 				} else if(homeGoal==homePlayerResult) { //Goles equipos local
 					player.setPoints(player.getPoints()+50);
-					bet.setEstado("COMPROBADA");
 				} else if(awayGoal==awayPlayerResult) { //Goles equipo visitante
 					player.setPoints(player.getPoints()+50);
-					bet.setEstado("COMPROBADA");
 				} else if(diffGoal==diffPlayerResult) { //Goles equipo visitante
 					player.setPoints(player.getPoints()+75);
-					bet.setEstado("COMPROBADA");
 				} else {
 					player.setPoints(player.getPoints()-100);
-					bet.setEstado("COMPROBADA");
 				}
+				bet.setEstado("COMPROBADA");
 				this.playerService.savePlayer(player);
 				this.betService.save(bet);
 			}
 		}
+	}
+	
+	@GetMapping("/playerBets/{betId}")
+	public List<PlayerBet> getPlayerBetByBetID(@PathVariable("betId") int betId) {
+		String username = this.userController.getCurrentUsername();
+		Player player = this.playerService.findPlayerByUsername(username).get();
+		List<PlayerBet> playerBets = this.playerBetService.findPlayerBetByBetId(betId);
+		List<PlayerBet> players = new ArrayList<>();
+		for(int i=0;i<playerBets.size();i++) {
+			if(player.getId()==playerBets.get(i).getPlayer().getId()) {
+				players.add(playerBets.get(i));
+			}
+		}
+		return players;
 	}
 }

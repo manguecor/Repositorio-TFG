@@ -49,5 +49,13 @@ public class LeagueService {
 		}
 		return res;
 	}
+	
+	public Optional<League> findLeagueByName(String name) throws DataAccessException {
+		return this.leagueRepository.findLeagueByName(name);
+	}
+	
+	/*public List<League> findLeaguesByUsername(String username) throws DataAccessException {
+		return this.leagueRepository.findLeaguesByUsername(username);
+	}*/
 
 }

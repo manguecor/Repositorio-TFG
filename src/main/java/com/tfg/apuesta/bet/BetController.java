@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tfg.apuesta.client.Client;
 import com.tfg.apuesta.client.ClientService;
 import com.tfg.apuesta.league.League;
+import com.tfg.apuesta.league.LeagueService;
 import com.tfg.apuesta.match.Match;
 import com.tfg.apuesta.match.MatchService;
 import com.tfg.apuesta.player.Player;
@@ -43,6 +44,8 @@ public class BetController {
 	
 	private final ClientService clientService;
 	
+	private final LeagueService leagueService;
+	
 	private final PlayerService playerService;
 	
 	private final MatchService matchService;
@@ -50,13 +53,15 @@ public class BetController {
 	private final UserController userController;
 	
 	@Autowired
-	public BetController(BetService betService,UserService userService, ClientService clientService,PlayerService playerService,MatchService matchService,UserController userController) {
+	public BetController(BetService betService,UserService userService, ClientService clientService,PlayerService playerService,MatchService matchService,
+			UserController userController, LeagueService leagueService) {
 		this.betService = betService;
 		this.userService = userService;
 		this.clientService = clientService;
 		this.playerService = playerService;
 		this.matchService = matchService;
 		this.userController = userController;
+		this.leagueService = leagueService;
 	}
 	
 	@InitBinder
@@ -66,30 +71,32 @@ public class BetController {
 	
 	@PostMapping(value="/bets/save")
 	public void saveMatchBet(@RequestBody List<String> response) {
-		String username = this.userController.getCurrentUsername();
-		List<Integer> matchesAPIId = new ArrayList<>();
-		String betType = response.get(0);
-		for(int i=1;i<response.size();i++) {
-			matchesAPIId.add(Integer.valueOf(response.get(i)));
-		}
-		Bet bet = new Bet();
-		if(betType.equals("WINNER")) {
-			bet.setBetType(BetType.WINNER);
-		} else if(betType.equals("RESULT")) {
-			bet.setBetType(BetType.RESULT);	
-		}
-		Player p = playerService.findPlayerByUsername(username).get();
-		bet.setPlayer(p);
-		League league = new League();
-		league.setId(1);
-		bet.setLeague(league);
-		bet.setEstado("PENDIENTE");
-		this.betService.save(bet);
-		for(int j=0;j<matchesAPIId.size();j++) {
-			Match m = matchService.getMatchWinnerById(matchesAPIId.get(j));
-			m.setApi_id(matchesAPIId.get(j));
-			m.setBets(bet);
-			this.matchService.save(m);
+		Optional<League> result = this.leagueService.findLeagueByName(response.get(2));
+		if(result.isPresent()) {
+			String username = this.userController.getCurrentUsername();
+			List<Integer> matchesAPIId = new ArrayList<>();
+			for(int i=3;i<response.size();i++) {
+				matchesAPIId.add(Integer.valueOf(response.get(i)));
+			}
+			Bet bet = new Bet();
+			String betType = response.get(0);
+			if(betType.equals("WINNER")) {
+				bet.setBetType(BetType.WINNER);
+			} else if(betType.equals("RESULT")) {
+				bet.setBetType(BetType.RESULT);	
+			}
+			Player p = playerService.findPlayerByUsername(username).get();
+			bet.setPlayer(p);
+			bet.setDescription(response.get(1));
+			bet.setLeague(result.get());
+			bet.setEstado("PENDIENTE");
+			this.betService.save(bet);
+			for(int j=0;j<matchesAPIId.size();j++) {
+				Match m = matchService.getMatchWinnerById(matchesAPIId.get(j));
+				m.setApi_id(matchesAPIId.get(j));
+				m.setBets(bet);
+				this.matchService.save(m);
+			}
 		}	
 	}
 	
