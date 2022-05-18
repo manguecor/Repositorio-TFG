@@ -5,8 +5,10 @@
     <div class="equipos" v-for = "team in teams" v-bind:key = "team.id">
         <router-link :to="'/teams/' + team.id + '/nextMatches'"><img :src="team.emblemUrl" alt="" width="40" height="40"></router-link>
     </div>
-    <div class="container">
-        <table class="table table-striped" style="width:45%" border=3>
+    <br><br><br><br><br>
+    <div class="container1">
+        <h4 class="text-center"> CLASIFICACION</h4><br>
+        <table class="table table-striped">
         <thead>
             <th> </th>
             <th> EQUIPO </th>
@@ -26,8 +28,25 @@
                 <td>{{ standing.pg }}</td>
                 <td>{{ standing.pe }}</td>
                 <td>{{ standing.pp }}</td>
-            </tr>
-             
+            </tr>  
+        </tbody>
+        </table>
+    </div>
+
+    <div class="container2">
+        <h4 class="text-center"> GOLEADORES</h4><br>
+        <table class="table table-striped">
+        <thead>
+            <th> JUGADOR</th>
+            <th> EQUIPO </th>
+            <th> GOLES </th>
+        </thead>
+        <tbody>
+            <tr v-for = "scorer in scorers" v-bind:key = "scorer.id">
+                <td>{{ scorer.footballPlayer }}</td>
+                <td>{{ scorer.playerTeam }}</td>
+                <td>{{ scorer.goals }}</td>
+            </tr>  
         </tbody>
         </table>
     </div>
@@ -40,13 +59,15 @@
 
 import TeamService from '../services/TeamService'; 
 import StandingService from '../services/StandingService';   
+import ScorerService from '../services/ScorerService';
 
 export default {
     name: 'MyCompetitionDetails',
     data(){
         return {
             teams: [],
-            standings: []
+            standings: [],
+            scorers: []
         }
     },
     methods: {
@@ -60,11 +81,19 @@ export default {
             StandingService.getClasificationByCompetition(this.$route.params.competitionId).then((response) =>{
                 this.standings = response.data;
             });
+        },
+
+        getScorersByCompetition(){
+            ScorerService.getScorersByCompetition(this.$route.params.competitionId).then((response) => {
+                this.scorers = response.data;
+                console.log(this.scorers);
+            })
         }
     },
     created() {
         this.getTeamsByCompetition()
         this.getClasification()
+        this.getScorersByCompetition()
     }
 }
 
@@ -74,12 +103,16 @@ export default {
 <style>
 
 .equipos{
-    overflow: hidden;
-    margin-top: 0px;
-    block-size: 70px;
     float:left;
-    text-align: center;
-    margin-left: 0%;
-    margin-right: 0%;
+}
+
+.container1 {
+    float:left;
+    margin-right: 15%;
+    padding-bottom: 70px;
+}
+.container2 {
+    float:left;
+    padding-bottom: 70px;
 }
 </style>
