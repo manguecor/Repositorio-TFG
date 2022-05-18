@@ -41,17 +41,35 @@ const routes = [
   {
     path: '/leagues',
     name: 'leagues',
-    component: MyLeagues
+    component: MyLeagues,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
   },
   {
     path: '/leagues/:leagueId',
     name: 'league',
-    component: MyLeague
+    component: MyLeague,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
   },
   {
     path: '/leagues/join',
     name: 'leagueJoin',
-    component: LeagueJoin
+    component: LeagueJoin,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
   },
   {
     path: '/teams/:competitionId',
@@ -81,7 +99,13 @@ const routes = [
   {
     path: '/loginSuccess',
     name: 'MyLoginSuccess',
-    component: MyLoginSuccess
+    component: MyLoginSuccess,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
   },
   {
     path: "/logout",
@@ -97,12 +121,24 @@ const routes = [
   {
     path: '/matches/:betId',
     name: 'MyMatches',
-    component: MyMatchesToBet
+    component: MyMatchesToBet,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
   },
   {
     path: '/bets',
     name: 'MyBets',
-    component: MyBets
+    component: MyBets,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
   },
 ]
 
