@@ -36,7 +36,6 @@
                       {{playerBet.playerResult}}
                     </span>
                   </div>
-                  
                 </td>
             </tr>
         </tbody>
@@ -45,9 +44,11 @@
     <div v-if="this.bets.betType=='RESULT'">
       <table class="table table-striped">
         <thead>
+            <th> EQUIPO LOCAL </th>
             <th> </th>
-            <th> </th>
-            <th> </th>
+            <th> EQUIPO VISITANTE</th>
+            <th> RESULTADO</th>
+            <th> APUESTA</th>
         </thead>
         <tbody>
             <tr v-for = "match in matches" v-bind:key = "match.id">
@@ -64,12 +65,32 @@
                     <a type="checkbox" v-if="match.status=='SCHEDULED'">{{match.awayTeam}}</a>
                     <a type="checkbox" v-else-if="match.status!='SCHEDULED'">{{match.awayTeam}}</a>
                 </td>
+                  <td>
+                  <a type="checkbox" v-if="match.status!='SCHEDULED'">{{match.result}}</a>
+                </td>
+                <td>
+                  <div v-for= "playerBet in playerBets" v-bind:key= "playerBet.id">
+                    <span v-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result" class="acierto">
+                      {{playerBet.playerResult}}
+                    </span>
+                    <span v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult[0] == match.result[0]" class="soloGol">
+                      {{playerBet.playerResult}}
+                    </span>
+                    <span v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult[2] == match.result[2]" class="soloGol">
+                      {{playerBet.playerResult}}
+                    </span>
+                    <span v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result" class="fallo">
+                      {{playerBet.playerResult}}
+                    </span>
+                  </div>
+                </td>
             </tr>
         </tbody>
     </table>
     </div>
-    <a href="/" class="btn btn-success" @click="savePlayerBet()">Realizar apuesta</a>
-    <a href="/" class="btn btn-success" v-if="this.bets.estado=='PENDIENTE'" @click="checkPlayerBet()">Comprobar apuesta</a>
+    <a href="/bets" class="btn btn-success" @click="savePlayerBet()">Realizar apuesta</a><br><br>
+    <a href="/bets" class="btn btn-success" v-if="this.bets.estado=='PENDIENTE'" @click="checkPlayerBet()">Comprobar apuesta</a><br><br>
+    <a href="/bets" class="btn btn-success">Volver</a>
   </div>
 </template>
 
@@ -202,5 +223,14 @@ export default {
    height: 50px; 
    border: 3px solid #555;
    background-color: rgb(255, 0, 0);
+ }
+
+.soloGol {
+   font: rgb(0, 0, 0);
+   font-weight: bold;
+   width: 150px; 
+   height: 50px; 
+   border: 3px solid #555;
+   background-color: rgb(255, 255, 0);
  }
 </style>
