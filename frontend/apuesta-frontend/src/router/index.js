@@ -15,12 +15,18 @@ import MyMatchesToBet from '@/components/MyMatchesToBet.vue'
 import MyBets from '@/components/MyBets.vue'
 import MyLoginSuccess from '@/components/MyLoginSuccess.vue'
 import LeagueJoin from '@/components/LeagueJoin.vue'
+import MyProfile from '@/components/MyProfile.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/clients/profile',
+    name: 'profile',
+    component: MyProfile
   },
   {
     path: '/competitions',
