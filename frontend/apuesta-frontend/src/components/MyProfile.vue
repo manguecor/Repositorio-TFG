@@ -4,11 +4,6 @@
                 <h2>Registrarse</h2>
                 <br>
                 <div class="form-group">
-                    <label for="username">Usuario:</label>
-                    <input id="username" v-model="client.user.username" placeholder="Username" type="text" class="form" readonly>
-                </div>
-                <br>
-                <div class="form-group">
                     <label for="price">Contraseña:</label>
                     <input id="password" v-model="client.user.password" placeholder="Password" type="password" class="form">
                 </div>
