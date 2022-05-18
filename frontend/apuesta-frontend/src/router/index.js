@@ -8,7 +8,6 @@ import MyLeague from '@/components/MyLeague.vue'
 import MyCompetitionDetails from '@/components/MyCompetitionDetails.vue'
 import MyNextMatches from '@/components/MyNextMatches.vue'
 import MyMatchesToday from '@/components/MyMatchesToday.vue'
-import MyLastMatches from '@/components/MyLastMatches.vue'
 import Login from '@/components/MyLogin.vue'
 import Logout from '@/components/MyLogout.vue'
 import LoginService from '@/services/LoginService'
@@ -85,11 +84,6 @@ const routes = [
     path: '/matches/today',
     name: 'MyMatchesToday',
     component: MyMatchesToday
-  },
-  {
-    path: '/matches/:teamId/results',
-    name: 'MyLastMatches',
-    component: MyLastMatches
   },
   {
     path: '/login',

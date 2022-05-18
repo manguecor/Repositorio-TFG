@@ -10,15 +10,18 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tfg.apuesta.scorers.Scorer;
+import com.tfg.apuesta.scorers.ScorerService;
+
 @RestController
 @CrossOrigin("http://localhost:8081/")
-public class CompetitionController {
+public class ScorerController {
 	
-	private final CompetitionService competitionService;
+	private final ScorerService scorerService;
 	
 	@Autowired
-	public CompetitionController(CompetitionService competitionService) {
-		this.competitionService = competitionService;
+	public ScorerController(ScorerService scorerService) {
+		this.scorerService = scorerService;
 	}
 	
 	@InitBinder
@@ -26,8 +29,9 @@ public class CompetitionController {
 		dataBinder.setDisallowedFields("id");
 	}
 	
-	@GetMapping("/competitions")
-	public List<Competition> getCompetitions() {
-		return this.competitionService.showAllCompetitions();
+	@GetMapping("/scorers/{competitionId}")
+	public List<Scorer> getScorers(@PathVariable("competitionId") int competitionId) {
+		return this.scorerService.showScorersByCompetition(competitionId);
 	}
+
 }
