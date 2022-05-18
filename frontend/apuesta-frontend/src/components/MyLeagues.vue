@@ -11,8 +11,9 @@
             <tr v-for = "league in leagues" v-bind:key = "league.id">
                 
                 <!--<td> {{league.id}} </td>-->
-                <td> <router-link :to="'/bets'">{{league.name}}</router-link> </td>
+                <td> {{league.name}} </td>
                 <td> {{league.code}} </td>
+                <td> <a href="/bets" class="btn btn-success">Acceder a la liga</a></td>
                 <td> <a href="/leagues" @click="delete_league(league.id)"  class="btn btn-success">Borrar liga</a> </td>
             </tr>
             

@@ -9,7 +9,7 @@
             <th> Competición </th>
             <th> Fecha del partido </th>
             <th> Estado </th>
-            <th> </th>
+            <th v-if="isAuthenticated"> </th>
         </thead>
         <tbody>
             <tr v-for = "match in matches" v-bind:key = "match.id">
@@ -19,22 +19,34 @@
                 <td> {{match.competition}} </td>
                 <td> {{match.match_date}} </td>
                 <td> {{match.status}}</td>
-                <td> <a class="btn btn-success" v-if="match.status=='SCHEDULED'" v-on:click="addMatch(match.id)">Añadir partido</a></td>
+                <td v-if="isAuthenticated"> <a class="btn btn-success" v-if="match.status=='SCHEDULED'" v-on:click="addMatch(match.id)">Añadir partido</a></td>
             </tr>
         </tbody>
     </table>
-    <div class="form-group">
+    <div class="form-group" v-if="isAuthenticated">
+    <label>Tipo de apuesta:</label>
+        <select name="betType" id="betType">
+            <option value="" disabled selected>Seleccione un tipo de apuesta...</option>
+            <option value="WINNER">Ganador del partido</option>
+            <option value="RESULT">Resultado exacto</option>
+        </select><br><br>
+    </div>
+    <div class="form-group" v-if="isAuthenticated">
         <label for="description">Descripción de de la apuesta:</label>
             <input id="description" v-model="name" placeholder="Descripción de la apuesta" type="text" class="form">
     </div>
     <br>
-    <div class="form-group">
+    <div class="form-group" v-if="isAuthenticated">
         <label for="leagueId">Nombre de la liga:</label>
             <input id="leagueId" v-model="leagueId" placeholder="Nombre de la liga" type="text" class="form">
     </div>
     <br>
-    <a href="/" class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a>
+    <div class="form-group" v-if="isAuthenticated">
+        <a href="/" class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a><br><br>
+    </div>
+    <a href="/" class="btn btn-success" v-on:click="saveBet">Volver</a>
     
+
    
 </div>
 
@@ -43,7 +55,9 @@
 
 <script>
 import MatchService from '../services/MatchService'; 
-import BetService from "../services/BetService";   
+import BetService from "../services/BetService"; 
+import LoginService from "../services/LoginService"; 
+
 export default {
     name: 'MyMatchesToday',
     data(){
@@ -51,7 +65,8 @@ export default {
             matches: [],
             matchesId: [],
             name: null,
-            leagueId: null
+            leagueId: null,
+            isAuthenticated: LoginService.isUserLoggedIn()
         }
         
     },
@@ -72,14 +87,17 @@ export default {
         },
         saveBet() {
             let matchesId = this.matchesId;
+            let betType = document.getElementById("betType");
+            let betTypeValue = betType.options[betType.selectedIndex].value;
             let name = this.name;
             let leagueId = this.leagueId;
             matchesId.unshift(leagueId);
             matchesId.unshift(name);
+            matchesId.unshift(betTypeValue);
             BetService.postBet(this.matchesId).then((response) => {
+            console.log(this.matchesId);
             console.log(response);
-            console.log(localStorage.getItem("username"));
-            })
+            })      
         }
     },
     created() {
@@ -87,3 +105,9 @@ export default {
     }
 }
 </script>
+
+<style>
+    .container{
+        padding-bottom: 70px;
+    }
+</style>

@@ -8,7 +8,6 @@ import MyLeague from '@/components/MyLeague.vue'
 import MyCompetitionDetails from '@/components/MyCompetitionDetails.vue'
 import MyNextMatches from '@/components/MyNextMatches.vue'
 import MyMatchesToday from '@/components/MyMatchesToday.vue'
-import MyLastMatches from '@/components/MyLastMatches.vue'
 import Login from '@/components/MyLogin.vue'
 import Logout from '@/components/MyLogout.vue'
 import LoginService from '@/services/LoginService'
@@ -47,17 +46,35 @@ const routes = [
   {
     path: '/leagues',
     name: 'leagues',
-    component: MyLeagues
+    component: MyLeagues,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
   },
   {
     path: '/leagues/:leagueId',
     name: 'league',
-    component: MyLeague
+    component: MyLeague,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
   },
   {
     path: '/leagues/join',
     name: 'leagueJoin',
-    component: LeagueJoin
+    component: LeagueJoin,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
   },
   {
     path: '/teams/:competitionId',
@@ -75,11 +92,6 @@ const routes = [
     component: MyMatchesToday
   },
   {
-    path: '/matches/:teamId/results',
-    name: 'MyLastMatches',
-    component: MyLastMatches
-  },
-  {
     path: '/login',
     name: 'MyLogin',
     component: Login
@@ -87,7 +99,13 @@ const routes = [
   {
     path: '/loginSuccess',
     name: 'MyLoginSuccess',
-    component: MyLoginSuccess
+    component: MyLoginSuccess,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
   },
   {
     path: "/logout",
@@ -103,12 +121,24 @@ const routes = [
   {
     path: '/matches/:betId',
     name: 'MyMatches',
-    component: MyMatchesToBet
+    component: MyMatchesToBet,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
   },
   {
     path: '/bets',
     name: 'MyBets',
-    component: MyBets
+    component: MyBets,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
   },
 ]
 
