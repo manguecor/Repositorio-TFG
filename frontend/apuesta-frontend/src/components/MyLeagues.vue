@@ -13,8 +13,8 @@
                 <!--<td> {{league.id}} </td>-->
                 <td> {{league.name}} </td>
                 <td> {{league.code}} </td>
-                <td> <a href="/bets" class="btn btn-success">Acceder a la liga</a></td>
-                <td> <a href="/leagues" @click="delete_league(league.id)"  class="btn btn-success">Borrar liga</a> </td>
+                <td> <a :href="'/leagues/' + league.id + '/bets/'" class="btn btn-success">Acceder a la liga</a></td>
+                <td> <a href="/leagues/myLeagues" @click="delete_league(league.id)"  class="btn btn-success">Borrar liga</a> </td>
             </tr>
             
         </tbody>
@@ -39,8 +39,8 @@ export default {
         
     },
     methods: {
-        getLeagues(){
-            LeagueService.listAll().then((response) =>{
+        getMyLeagues(){
+            LeagueService.listMyLeagues().then((response) =>{
                 this.leagues = response.data;
                 console.log(this.leagues)
             });
@@ -52,7 +52,7 @@ export default {
         }
     },
     created() {
-        this.getLeagues()
+        this.getMyLeagues()
     }
 }
 </script>

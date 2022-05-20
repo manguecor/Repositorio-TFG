@@ -12,7 +12,7 @@
                 <!--<td> {{league.id}} </td>-->
                 <td> {{league.name}} </td>
                 <td> {{league.code}} </td>
-                <td> <a href="/leagues" @click="delete_league" class="btn btn-success">Borrar liga</a> </td>
+                <td> <a href="/leagues/myLeague" @click="delete_league" class="btn btn-success">Borrar liga</a> </td>
             
             
         </tbody>

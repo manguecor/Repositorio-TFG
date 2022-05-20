@@ -1,5 +1,6 @@
 package com.tfg.apuesta.league;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -57,11 +58,26 @@ public class LeagueController {
 		return this.leagueService.findAllLeagues();
 	}
 	
-	/*@GetMapping("/leagues")
+	@GetMapping("/leagues/myLeagues")
 	public List<League> showLeaguesByUsername() {
+		List<League> myLeagues = new ArrayList<>();
 		String username = userController.getCurrentUsername();
-		return this.leagueService.findLeaguesByUsername(username);
-	}*/
+		Optional<Client> result = this.clientService.findClientByUsername(username);
+		if(result.isPresent()) {
+			List<Player> players = this.playerService.findPlayersByUsername(result.get().getUser().getUsername());
+			if(players != null) {
+				List<League> leagues = this.leagueService.findAllLeagues();
+				for(Player p: players) {
+					for(League l: leagues) {
+						if(l.getPlayers().contains(p)) {
+							myLeagues.add(l);
+						}
+					}
+				}
+			}
+		}
+		return myLeagues;
+	}
 	
 	@PostMapping("/leagues/save")
 	public void saveLeague(@RequestBody League league) {
@@ -102,7 +118,7 @@ public class LeagueController {
 				player.setPoints(500);
 				player.setClient(client);
 				Set<Player> players = league.getPlayers();
-				if(!this.leagueService.checkPlayerInLeague(league, player)) {
+				if(!league.getPlayers().contains(player)) {
 					this.playerService.savePlayer(player);
 					players.add(player);
 					this.leagueService.save(league);

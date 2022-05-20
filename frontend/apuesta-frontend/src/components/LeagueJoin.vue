@@ -9,10 +9,10 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <a href="/leagues" @click="join_league" class="btn btn-success">Unirse a liga</a>
+                    <a href="/leagues/myLeagues" @click="join_league" class="btn btn-success">Unirse a liga</a>
                     <br>
                     <br>
-                    <a href="/leagues" class="btn btn-info">Volver</a>
+                    <a href="/leagues/myLeagues" class="btn btn-info">Volver</a>
                 </div>
             </div>
         </div>

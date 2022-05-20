@@ -44,7 +44,7 @@ const routes = [
     component: LeaguesC
   },
   {
-    path: '/leagues',
+    path: '/leagues/myLeagues',
     name: 'leagues',
     component: MyLeagues,
     beforeEnter: (to, from, next) => {
@@ -130,7 +130,7 @@ const routes = [
     },
   },
   {
-    path: '/bets',
+    path: '/leagues/:leagueId/bets',
     name: 'MyBets',
     component: MyBets,
     beforeEnter: (to, from, next) => {

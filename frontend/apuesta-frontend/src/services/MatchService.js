@@ -16,7 +16,7 @@ class MatchService{
     }
 
     getMatchesByBetId(betId){
-        return axios.get(`http://localhost:8080/matches/${betId}`);
+        return axios.get(MATCHES_API_BASE_URL + `/${betId}`);
     }
 }
 

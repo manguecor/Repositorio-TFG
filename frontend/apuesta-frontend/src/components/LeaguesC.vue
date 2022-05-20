@@ -14,7 +14,7 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <a href="/leagues" @click="create_league" class="btn btn-success">Crear liga</a>
+                    <a href="/leagues/myLeagues" @click="create_league" class="btn btn-success">Crear liga</a>
                     <br>
                     <br>
                     <a href="/" class="btn btn-info">Volver</a>

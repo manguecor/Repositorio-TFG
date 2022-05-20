@@ -39,16 +39,16 @@ public class LeagueService {
 		return this.leagueRepository.findLeagueByCode(code);
 	}
 	
-	public Boolean checkPlayerInLeague(League league, Player player) {
+	/*public Boolean checkPlayerInLeague(League league, Player player) {
 		Boolean res = false;
 		for(Player p: league.getPlayers()) {
-			res = p.getClient().equals(player.getClient());
+			res = league.getPlayers().contains(p);
 			if(res) {
 				break;
 			}
 		}
 		return res;
-	}
+	}*/
 	
 	public Optional<League> findLeagueByName(String name) throws DataAccessException {
 		return this.leagueRepository.findLeagueByName(name);

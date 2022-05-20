@@ -85,18 +85,22 @@ public class BetController {
 			} else if(betType.equals("RESULT")) {
 				bet.setBetType(BetType.RESULT);	
 			}
-			Player p = playerService.findPlayerByUsername(username).get();
-			bet.setPlayer(p);
-			bet.setDescription(response.get(1));
-			bet.setLeague(result.get());
-			bet.setEstado("PENDIENTE");
-			this.betService.save(bet);
-			for(int j=0;j<matchesAPIId.size();j++) {
-				Match m = matchService.getMatchWinnerById(matchesAPIId.get(j));
-				m.setApi_id(matchesAPIId.get(j));
-				m.setBets(bet);
-				this.matchService.save(m);
-			}
+			List<Player> players = playerService.findPlayersByUsername(username);
+			for(Player p: players) {
+				if(result.get().getPlayers().contains(p)) {
+					bet.setPlayer(p);
+					bet.setDescription(response.get(1));
+					bet.setLeague(result.get());
+					bet.setEstado("PENDIENTE");
+					this.betService.save(bet);
+					for(int j=0;j<matchesAPIId.size();j++) {
+						Match m = matchService.getMatchWinnerById(matchesAPIId.get(j));
+						m.setApi_id(matchesAPIId.get(j));
+						m.setBets(bet);
+						this.matchService.save(m);
+					}
+				}
+			}	
 		}	
 	}
 	
@@ -105,8 +109,18 @@ public class BetController {
 		return this.betService.findAllBets();
 	}
 	
+	@GetMapping("/leagues/{leagueId}/bets")
+	public List<Bet> showBetsByLeague(@PathVariable("leagueId") int leagueId) {
+		return this.betService.findBetsByLeague(leagueId);
+	}
+	
 	@GetMapping("/bets/{betId}")
 	public Bet getBetByBetID(@PathVariable("betId") int betId) {
 		return this.betService.findBetById(betId);
+	}
+	
+	@GetMapping("/bets/{betId}/league")
+	public Integer getLeagueIdByBet(@PathVariable("betId") int betId) {
+		return this.betService.findBetById(betId).getLeague().getId();
 	}
 }

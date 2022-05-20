@@ -11,6 +11,10 @@ class LeagueService {
         return axios.get(LEAGUES_API_BASE_URL);
     }
 
+    listMyLeagues() {
+        return axios.get(LEAGUES_API_BASE_URL+"/myLeagues");
+    }
+
     getLeague(leagueId) {
         return axios.get(LEAGUES_API_BASE_URL+`/${leagueId}`);
     }

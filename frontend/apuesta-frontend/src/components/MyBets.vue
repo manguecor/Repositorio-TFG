@@ -25,7 +25,7 @@
             </tr>
         </tbody>
     </table>
-    <a href="/leagues" class="btn btn-success">Volver</a>
+    <a href="/leagues/myLeagues" class="btn btn-success">Volver</a>
 </div>
 </template>
 
@@ -41,14 +41,14 @@ export default {
   },
   methods: {
     
-    getBets() {
-        BetService.getBets().then((response) => {
+    getBetsByLeague() {
+        BetService.getBetsByLeague(this.$route.params.leagueId).then((response) => {
             this.bets = response.data;
         })
     }
   },
   created() {
-        this.getBets()
+        this.getBetsByLeague()
     }
 }
 </script>
