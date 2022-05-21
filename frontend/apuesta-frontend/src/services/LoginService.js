@@ -26,6 +26,10 @@ class LoginService{
     getUsername(username) {
         return axios.post('http://localhost:8080/username', username);
     }
+
+    existUsername(username) {
+        return axios.post('http://localhost:8080/username/exists', username);
+    }
 }
 
 export default new LoginService()

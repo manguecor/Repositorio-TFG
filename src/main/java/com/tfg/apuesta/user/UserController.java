@@ -88,5 +88,13 @@ public class UserController {
 		System.out.println(username);
 		return this.currentUsername = username.substring(0, username.length()-1);
 	}
+	
+	@PostMapping("/username/exists")
+	public Boolean getUsernameExists(@RequestBody String username) {
+		String user = this.getCurrentUsername();
+		String u = username.split("=")[0];
+		Boolean b = this.userService.existUsername(u) && user!=u;
+		return b;
+	}
 
 }
