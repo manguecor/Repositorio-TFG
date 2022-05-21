@@ -58,14 +58,25 @@ public class InvitationController {
 		List<Player> playersByClient = this.playerService.findPlayersByUsername(guestClient);
 		Integer leagueId = Integer.valueOf(response.get(1));
 		League league = this.leagueService.findLeagueById(leagueId);
-		for(int i=0;i<playersByClient.size();i++) {
-			if(!league.getPlayers().contains(playersByClient.get(i))) {
-				Invitation invitation = new Invitation();
-				invitation.setInvitingClient(username);
-				invitation.setLeague(league);
-				invitation.setGuestClient(guestClient);
-				invitation.setInvitationState("PENDIENTE");
-				this.invitationService.save(invitation);
+		if(playersByClient.isEmpty()) {
+			Invitation invitation = new Invitation();
+			invitation.setInvitingClient(username);
+			invitation.setLeague(league);
+			invitation.setGuestClient(guestClient);
+			invitation.setInvitationState("PENDIENTE");
+			this.invitationService.save(invitation);
+		} else if(!playersByClient.isEmpty()) {
+			for(int i=0;i<playersByClient.size();i++) {
+				Set<Player> p = league.getPlayers();
+				Player pp = playersByClient.get(i);
+				if(!league.getPlayers().contains(playersByClient.get(i))) {
+					Invitation invitation = new Invitation();
+					invitation.setInvitingClient(username);
+					invitation.setLeague(league);
+					invitation.setGuestClient(guestClient);
+					invitation.setInvitationState("PENDIENTE");
+					this.invitationService.save(invitation);
+				}
 			}
 		}	
 	}

@@ -10,12 +10,12 @@
                 <br>
                 <div class="form-group">
                     <a class="btn btn-success" @click="checkUsernameExists()">Comprobar usuario</a>
-                    <a v-if="this.exists==true" @click="sendInvitation()" class="btn btn-success">Enviar invitación</a>
+                    <router-link :to="'/leagues/' + this.$route.params.leagueId + '/bets'" v-if="this.exists==true" @click="sendInvitation()" class="btn btn-success">Enviar invitación</router-link>
                     <br>
                     <br>
                 </div>
             </div>
-            <a href="/leagues/myLeagues" class="btn btn-success">Volver</a>
+            <router-link :to="'/leagues/' + this.$route.params.leagueId + '/bets'" class="btn btn-success">Volver</router-link>
     </div>
 </template>
 
@@ -36,12 +36,13 @@ export default {
     },
     methods: {
         checkUsernameExists(){
-            LoginService.existUsername(this.username).then((response) => {
+            if(this.username!=this.currentUser){
+                LoginService.existUsername(this.username).then((response) => {
                 this.exists = response.data;
-                console.log(this.exists);
-                console.log(this.username);
-                console.log(this.currentUser);
             })
+            } else {
+                this.exists = false;
+            }
         },
 
         sendInvitation(){
