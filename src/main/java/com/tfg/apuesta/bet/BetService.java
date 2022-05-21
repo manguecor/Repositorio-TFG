@@ -28,4 +28,8 @@ public class BetService {
 	public Bet findBetById(Integer betId) throws DataAccessException {
 		return this.betRepository.findBetById(betId);
 	}
+	
+	public List<Bet> findBetsByLeague(Integer leagueId) throws DataAccessException {
+		return this.betRepository.findBetsByLeagueId(leagueId);
+	}
 }

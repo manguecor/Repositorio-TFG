@@ -88,9 +88,9 @@
         </tbody>
     </table>
     </div>
-    <a href="/bets" class="btn btn-success" @click="savePlayerBet()">Realizar apuesta</a><br><br>
-    <a href="/bets" class="btn btn-success" v-if="this.bets.estado=='PENDIENTE'" @click="checkPlayerBet()">Comprobar apuesta</a><br><br>
-    <a href="/bets" class="btn btn-success">Volver</a>
+    <a :href="'/leagues/' + leagueId + '/bets/'"  class="btn btn-success" @click="savePlayerBet()">Realizar apuesta</a><br><br>
+    <a :href="'/leagues/' + leagueId + '/bets/'" class="btn btn-success" v-if="this.bets.estado=='PENDIENTE'" @click="checkPlayerBet()">Comprobar apuesta</a><br><br>
+    <a :href="'/leagues/' + leagueId + '/bets/'" class="btn btn-success">Volver</a>
   </div>
 </template>
 
@@ -107,7 +107,8 @@ export default {
       matchBet: [],
       bets: [],
       result: [],
-      playerBets: []
+      playerBets: [],
+      leagueId: null
     }
   },
   methods: {
@@ -196,12 +197,19 @@ export default {
           console.log(response);
         })
       }
+    },
+
+    getLeagueIdByBet() {
+      BetService.getLeagueIdByBet(this.$route.params.betId).then((response)=>{
+        this.leagueId = response.data;
+      });
     }
   },
   created() {
         this.getMatches()
         this.getBetByBetId()
         this.getPlayerBetByBetId()
+        this.getLeagueIdByBet()
     }
 }
 </script>
