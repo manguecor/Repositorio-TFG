@@ -33,12 +33,14 @@
     </div>
     <div class="form-group" v-if="isAuthenticated">
         <label for="description">Descripción de de la apuesta:</label>
-            <input id="description" v-model="name" placeholder="Descripción de la apuesta" type="text" class="form">
+            <input id="description" v-model="description" placeholder="Descripción de la apuesta" type="text" class="form">
     </div>
     <br>
     <div class="form-group" v-if="isAuthenticated">
-        <label for="leagueId">Nombre de la liga:</label>
-            <input id="leagueId" v-model="leagueId" placeholder="Nombre de la liga" type="text" class="form">
+        <label for="leagueName">Nombre de la liga:</label>
+            <select v-model="leagueName" id="leagueName">
+            </select>
+                
     </div>
     <br>
     <div class="form-group" v-if="isAuthenticated">
@@ -57,6 +59,7 @@
 import MatchService from '../services/MatchService'; 
 import BetService from "../services/BetService"; 
 import LoginService from "../services/LoginService"; 
+import LeagueService from "../services/LeagueService";
 
 export default {
     name: 'MyMatchesToday',
@@ -64,9 +67,10 @@ export default {
         return {
             matches: [],
             matchesId: [],
-            name: null,
-            leagueId: null,
-            isAuthenticated: LoginService.isUserLoggedIn()
+            description: null,
+            leagueName: null,
+            isAuthenticated: LoginService.isUserLoggedIn(),
+            myLeagues: []
         }
         
     },
@@ -75,6 +79,23 @@ export default {
             MatchService.getMatchesToday().then((response) => {
                 this.matches = response.data;
             })
+        },
+
+        getMyLeaguesNames(){
+            LeagueService.listMyLeagues().then((response) =>{
+                var leagues = response.data;
+                for(let value in leagues) {
+                    this.myLeagues[value] = leagues[value].name;
+                }
+                var select = document.querySelector("#leagueName");
+                for(let value in this.myLeagues) {
+                    var option = document.createElement("option");
+                    option.value = this.myLeagues[value];
+                    option.text = this.myLeagues[value];
+                    select.append(option);
+                }
+                //console.log(select);
+            });
         },
         
         addMatch(matchId){
@@ -89,10 +110,10 @@ export default {
             let matchesId = this.matchesId;
             let betType = document.getElementById("betType");
             let betTypeValue = betType.options[betType.selectedIndex].value;
-            let name = this.name;
-            let leagueId = this.leagueId;
-            matchesId.unshift(leagueId);
-            matchesId.unshift(name);
+            let description = this.description;
+            let leagueName = this.leagueName;
+            matchesId.unshift(leagueName);
+            matchesId.unshift(description);
             matchesId.unshift(betTypeValue);
             BetService.postBet(this.matchesId).then((response) => {
             console.log(this.matchesId);
@@ -102,6 +123,7 @@ export default {
     },
     created() {
         this.getMatchesToday()
+        this.getMyLeaguesNames()
     }
 }
 </script>
