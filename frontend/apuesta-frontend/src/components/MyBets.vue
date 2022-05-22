@@ -13,18 +13,11 @@
                 <td> {{bet.description}} </td>
                 <td> {{bet.estado}} </td>
                 <td> {{bet.betType}}</td>
-                <!--<td>
-                  <div v-if="bet.betType=='WINNER'">
-                    <router-link :to="'/matches/' + bet.id" class="btn btn-success">Ver apuesta</router-link>
-                  </div>  
-                  <div v-else-if="bet.betType=='RESULT'">
-                    <router-link :to="'/matches/result/' + bet.id" class="btn btn-success">Ver apuesta</router-link>
-                  </div>
-                </td>-->
                 <td><router-link :to="'/matches/' + bet.id" class="btn btn-success">Ver apuesta</router-link></td>
             </tr>
         </tbody>
     </table>
+    <router-link :to="'/leagues/' + this.$route.params.leagueId + '/invitation'" class="btn btn-success">Invitar a un amigo</router-link>
     <a href="/leagues/myLeagues" class="btn btn-success">Volver</a>
 </div>
 </template>

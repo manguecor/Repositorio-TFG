@@ -16,6 +16,9 @@ import MyBets from '@/components/MyBets.vue'
 import MyLoginSuccess from '@/components/MyLoginSuccess.vue'
 import LeagueJoin from '@/components/LeagueJoin.vue'
 import MyProfile from '@/components/MyProfile.vue'
+import MyInvitation from '@/components/MyInvitation.vue'
+import MyInvitations from '@/components/MyInvitations.vue'
+
 
 const routes = [
   {
@@ -140,6 +143,28 @@ const routes = [
       next();
     },
   },
+  {
+    path: '/leagues/:leagueId/invitation',
+    name: 'MyInvitation',
+    component: MyInvitation,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
+  },
+  {
+    path: '/invitation/myInvitations',
+    name: 'MyInvitations',
+    component: MyInvitations,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
+  }
 ]
 
 const router = createRouter({
