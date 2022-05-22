@@ -14,13 +14,13 @@
                 <td> {{invitation.league.name}}</td>
                 <td> {{invitation.invitingClient}} </td>
                 <td> {{invitation.invitationState}}</td>
-                <td><a href="/leagues/myLeagues" v-if="invitation.invitationState=='PENDIENTE'" @click="acceptInvitation(invitation.id)" class="btn btn-success">Aceptar invitacion</a></td>
-                <td><a href="/leagues/myLeagues" v-if="invitation.invitationState=='PENDIENTE'" @click="declineInvitation(invitation.id)" class="btn btn-success">Rechazar invitacion</a></td>
-                <td><a href="/leagues/myLeagues" v-if="invitation.invitationState!='PENDIENTE'" @click="deleteInvitation(invitation.id)" class="btn btn-success">Borrar invitacion</a></td> 
+                <td><a href="/invitation/myInvitations" v-if="invitation.invitationState=='PENDIENTE'" @click="acceptInvitation(invitation.id)" class="btn btn-success">Aceptar invitacion</a></td>
+                <td><a href="/invitation/myInvitations" v-if="invitation.invitationState=='PENDIENTE'" @click="declineInvitation(invitation.id)" class="btn btn-success">Rechazar invitacion</a></td>
+                <td><a href="/invitation/myInvitations" v-if="invitation.invitationState!='PENDIENTE'" @click="deleteInvitation(invitation.id)" class="btn btn-success">Borrar invitacion</a></td> 
             </tr>
         </tbody>
     </table>
-    <a href="/" class="btn btn-success">Volver</a>
+    <a href="/leagues/myLeagues" class="btn btn-success">Volver</a>
 </div>
 </template>
 

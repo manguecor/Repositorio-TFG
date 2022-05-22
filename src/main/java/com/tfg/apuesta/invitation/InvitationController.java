@@ -67,8 +67,6 @@ public class InvitationController {
 			this.invitationService.save(invitation);
 		} else if(!playersByClient.isEmpty()) {
 			for(int i=0;i<playersByClient.size();i++) {
-				Set<Player> p = league.getPlayers();
-				Player pp = playersByClient.get(i);
 				if(!league.getPlayers().contains(playersByClient.get(i))) {
 					Invitation invitation = new Invitation();
 					invitation.setInvitingClient(username);
