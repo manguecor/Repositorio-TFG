@@ -1,5 +1,6 @@
 package com.tfg.apuesta.client;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +62,16 @@ public class ClientController {
 	@GetMapping("/clients")
 	public List<Client> allUsers(){
 		return repository.findAll();
+	}
+	
+	@GetMapping("/clients/usernames")
+	public List<String> allUsernames(){
+		List<Client> clientes = this.clientService.findAllClients();
+		List<String> usernames = new ArrayList<>();
+		for(Client c: clientes) {
+			usernames.add(c.getUser().getUsername());
+		}
+		return usernames;
 	}
 	
 	@PostMapping(value="/clients/save")

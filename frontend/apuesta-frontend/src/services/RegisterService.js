@@ -7,6 +7,10 @@ class RegisterService{
     postRegisterClient(client){
         return axios.post(CLIENTS_API_BASE_URL,client);
     }
+
+    getClients() {
+        return axios.get('http://localhost:8080/clients/usernames');
+    }
 }
 
 export default new RegisterService()

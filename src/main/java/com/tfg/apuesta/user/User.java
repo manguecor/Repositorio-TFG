@@ -19,11 +19,11 @@ import lombok.Setter;
 @Table(name = "users")
 public class User {
 	@Id
-	@NotEmpty
+	//@NotEmpty
 	@Column(name="username")
 	String username;
 	
-	@NotEmpty
+	//@NotEmpty
 	@Column(name="password")
 	String password;
 	

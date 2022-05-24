@@ -24,19 +24,19 @@ import lombok.Setter;
 @Table(name="clients")
 public class Client extends BaseEntity{
 	
-	@NotNull
+	//@NotNull
 	private String name;
 	
-	@NotNull
+	//@NotNull
 	private String surname;
 	
-	@NotNull
+	//@NotNull
 	private String email;
 	
-	@NotNull
+	//@NotNull
 	private String fav_team;
 	
-	@Valid
+	//@Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
