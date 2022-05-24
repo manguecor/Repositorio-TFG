@@ -1,11 +1,13 @@
 <template>
 <div class="container">
-    <h1 class="text-center"> Leagues list </h1>
+    <br>
+    <span class="titulos"> MIS LIGAS </span><br><br>
     <table class="table table-striped">
         <thead>
-
-            <th> Name </th>
-            <th> Code </th>
+            <th> NOMBRE </th>
+            <th> CODIGO </th>
+            <th> </th>
+            <th> </th>
         </thead>
         <tbody>
             <tr v-for = "league in leagues" v-bind:key = "league.id">

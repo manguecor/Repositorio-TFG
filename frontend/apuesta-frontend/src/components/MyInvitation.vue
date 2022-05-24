@@ -1,8 +1,9 @@
 <template>
    <div class="row3">
             <div class="col-12">
-                <h2>Invitar a un amigo</h2>
                 <br>
+                <span class="titulos">INVITAR A UN AMIGO</span>
+                <br><br>
                 <div class="form-group">
                     <label for="username">Usuario del amigo:</label>
                     <input id="username" v-model="username" placeholder="Usuario" type="text" class="form">

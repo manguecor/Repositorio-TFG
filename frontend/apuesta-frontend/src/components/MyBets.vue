@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <br><h2 class="text-center"> Apuestas disponibles </h2><br>
+    <br><span class="titulos"> APUESTAS DISPONIBLES </span><br><br>
     <table class="table table-striped">
         <thead>
-            <th> Descripcion </th>
-            <th> Estado de la apuesta </th>
-            <th> Tipo de apuesta </th>
+            <th> DESCRIPCION </th>
+            <th> ESTADO DE LA APUESTA </th>
+            <th> TIPO DE APUESTA </th>
             <th> </th>
         </thead>
         <tbody>

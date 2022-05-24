@@ -138,7 +138,7 @@ ul, ol {
 }
 
 .nav2 {
-    margin-left: 10px;
+    margin-left: 0px;
 }
 
 .nav3 {

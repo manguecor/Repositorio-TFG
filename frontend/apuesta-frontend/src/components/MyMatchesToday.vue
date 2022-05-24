@@ -1,14 +1,14 @@
 <template>
 <div class="container">
-    <br><h2 class="text-center"> Partidos de hoy </h2><br>
+    <br><span class="titulos"> PARTIDOS DE HOY </span><br><br>
     <table class="table table-striped">
         <thead>
             <!--<th> Match Id </th>-->
-            <th> Equipo local </th>
-            <th> Equipo visitante </th>
-            <th> Competición </th>
-            <th> Fecha del partido </th>
-            <th> Estado </th>
+            <th> EQUIPO LOCAL </th>
+            <th> EQUIPO VISITANTE </th>
+            <th> COMPETICION </th>
+            <th> FECHA </th>
+            <th> ESTADO </th>
             <th v-if="isAuthenticated"> </th>
         </thead>
         <tbody>
