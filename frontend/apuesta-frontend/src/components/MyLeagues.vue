@@ -22,7 +22,7 @@
         </tbody>
     </table>
     <a href="/leagues/new"  class="btn btn-success">Crear liga</a>
-    <a href="/leagues/join" class="btn btn-success">Unirse a una liga</a>
+    <a style="margin-left: 14px" href="/leagues/join" class="btn btn-success">Unirse a una liga</a>
     <br>
     <br>
     <a href="/" class="btn btn-info">Volver</a>

@@ -98,9 +98,10 @@
         </tbody>
     </table>
     </div>
-    <a :href="'/leagues/' + leagueId + '/bets/'"  class="btn btn-success" v-if="this.playerBets.length==0" @click="savePlayerBet()">Realizar apuesta</a><br><br>
-    <a :href="'/leagues/' + leagueId + '/bets/'" class="btn btn-success" v-if="this.bets.estado=='PENDIENTE' && this.status==true" @click="checkPlayerBet()">Comprobar apuesta</a><br><br>
-    <a :href="'/leagues/' + leagueId + '/bets/'" class="btn btn-success">Volver</a>
+    <a :href="'/leagues/' + leagueId + '/bets/'"  class="btn btn-success" v-if="this.playerBets.length==0" @click="savePlayerBet()">Realizar apuesta</a>
+    <a style="margin-left: 14px" :href="'/leagues/' + leagueId + '/bets/'" class="btn btn-success" v-if="this.bets.estado=='PENDIENTE' && this.status==true" @click="checkPlayerBet()">Comprobar apuesta</a>
+    <a style="margin-left: 14px" :href="'/leagues/' + leagueId + '/bets/'" class="btn btn-success" v-if="this.bets.estado=='COMPROBADA'" @click="closeBet()">Cerrar apuesta</a>
+    <a style="margin-left: 14px" :href="'/leagues/' + leagueId + '/bets/'" class="btn btn-success">Volver</a>
   </div>
 </template>
 
@@ -220,6 +221,12 @@ export default {
     getLeagueIdByBet() {
       BetService.getLeagueIdByBet(this.$route.params.betId).then((response)=>{
         this.leagueId = response.data;
+      });
+    },
+
+    closeBet(){
+      BetService.closeBet(this.$route.params.betId).then((response) => {
+        console.log(response);
       });
     }
   },

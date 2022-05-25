@@ -18,7 +18,7 @@ import LeagueJoin from '@/components/LeagueJoin.vue'
 import MyProfile from '@/components/MyProfile.vue'
 import MyInvitation from '@/components/MyInvitation.vue'
 import MyInvitations from '@/components/MyInvitations.vue'
-
+import MyBetsRecord from '@/components/MyBetsRecord.vue'
 
 const routes = [
   {
@@ -136,6 +136,17 @@ const routes = [
     path: '/leagues/:leagueId/bets',
     name: 'MyBets',
     component: MyBets,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
+  },
+  {
+    path: '/leagues/:leagueId/bets/record',
+    name: 'MyBetsRecord',
+    component: MyBetsRecord,
     beforeEnter: (to, from, next) => {
       if (!LoginService.isUserLoggedIn()) {
         next('/login');

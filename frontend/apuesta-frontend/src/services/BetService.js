@@ -23,6 +23,10 @@ class BetService{
     getLeagueIdByBet(betId) {
         return axios.get(BET_API_BASE_URL+`/${betId}/league`);
     }
+
+    closeBet(betId){
+        return axios.post(BET_API_BASE_URL+'/close',betId);
+    }
 }
 
 export default new BetService()
