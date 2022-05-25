@@ -12,22 +12,22 @@
                 </p>
                 <div class="form-group">
                     <label for="username">Usuario:</label>
-                    <input id="username" v-model="client.user.username" placeholder="Username" type="text" class="form" required>
+                    <input id="username" v-model="client.user.username" placeholder="Usuario" type="text" class="form" required>
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="price">Contraseña:</label>
-                    <input id="password" v-model="client.user.password" placeholder="Password" type="password" class="form" required>
+                    <input id="password" v-model="client.user.password" placeholder="Contraseña" type="password" class="form" required>
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="name">Nombre:</label>
-                    <input id="name" v-model="client.name" placeholder="Name" type="text" class="form" required>
+                    <input id="name" v-model="client.name" placeholder="Nombre" type="text" class="form" required>
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="surname">Apellidos:</label>
-                    <input id="surname" v-model="client.surname" placeholder="Surname" type="text" class="form" required>
+                    <input id="surname" v-model="client.surname" placeholder="Apellidos" type="text" class="form" required>
                 </div>
                 <br>
                 <div class="form-group">
@@ -36,13 +36,8 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="fav_team">Equipo favorito:</label>
-                    <input id="fav_team" v-model="client.fav_team" placeholder="Fav_team" type="text" class="form" required>
-                </div>
-                <br>
-                <div class="form-group">
                    <p>
-                        <input type="submit" value="Enviar" class="btn btn-success">
+                        <input type="submit" value="Registrarse" class="btn btn-success">
                     </p>
                    <!--<a href="/register" @click="checkForm" class="btn btn-success">Registrarse</a>-->
                    <a href="/" class="btn btn-info">Volver</a>
@@ -55,6 +50,7 @@
 <script>
 
 import RegisterService from '../services/RegisterService'; 
+import ClientService from '../services/ClientService';
 
 export default {
     name: 'MyRegister',
@@ -65,7 +61,6 @@ export default {
                 name: null,
                 surname: null,
                 email: null,
-                fav_team: null,
                 user: {
                     username: null,
                     password: null
@@ -102,8 +97,11 @@ export default {
         },
 
         getUsernames() {
-            RegisterService.getClients().then(data => {
-                this.usernames = data.data;
+            ClientService.getClients().then(data => {
+                let clients = data.data;
+                for(let value in clients) {
+                    this.usernames[value] = clients[value].user.username;
+                }
                 
             });
         }

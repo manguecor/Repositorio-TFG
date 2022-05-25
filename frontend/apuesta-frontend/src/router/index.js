@@ -13,7 +13,7 @@ import Logout from '@/components/MyLogout.vue'
 import LoginService from '@/services/LoginService'
 import MyMatchesToBet from '@/components/MyMatchesToBet.vue'
 import MyBets from '@/components/MyBets.vue'
-import MyLoginSuccess from '@/components/MyLoginSuccess.vue'
+//import MyLoginSuccess from '@/components/MyLoginSuccess.vue'
 import LeagueJoin from '@/components/LeagueJoin.vue'
 import MyProfile from '@/components/MyProfile.vue'
 import MyInvitation from '@/components/MyInvitation.vue'
@@ -99,7 +99,7 @@ const routes = [
     name: 'MyLogin',
     component: Login
   },
-  {
+  /*{
     path: '/loginSuccess',
     name: 'MyLoginSuccess',
     component: MyLoginSuccess,
@@ -109,7 +109,7 @@ const routes = [
       }
       next();
     },
-  },
+  },*/
   {
     path: "/logout",
     name: "MyLogout",
