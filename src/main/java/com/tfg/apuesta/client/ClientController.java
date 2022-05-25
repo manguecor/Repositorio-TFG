@@ -60,7 +60,7 @@ public class ClientController {
 	
 	@GetMapping("/clients")
 	public List<Client> allUsers(){
-		return repository.findAll();
+		return this.clientService.findAllClients();
 	}
 	
 	@PostMapping(value="/clients/save")

@@ -23,30 +23,41 @@
             </tr>
         </tbody>
     </table>
+    <form @submit="saveBet">
+        <p v-if="errors.length">
+        <b>Por favor, corriga el(los) siguiente(s) error(es): </b>
+          <ul>
+            <li v-for="error in errors" v-bind:key="error.id">{{error}}</li>
+          </ul>
+        </p>
     <div class="form-group" v-if="isAuthenticated">
     <label>Tipo de apuesta:</label>
         <select name="betType" id="betType">
-            <option value="" disabled selected>Seleccione un tipo de apuesta...</option>
+            <!--<option value="" disabled selected>Seleccione un tipo de apuesta...</option>-->
             <option value="WINNER">Ganador del partido</option>
             <option value="RESULT">Resultado exacto</option>
         </select><br><br>
     </div>
     <div class="form-group" v-if="isAuthenticated">
         <label for="description">Descripción de de la apuesta:</label>
-            <input id="description" v-model="description" placeholder="Descripción de la apuesta" type="text" class="form">
+            <input id="description" v-model="description" placeholder="Descripción de la apuesta" type="text" class="form" required>
     </div>
     <br>
     <div class="form-group" v-if="isAuthenticated">
         <label for="leagueName">Nombre de la liga:</label>
-            <select v-model="leagueName" id="leagueName">
+            <select v-model="leagueName" id="leagueName" required>
             </select>
                 
     </div>
     <br>
     <div class="form-group" v-if="isAuthenticated">
-        <a href="/" class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a><br><br>
+        <!--<a href="/" class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a><br><br>-->
+        <p>
+                        <input type="submit" value="Guardar apuesta" class="btn btn-success">
+                    </p>
     </div>
-    <a href="/" class="btn btn-success" v-on:click="saveBet">Volver</a>
+    </form>
+    <a href="/" class="btn btn-success">Volver</a>
     
 
    
@@ -70,7 +81,8 @@ export default {
             description: null,
             leagueName: null,
             isAuthenticated: LoginService.isUserLoggedIn(),
-            myLeagues: []
+            myLeagues: [],
+            errors: []
         }
         
     },
@@ -106,20 +118,33 @@ export default {
             }
                  
         },
-        saveBet() {
+        saveBet: function (e) {
+            this.errors = [];
+            
             let matchesId = this.matchesId;
-            let betType = document.getElementById("betType");
-            let betTypeValue = betType.options[betType.selectedIndex].value;
-            let description = this.description;
-            let leagueName = this.leagueName;
-            matchesId.unshift(leagueName);
-            matchesId.unshift(description);
-            matchesId.unshift(betTypeValue);
-            BetService.postBet(this.matchesId).then((response) => {
-            console.log(this.matchesId);
-            console.log(response);
-            })      
+            if(matchesId.length<2) {
+                this.errors.push('Tienes que elegir al menos dos partidos')
+            }
+
+            e.preventDefault();
+            
+            if(this.errors.length==0) {
+                let betType = document.getElementById("betType");
+                let betTypeValue = betType.options[betType.selectedIndex].value;
+                let description = this.description;
+                let leagueName = this.leagueName;
+                matchesId.unshift(leagueName);
+                matchesId.unshift(description);
+                matchesId.unshift(betTypeValue);
+                BetService.postBet(this.matchesId).then((response) => {
+                console.log(this.matchesId);
+                console.log(response);
+                window.location.href = "/";
+                })
+            }
+            
         }
+                  
     },
     created() {
         this.getMatchesToday()

@@ -1,18 +1,14 @@
 package com.tfg.apuesta.client;
 
-import java.util.Date;
-import java.util.Set;
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.tfg.apuesta.bet.Bet;
 import com.tfg.apuesta.configuration.BaseEntity;
-import com.tfg.apuesta.league.League;
-import com.tfg.apuesta.player.Player;
 import com.tfg.apuesta.user.User;
 
 import lombok.Getter;
@@ -24,17 +20,14 @@ import lombok.Setter;
 @Table(name="clients")
 public class Client extends BaseEntity{
 	
-	@NotNull
+	@NotBlank
 	private String name;
 	
-	@NotNull
+	@NotBlank
 	private String surname;
 	
-	@NotNull
+	@NotBlank
 	private String email;
-	
-	@NotNull
-	private String fav_team;
 	
 	@Valid
     @OneToOne(cascade = CascadeType.ALL)
@@ -65,14 +58,6 @@ public class Client extends BaseEntity{
 		this.email = email;
 	}
 
-	public String getFav_team() {
-		return fav_team;
-	}
-
-	public void setFav_team(String fav_team) {
-		this.fav_team = fav_team;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -83,7 +68,7 @@ public class Client extends BaseEntity{
 
 	@Override
 	public String toString() {
-		return "Client [name=" + name + ", surname=" + surname + ", email=" + email + ", fav_team=" + fav_team
+		return "Client [name=" + name + ", surname=" + surname + ", email=" + email
 				+ ", user=" + user + "]";
 	}
 	
