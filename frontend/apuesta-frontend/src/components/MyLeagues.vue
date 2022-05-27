@@ -1,11 +1,13 @@
 <template>
 <div class="container">
-    <h1 class="text-center"> Leagues list </h1>
+    <br>
+    <span class="titulos"> MIS LIGAS </span><br><br>
     <table class="table table-striped">
         <thead>
-
-            <th> Name </th>
-            <th> Code </th>
+            <th> NOMBRE </th>
+            <th> CODIGO </th>
+            <th> </th>
+            <th> </th>
         </thead>
         <tbody>
             <tr v-for = "league in leagues" v-bind:key = "league.id">
@@ -20,7 +22,7 @@
         </tbody>
     </table>
     <a href="/leagues/new"  class="btn btn-success">Crear liga</a>
-    <a href="/leagues/join" class="btn btn-success">Unirse a una liga</a>
+    <a style="margin-left: 14px" href="/leagues/join" class="btn btn-success">Unirse a una liga</a>
     <br>
     <br>
     <a href="/" class="btn btn-info">Volver</a>

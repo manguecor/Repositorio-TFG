@@ -1,17 +1,10 @@
 package com.tfg.apuesta.bet;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.tfg.apuesta.client.Client;
 import com.tfg.apuesta.client.ClientService;
 import com.tfg.apuesta.league.League;
 import com.tfg.apuesta.league.LeagueService;
@@ -30,7 +21,6 @@ import com.tfg.apuesta.match.Match;
 import com.tfg.apuesta.match.MatchService;
 import com.tfg.apuesta.player.Player;
 import com.tfg.apuesta.player.PlayerService;
-import com.tfg.apuesta.user.MyUserDetails;
 import com.tfg.apuesta.user.UserController;
 import com.tfg.apuesta.user.UserService;
 
@@ -122,5 +112,13 @@ public class BetController {
 	@GetMapping("/bets/{betId}/league")
 	public Integer getLeagueIdByBet(@PathVariable("betId") int betId) {
 		return this.betService.findBetById(betId).getLeague().getId();
+	}
+	
+	@PostMapping("/bets/close")
+	public void closeBet(@RequestBody String response) {
+		Integer betId = Integer.valueOf(response.split("=")[0]);
+		Bet bet = this.betService.findBetById(betId);
+		bet.setEstado("CERRADA");
+		this.betService.save(bet);
 	}
 }

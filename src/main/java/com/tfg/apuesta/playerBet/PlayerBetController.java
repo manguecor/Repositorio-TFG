@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tfg.apuesta.bet.Bet;
 import com.tfg.apuesta.bet.BetService;
+import com.tfg.apuesta.league.League;
 import com.tfg.apuesta.match.Match;
 import com.tfg.apuesta.match.MatchService;
 import com.tfg.apuesta.player.Player;
@@ -56,29 +56,35 @@ public class PlayerBetController {
 	public void savePlayerBet(@RequestBody List<String> response) {
 		Integer betId = Integer.valueOf(response.get(0));
 		Bet bet = this.betService.findBetById(betId);
+		League league = bet.getLeague();
 		List<Integer> matchesId = new ArrayList<>();
 		List<String> playerResults = new ArrayList<>();
 		Map<Integer,String> prueba = new HashMap<>();
 		String username = this.userController.getCurrentUsername();
-		Player player = this.playerService.findPlayerByUsername(username).get();
-		for(int i=1;i<response.size();i++) {
-			if(i%2==0) {
-				playerResults.add(response.get(i));
-			} else {
-				matchesId.add(Integer.valueOf(response.get(i)));	
+		List<Player> players = this.playerService.findPlayersByUsername(username);
+		for(Player p: players) {
+			if(league.getPlayers().contains(p)) {
+				for(int i=1;i<response.size();i++) {
+					if(i%2==0) {
+						playerResults.add(response.get(i));
+					} else {
+						matchesId.add(Integer.valueOf(response.get(i)));	
+					}
+				}
+				for(int t=0;t<matchesId.size();t++) {
+					prueba.put(matchesId.get(t), playerResults.get(t));
+				}
+				for (Map.Entry<Integer, String> pair : prueba.entrySet()) {
+					PlayerBet playerBet = new PlayerBet();
+					playerBet.setBet(bet);
+				    playerBet.setMatchId(pair.getKey());
+				    playerBet.setPlayerResult(pair.getValue()); 
+				    playerBet.setPlayer(p);
+				    this.playerBetService.save(playerBet);
+				}
 			}
-		}
-		for(int t=0;t<matchesId.size();t++) {
-			prueba.put(matchesId.get(t), playerResults.get(t));
-		}
-		for (Map.Entry<Integer, String> pair : prueba.entrySet()) {
-			PlayerBet playerBet = new PlayerBet();
-			playerBet.setBet(bet);
-		    playerBet.setMatchId(pair.getKey());
-		    playerBet.setPlayerResult(pair.getValue()); 
-		    playerBet.setPlayer(player);
-		    this.playerBetService.save(playerBet);
-		}
+		}	
+		
 	}
 	
 	@PostMapping(value="/playerBets/result/save")
