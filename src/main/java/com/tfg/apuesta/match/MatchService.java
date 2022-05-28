@@ -185,5 +185,33 @@ public class MatchService {
 	    m.setStatus(match.get("status").toString());
 	    return m;
 	}
+	
+	public List<Match> showMatchesByDate(String date){ 
+	    //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
+	    //String dateFormat = format.format(date); 
+	    String uri = "http://api.football-data.org/v2/matches?dateFrom="+date+"&dateTo="+date;
+		String auth = "X-Auth-Token";
+		String apiKey = "f3cafe6d1b40474992616dd3b183d801";
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.add(auth, apiKey);
+	    HttpEntity request = new HttpEntity(headers);
+	    ResponseEntity<String> response = new RestTemplate().exchange(uri, HttpMethod.GET, request, String.class);
+	    String json = response.getBody();
+	    JSONObject jsonObj = new JSONObject(json);
+	    JSONArray arrayObject = (JSONArray) jsonObj.get("matches");
+	    List<Match> res = new ArrayList<>();
+	    for(int i=0;i<arrayObject.length();i++) {
+	    	JSONObject object = (JSONObject) arrayObject.get(i);
+	    	Match m = new Match();
+	    	m.setId(Integer.valueOf(object.get("id").toString()));
+	    	m.setCompetition(object.getJSONObject("competition").get("name").toString());
+	    	m.setMatch_date(object.get("utcDate").toString());
+	    	m.setHomeTeam(object.getJSONObject("homeTeam").get("name").toString());
+	    	m.setAwayTeam(object.getJSONObject("awayTeam").get("name").toString());
+	    	m.setStatus(object.get("status").toString());
+	    	res.add(m);
+	    }
+	    return res;
+	}
 
 }

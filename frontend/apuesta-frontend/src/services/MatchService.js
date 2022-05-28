@@ -18,6 +18,10 @@ class MatchService{
     getMatchesByBetId(betId){
         return axios.get(MATCHES_API_BASE_URL + `/${betId}`);
     }
+
+    getMatchesByDate(date){
+        return axios.get(MATCHES_API_BASE_URL + `/${date}/date`);
+    }
 }
 
 export default new MatchService()
