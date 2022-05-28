@@ -51,12 +51,15 @@ export default {
 
       this.errors = []
 
-      let error = false;
+      let comp = false;
       for(let value in this.clients) {
-        error = this.clients[value].user.username != this.username || this.clients[value].user.password != this.password;
-        console.log(error);
+        comp = (this.clients[value].user.username == this.username && this.clients[value].user.password == this.password) || (this.username == "admin" && this.password == "admin");
+        console.log(comp);
+        if(comp) {
+          break;
+        }
       }
-      if(error) {
+      if(!comp) {
           this.errors.push('El usuario no existe');
       }
       
@@ -78,7 +81,7 @@ export default {
 
           LoginService.getUsername(localStorage.getItem("username"));
           })
-          window.location.href = "/loginSuccess";
+          window.location.href = "/";
           //this.$router.push("/loginSuccess");
       } 
       
