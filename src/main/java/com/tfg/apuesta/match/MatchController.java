@@ -1,5 +1,6 @@
 package com.tfg.apuesta.match;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tfg.apuesta.bet.Bet;
@@ -46,5 +49,10 @@ public class MatchController {
 	@GetMapping("/matches/{betId}")
 	public List<Match> showAllMatchesByBetId(@PathVariable("betId") int betId) {
 		return this.matchService.findMatchesByBetId(betId);
+	}
+	
+	@GetMapping("/matches/{date}/date")
+	public List<Match> getMatchesByDate(@PathVariable("date") String date){
+		return this.matchService.showMatchesByDate(date);
 	}
 }

@@ -1,6 +1,9 @@
 <template>
 <div class="container">
     <br><span class="titulos"> PARTIDOS DE HOY </span><br><br>
+    <input type="date" id="date" name="date">
+    <input style="margin-left:14px" type="submit" value="Buscar" class="btn btn-success" @click="getMatchesByDate()">
+    <br><br>
     <table class="table table-striped">
         <thead>
             <!--<th> Match Id </th>-->
@@ -82,7 +85,8 @@ export default {
             leagueName: null,
             isAuthenticated: LoginService.isUserLoggedIn(),
             myLeagues: [],
-            errors: []
+            errors: [],
+            date: null
         }
         
     },
@@ -141,8 +145,15 @@ export default {
                 console.log(response);
                 window.location.href = "/";
                 })
-            }
-            
+            }   
+        },
+
+        getMatchesByDate(){
+            this.date = document.getElementById("date").value;
+            console.log(this.date);
+            MatchService.getMatchesByDate(this.date).then((response) => {
+                this.matches = response.data;
+            })
         }
                   
     },
