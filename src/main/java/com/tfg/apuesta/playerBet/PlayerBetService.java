@@ -24,5 +24,9 @@ public class PlayerBetService {
 	public List<PlayerBet> findPlayerBetByBetId(Integer betId) throws DataAccessException {
 		return this.playerBetRepository.findPlayerBetByBetId(betId);
 	}
-
+	
+	public void deletePlayerBet(PlayerBet playerBet) throws DataAccessException {
+		this.playerBetRepository.delete(playerBet);
+	}
+ 
 }

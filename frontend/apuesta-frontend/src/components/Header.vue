@@ -17,7 +17,8 @@
       <ul class="nav">
           <li><a href="/">Inicio</a></li>
           <li><a href="/competitions">Competiciones</a></li>
-          <li><a href="/leagues/myLeagues">Mis ligas</a></li>
+          <li><a v-if="currentUser!='admin'" href="/leagues/myLeagues">Mis ligas</a></li>
+          <li><a v-if="isAuthenticated && currentUser=='admin'" href="/leagues">Todas las ligas</a></li>
           <li><a href="/matches/today">Partidos</a></li>
         <ul class="nav1">
           <li><a v-if="!isAuthenticated" href="/login">Iniciar sesión</a></li>
