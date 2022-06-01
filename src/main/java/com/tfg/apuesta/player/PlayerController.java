@@ -1,5 +1,9 @@
 package com.tfg.apuesta.player;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +38,23 @@ public class PlayerController {
 	}
 	
 	@GetMapping("/players/{leagueId}/points")
-	public Set<Player> getPlayersByLeague(@PathVariable("leagueId") int leagueId) {
+	public List<Player> getPlayersByLeague(@PathVariable("leagueId") int leagueId) {
 		League league = this.leagueService.findLeagueById(leagueId);
-		Set<Player> res = league.getPlayers();
-		return res;
+		List<Player> playersList = new ArrayList<>();
+		playersList.addAll(league.getPlayers());
+		//List<Player> res = new ArrayList<>();
+		/*for(int i=0;i<playersList.size();i++) {
+			
+			res.add(playersList.get(i).getPoints());
+			
+			if(p.getPoints()>=playersList.get(i).getPoints()) {
+				res.add(0, p);
+			} else {
+				res.add(p);
+			}
+		}*/
+		Collections.sort(playersList, (o1, o2) -> o1.getPoints().compareTo(o2.getPoints()));
+		Collections.reverse(playersList);
+		return playersList;
 	}
 }

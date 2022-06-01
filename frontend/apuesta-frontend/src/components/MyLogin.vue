@@ -81,8 +81,8 @@ export default {
 
           LoginService.getUsername(localStorage.getItem("username"));
           })
-          window.location.href = "/";
-          //this.$router.push("/loginSuccess");
+          //window.location.href = "/";
+          this.$router.push("/loginSuccess");
       } 
       
     },

@@ -4,11 +4,23 @@ INSERT INTO users_authorities(user_username,authorities_id) VALUES ('admin',1);
 INSERT INTO users(username,enabled,password) VALUES ('client1',TRUE,'client');
 INSERT INTO authorities(id,authority) VALUES (2,'client');
 INSERT INTO users_authorities(user_username,authorities_id) VALUES ('client1',2);
+INSERT INTO users(username,enabled,password) VALUES ('client2',TRUE,'client');
+INSERT INTO authorities(id,authority) VALUES (3,'client');
+INSERT INTO users_authorities(user_username,authorities_id) VALUES ('client2',3);
+INSERT INTO users(username,enabled,password) VALUES ('client3',TRUE,'client');
+INSERT INTO authorities(id,authority) VALUES (4,'client');
+INSERT INTO users_authorities(user_username,authorities_id) VALUES ('client3',4);
 
 INSERT INTO clients(username,name,surname,email) VALUES ('client1','Pedro','Pérez López','pedropl@gmail.com');
+INSERT INTO clients(username,name,surname,email) VALUES ('client2','Jesus','García Fekir','jesusgf@gmail.com');
+INSERT INTO clients(username,name,surname,email) VALUES ('client3','Sergio','Canales Ruiz','sergiocr@gmail.com');
 INSERT INTO leagues(name,code) VALUES ('Prueba','crvtv');
 INSERT INTO players(points,client_id) VALUES (500,1);
 INSERT INTO leagues_players(league_id,players_id) VALUES (1,1);
+INSERT INTO players(points,client_id) VALUES (700,2);
+INSERT INTO leagues_players(league_id,players_id) VALUES (1,2);
+INSERT INTO players(points,client_id) VALUES (550,3);
+INSERT INTO leagues_players(league_id,players_id) VALUES (1,3);
 
 INSERT INTO bets(bet_type,description,estado,league_id,player_id) VALUES (0,'Apuesta 2 partidos','PENDIENTE',1,1);
 INSERT INTO matches(api_id,away_team,competition,home_team,match_date,result,status,bet_id) VALUES (325784,'SC Heerenveen','Eredivisie','Go Ahead Eagles',null,'AWAY_TEAM','FINISHED',1);

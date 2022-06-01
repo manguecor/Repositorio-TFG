@@ -25,7 +25,7 @@
     <a style="margin-left: 14px" href="/leagues/join" class="btn btn-success">Unirse a una liga</a>
     <br>
     <br>
-    <a href="/" class="btn btn-info">Volver</a>
+    <a href="/" class="btn btn-success">Volver</a>
 </div>
     
 </template>
