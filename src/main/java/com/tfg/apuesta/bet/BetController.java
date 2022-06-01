@@ -61,6 +61,7 @@ public class BetController {
 	
 	@PostMapping(value="/bets/save")
 	public void saveMatchBet(@RequestBody List<String> response) {
+		System.out.println(response.get(2));
 		Optional<League> result = this.leagueService.findLeagueByName(response.get(2));
 		if(result.isPresent()) {
 			String username = this.userController.getCurrentUsername();

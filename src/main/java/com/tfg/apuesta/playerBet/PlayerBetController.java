@@ -91,36 +91,43 @@ public class PlayerBetController {
 	public void savePlayerBetResult(@RequestBody List<String> response) {
 		Integer betId = Integer.valueOf(response.get(0));
 		Bet bet = this.betService.findBetById(betId);
+		League league = bet.getLeague();
 		List<String> playerResults = new ArrayList<>();
 		List<Match> matches = this.matchService.findMatchesByBetId(betId);
 		String username = this.userController.getCurrentUsername();
-		Player player = this.playerService.findPlayerByUsername(username).get();
-		List<String> awayGoals = new ArrayList<>();
-		List<String> homeGoals = new ArrayList<>();
-		for(int i=1;i<response.size();i++) {
-			if(i%2==0) {
-				awayGoals.add(response.get(i));
-			} else {
-				homeGoals.add(response.get(i));
+		List<Player> players = this.playerService.findPlayersByUsername(username);
+		for(Player p: players) {
+			if(league.getPlayers().contains(p)) {
+				List<String> awayGoals = new ArrayList<>();
+				List<String> homeGoals = new ArrayList<>();
+				for(int i=1;i<response.size();i++) {
+					if(i%2==0) {
+						awayGoals.add(response.get(i));
+					} else {
+						homeGoals.add(response.get(i));
+					}
+				}
+				Integer homeGoalsResult=0;
+				Integer awayGoalsResult=0;
+				for(int q=0;q<homeGoals.size();q++) {
+					if(homeGoals.size()==awayGoals.size()) {
+						homeGoalsResult = Integer.valueOf(homeGoals.get(q));
+						awayGoalsResult = Integer.valueOf(awayGoals.get(q));
+						playerResults.add(homeGoalsResult + "-" + awayGoalsResult);
+					}
+				}
+				for(int j=0;j<matches.size();j++) {
+					PlayerBet playerBet = new PlayerBet();
+				    playerBet.setBet(bet);
+					playerBet.setPlayerResult(playerResults.get(j)); 
+					playerBet.setPlayer(p);
+					playerBet.setMatchId(matches.get(j).getApi_id());
+					this.playerBetService.save(playerBet);
+				}
 			}
 		}
-		Integer homeGoalsResult=0;
-		Integer awayGoalsResult=0;
-		for(int q=0;q<homeGoals.size();q++) {
-			if(homeGoals.size()==awayGoals.size()) {
-				homeGoalsResult = Integer.valueOf(homeGoals.get(q));
-				awayGoalsResult = Integer.valueOf(awayGoals.get(q));
-				playerResults.add(homeGoalsResult + "-" + awayGoalsResult);
-			}
-		}
-		for(int j=0;j<matches.size();j++) {
-			PlayerBet playerBet = new PlayerBet();
-		    playerBet.setBet(bet);
-			playerBet.setPlayerResult(playerResults.get(j)); 
-			playerBet.setPlayer(player);
-			playerBet.setMatchId(matches.get(j).getApi_id());
-			this.playerBetService.save(playerBet);
-		}
+			
+		
 	}
 	
 	@PostMapping(value="/playerBets/check/{betId}")
@@ -183,14 +190,19 @@ public class PlayerBetController {
 	@GetMapping("/playerBets/{betId}")
 	public List<PlayerBet> getPlayerBetByBetID(@PathVariable("betId") int betId) {
 		String username = this.userController.getCurrentUsername();
-		Player player = this.playerService.findPlayerByUsername(username).get();
-		List<PlayerBet> playerBets = this.playerBetService.findPlayerBetByBetId(betId);
-		List<PlayerBet> players = new ArrayList<>();
-		for(int i=0;i<playerBets.size();i++) {
-			if(player.getId()==playerBets.get(i).getPlayer().getId()) {
-				players.add(playerBets.get(i));
+		List<Player> players = this.playerService.findPlayersByUsername(username);
+		League league = this.betService.findBetById(betId).getLeague();
+		List<PlayerBet> res = new ArrayList<>();
+		for(Player p: players) {
+			if(league.getPlayers().contains(p)) {
+				List<PlayerBet> playerBets = this.playerBetService.findPlayerBetByBetId(betId);
+				for(int i=0;i<playerBets.size();i++) {
+					if(p.getId()==playerBets.get(i).getPlayer().getId()) {
+						res.add(playerBets.get(i));
+					}
+				}
 			}
 		}
-		return players;
+		return res;
 	}
 }

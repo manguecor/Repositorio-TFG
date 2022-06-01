@@ -30,8 +30,8 @@
           <th style="width:36%"> PUNTOS </th>
       </thead>
       <tbody>
-            <tr v-for= "player in players" v-bind:key= "player.id">
-              <td> </td>
+            <tr v-for= "(player,index) in players" v-bind:key= "player.id">
+              <td> {{this.positions[index]}} </td>
               <td> {{player.client.user.username}} </td>
               <td> {{player.points}} </td>
             </tr> 
@@ -57,7 +57,8 @@ export default {
     return {
       bets: [],
       players: [],
-      mypoints: null
+      mypoints: null,
+      positions: []
     }
   },
   methods: {
@@ -72,12 +73,14 @@ export default {
       PlayerService.getPlayersByLeague(this.$route.params.leagueId).then((response) => {
         this.players = response.data;
         for(let value in this.players){
+          this.positions[value] = parseInt(value)+1;
           if(this.players[value].client.user.username==localStorage.getItem('username')){
             this.mypoints = this.players[value].points;
           }
         }
         console.log(this.mypoints);
         console.log(this.players);
+        console.log(this.positions);
       })
     }
   },
