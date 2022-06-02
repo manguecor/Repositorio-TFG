@@ -19,6 +19,7 @@ import MyProfile from '@/components/MyProfile.vue'
 import MyInvitation from '@/components/MyInvitation.vue'
 import MyInvitations from '@/components/MyInvitations.vue'
 import MyBetsRecord from '@/components/MyBetsRecord.vue'
+import AllLeagues from '@/components/AllLeagues.vue'
 
 const routes = [
   {
@@ -48,8 +49,19 @@ const routes = [
   },
   {
     path: '/leagues/myLeagues',
-    name: 'leagues',
+    name: 'myLeagues',
     component: MyLeagues,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
+  },
+  {
+    path: '/leagues',
+    name: 'leagues',
+    component: AllLeagues,
     beforeEnter: (to, from, next) => {
       if (!LoginService.isUserLoggedIn()) {
         next('/login');
