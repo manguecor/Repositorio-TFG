@@ -2,7 +2,7 @@
 <form @submit="editClient">
    <div class="row2">
             <div class="col-12">
-                <h2>Registrarse</h2>
+                <h2>Mi perfil</h2>
                 <br>
                 <div class="form-group">
                     <label for="price">Contraseña:</label>
@@ -28,7 +28,6 @@
                     <p>
                         <input type="submit" value="Editar cliente" class="btn btn-success">
                     </p>
-                    <!--<a href="/" @click="editClient" class="btn btn-success">Editar cliente</a>-->
                     <a href="/" class="btn btn-info">Volver</a>
                 </div>
             </div>
