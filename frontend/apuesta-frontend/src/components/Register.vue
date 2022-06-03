@@ -2,8 +2,10 @@
 <form @submit="register">
    <div class="row2">
             <div class="col-12">
-                <h2>Registrarse</h2>
                 <br>
+                <!--<span class="titulos"> REGISTRARSE</span><br>-->
+                <img alt="SocialBet logo" src="../assets/logoNuevo.jpg" height="150" width="250">
+                <br><br>
                 <p v-if="errors.length">
                     <b>Por favor, corriga el(los) siguiente(s) error(es): </b>
                     <ul>
@@ -40,7 +42,7 @@
                         <input type="submit" value="Registrarse" class="btn btn-success">
                     </p>
                    <!--<a href="/register" @click="checkForm" class="btn btn-success">Registrarse</a>-->
-                   <a href="/" class="btn btn-info">Volver</a>
+                   <a href="/" class="btn btn-success">Volver</a>
                 </div>
             </div>
    </div>

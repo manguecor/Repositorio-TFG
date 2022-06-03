@@ -1,10 +1,12 @@
 <template>
    <div class="row3">
             <div class="col-12">
-                <h2>Unirse a liga</h2>
-                <br>
+                <br><br>
+                <span class="titulos">UNIRSE A LIGA</span><br><br>
+                <img src="../assets/logoNuevo.jpg" width="250" height="150">
+                <br><br>
                 <div class="form-group">
-                    <label for="name">Codigo:</label>
+                    <label for="name">Código:</label>
                     <input id="name" v-model="code" placeholder="Code" type="text" class="form">
                 </div>
                 <br>
@@ -12,7 +14,7 @@
                     <a href="/leagues/myLeagues" @click="join_league" class="btn btn-success">Unirse a liga</a>
                     <br>
                     <br>
-                    <a href="/leagues/myLeagues" class="btn btn-info">Volver</a>
+                    <a href="/leagues/myLeagues" class="btn btn-success">Volver</a>
                 </div>
             </div>
         </div>

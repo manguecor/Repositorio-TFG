@@ -15,6 +15,7 @@
 
   <header id="header">
       <ul class="nav">
+          <img class="logo" alt="SocialBet logo" src="../assets/logoHeader.jpg" width="60" height="35">
           <li><a href="/">Inicio</a></li>
           <li><a href="/competitions">Competiciones</a></li>
           <li><a href="/leagues/myLeagues">Mis ligas</a></li>
@@ -112,6 +113,7 @@ ul, ol {
     text-decoration: none;
     padding: 22px 15px;
     display: block;
+    font-weight: bold;
 }
 
 .nav li a:hover {
@@ -145,4 +147,8 @@ ul, ol {
     margin-left: 60px;
 }
 
+.logo{
+    margin-top: 18px;
+    margin-left: 10px;
+}
 </style>

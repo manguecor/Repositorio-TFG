@@ -1,7 +1,8 @@
 <template>
   <section>
       <br><br>
-    <h2>Has iniciado sesión correctamente</h2><br>
+    <h2>SE HA INICIADO SESION CORRECTAMENTE</h2><br>
+    <img alt="SocialBet logo" src="../assets/logoNuevo.jpg" height="150" width="250"><br><br>
     <a href="/" class="btn btn-success">Acceder</a>
   </section>
 </template>
