@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tfg.apuesta.bet.Bet;
 import com.tfg.apuesta.client.Client;
 import com.tfg.apuesta.client.ClientService;
 import com.tfg.apuesta.player.Player;
 import com.tfg.apuesta.player.PlayerService;
+import com.tfg.apuesta.playerBet.PlayerBet;
+import com.tfg.apuesta.playerBet.PlayerBetService;
 import com.tfg.apuesta.user.UserController;
 
 @RestController
@@ -35,12 +38,15 @@ public class LeagueController {
 	
 	private final UserController userController;
 	
+	private final PlayerBetService playerBetService;
+	
 	@Autowired
-	public LeagueController(LeagueService leagueService, PlayerService playerService, ClientService clientService, UserController userController) {
+	public LeagueController(LeagueService leagueService, PlayerService playerService, ClientService clientService, UserController userController, PlayerBetService playerBetService) {
 		this.leagueService = leagueService;
 		this.playerService = playerService;
 		this.clientService = clientService;
 		this.userController = userController;
+		this.playerBetService = playerBetService;
 	}
 	
 	@InitBinder
@@ -102,7 +108,21 @@ public class LeagueController {
 	
 	@DeleteMapping("/leagues/{leagueId}")
 	public void deleteLeague(@PathVariable("leagueId") int leagueId) {
-		this.leagueService.delete(this.leagueService.findLeagueById(leagueId));
+		String username = userController.getCurrentUsername();
+		if(username.equals("admin")) {
+		League league = this.leagueService.findLeagueById(leagueId);
+		Set<Player> players = league.getPlayers();
+		for(Player p: players) {
+			Set<Bet> bets = p.getBets();
+			for(Bet b: bets) {
+				List<PlayerBet> playerBets = this.playerBetService.findPlayerBetByBetId(b.getId());
+				for(PlayerBet pb: playerBets) {
+					this.playerBetService.deletePlayerBet(pb);
+				}
+			}
+		}
+		this.leagueService.delete(league);
+		}
 	}
 	
 	@PostMapping("/leagues/join")
