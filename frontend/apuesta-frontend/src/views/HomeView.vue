@@ -6,7 +6,7 @@
     <div class="carrusel">
       <div class="card">
         <li><a href="/leagues/myLeagues">
-        <img src="../assets/logoNuevo.jpg" width="300" height="300">
+        <img src="../assets/imagenInicio1.jpg" width="500" height="500">
         <div class="cuerpocard">
           <h5>Crea y únete a ligas con tus amigos</h5><br>
           <p>Puedes crear ligas para invitar a tus amigos o unirte a ligas ya creadas</p>
@@ -16,7 +16,7 @@
       </div>
       <div class="card">
         <li><a href="/matches/today">
-        <img src="../assets/logoHeader.jpg" width="300" height="300">
+        <img src="../assets/imagenInicio2.jpg" width="300" height="300">
         <div class="cuerpocard">
           <h5>Crea distintas apuestas</h5><br>
           <p>Puedes crear apuestas de dos tipos, apuestas de equipo ganador y apuestas de resultado concreto</p>
@@ -26,7 +26,7 @@
       </div>
       <div class="card">
         <li><a href="/competitions">
-        <img src="../assets/logo.png" width="300" height="300">
+        <img src="../assets/imagenInicio3.jpg" width="300" height="300">
         <div class="cuerpocard">
           <h5>Consulta tus competiciones y equipos</h5><br>
           <p>Puedes consultar clasificaciones, goleadores y partidos de las grandes competiciones</p>
@@ -61,6 +61,7 @@ export default {
   position: relative;
   width: 800px;
   height: 500px;
+  list-style:none;
 }
 
 .cuerpocard{
@@ -79,7 +80,7 @@ export default {
 }
 
 .card img{
-  width: 200px;
+  width: 350px;
   object-fit: cover;
   height: 300px;
 }

@@ -3,8 +3,9 @@
    <div class="row3">
             <div class="col-12">
                 <br>
-                <h2>Liga</h2>
-                <br>
+                <span class="titulos"> NUEVA LIGA</span><br><br>
+                <img alt="SocialBet logo" src="../assets/logoNuevo.jpg" height="150" width="250">
+                <br><br>
                 <p v-if="errors.length">
                     <b>Por favor, corriga el(los) siguiente(s) error(es): </b>
                         <ul>
