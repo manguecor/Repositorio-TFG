@@ -2,8 +2,10 @@
 <form @submit="editClient">
    <div class="row2">
             <div class="col-12">
-                <h2>Mi perfil</h2>
                 <br>
+                <span class="titulos"> MI PERFIL</span><br><br>
+                <img alt="SocialBet logo" src="../assets/logoNuevo.jpg" height="150" width="250">
+                <br><br>
                 <div class="form-group">
                     <label for="price">Contraseña:</label>
                     <input id="password" v-model="client.user.password" placeholder="Password" type="password" class="form" required>
@@ -28,7 +30,7 @@
                     <p>
                         <input type="submit" value="Editar cliente" class="btn btn-success">
                     </p>
-                    <a href="/" class="btn btn-info">Volver</a>
+                    <a href="/" class="btn btn-success">Volver</a>
                 </div>
             </div>
         </div>

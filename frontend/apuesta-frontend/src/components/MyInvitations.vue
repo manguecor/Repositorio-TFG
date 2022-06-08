@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <br><h2 class="text-center">Mis invitaciones</h2><br>
+    <br>
+    <span class="titulos"> MIS INVITACIONES</span><br><br>
     <table class="table table-striped">
         <thead>
             <th> LIGA </th>

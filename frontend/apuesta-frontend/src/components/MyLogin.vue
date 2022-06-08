@@ -1,10 +1,11 @@
 <template>
 <form @submit="login">
   <section>
-    <br>
-    <h2>Iniciar sesión</h2>
+    <br><br>
+    <!--<span class="titulos"> INICIAR SESION</span><br>-->
+    <img alt="SocialBet logo" src="../assets/logoNuevo.jpg" height="150" width="250">
     <div class="container">
-      <br>
+      <br><br>
       <p v-if="errors.length">
         <b>Por favor, corriga el(los) siguiente(s) error(es): </b>
           <ul>

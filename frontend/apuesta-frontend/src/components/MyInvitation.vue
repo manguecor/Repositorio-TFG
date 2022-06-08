@@ -2,7 +2,8 @@
    <div class="row3">
             <div class="col-12">
                 <br>
-                <span class="titulos">INVITAR A UN AMIGO</span>
+                <span class="titulos">INVITAR A UN AMIGO</span><br><br>
+                <img src="../assets/logoNuevo.jpg" width="250" height="150">
                 <br><br>
                 <div class="form-group">
                     <label for="username">Usuario del amigo:</label>

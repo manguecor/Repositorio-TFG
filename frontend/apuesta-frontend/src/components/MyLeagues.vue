@@ -39,15 +39,15 @@ export default {
         
     },
     methods: {
-        getAllLeagues(){
-            LeagueService.listAll().then((response) =>{
+        getMyLeagues(){
+            LeagueService.listMyLeagues().then((response) =>{
                 this.leagues = response.data;
                 console.log(this.leagues)
             });
         }
     },
     created() {
-        this.getAllLeagues()
+        this.getMyLeagues()
     }
 }
 </script>

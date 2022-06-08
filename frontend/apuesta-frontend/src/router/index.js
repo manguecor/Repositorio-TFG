@@ -49,7 +49,7 @@ const routes = [
   },
   {
     path: '/leagues/myLeagues',
-    name: 'myLeagues',
+    name: 'MyLeagues',
     component: MyLeagues,
     beforeEnter: (to, from, next) => {
       if (!LoginService.isUserLoggedIn()) {
