@@ -7,7 +7,7 @@
                 <br><br>
                 <div class="form-group">
                     <label for="name">Código:</label>
-                    <input id="name" v-model="code" placeholder="Code" type="text" class="form">
+                    <input id="name" v-model="code" placeholder="Código" type="text" class="form">
                 </div>
                 <br>
                 <div class="form-group">

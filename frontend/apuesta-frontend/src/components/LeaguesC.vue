@@ -14,19 +14,19 @@
                 </p>
                 <div class="form-group">
                     <label for="name">Nombre:</label>
-                    <input id="name" v-model="league.name" placeholder="Name" type="text" class="form" required>
+                    <input id="name" v-model="league.name" placeholder="Nombre" type="text" class="form" required>
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="name">Codigo:</label>
-                    <input id="name" v-model="league.code" placeholder="Code" type="text" class="form" required>
+                    <input id="name" v-model="league.code" placeholder="Código" type="text" class="form" required>
                 </div>
                 <br>
                 <div class="form-group">
                     <p>
                         <input type="submit" value="Crear liga" class="btn btn-success">
                     </p>
-                    <a href="/" class="btn btn-success">Volver</a>
+                    <a href="/leagues/myLeagues" class="btn btn-success">Volver</a>
                 </div>
             </div>
         </div>
