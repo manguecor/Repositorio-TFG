@@ -1,7 +1,6 @@
 package com.tfg.apuesta.match;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,9 +16,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import com.tfg.apuesta.bet.Bet;
-import com.tfg.apuesta.client.Client;
 
 @Service
 public class MatchService {
@@ -30,15 +27,22 @@ public class MatchService {
 		this.matchRepository = matchRepository;
 	}
 	
+	@Value("${api.call}")
+	private String call;
+	
+	@Value("${api.auth}")
+	private String auth;
+	
+	@Value("${api.key}")
+	private String key;
+	
 	public List<Match> showMatchesToday(){
 		Date date = new Date();  
 	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
 	    String today = format.format(date); 
-	    String uri = "http://api.football-data.org/v2/matches?dateFrom="+today+"&dateTo="+today;
-		String auth = "X-Auth-Token";
-		String apiKey = "f3cafe6d1b40474992616dd3b183d801";
+	    String uri = call + "/matches?dateFrom="+today+"&dateTo="+today;
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(auth, apiKey);
+	    headers.add(auth, key);
 	    HttpEntity request = new HttpEntity(headers);
 	    ResponseEntity<String> response = new RestTemplate().exchange(uri, HttpMethod.GET, request, String.class);
 	    String json = response.getBody();
@@ -60,11 +64,9 @@ public class MatchService {
 	}
 		
 	public List<Match> showLastMatchesByTeam(Integer teamId){
-	    String uri = "http://api.football-data.org/v2/teams/"+ teamId +"/matches?limit=5&status=FINISHED";
-		String auth = "X-Auth-Token";
-		String apiKey = "f3cafe6d1b40474992616dd3b183d801";
+	    String uri = call + "/teams/"+ teamId +"/matches?limit=5&status=FINISHED";
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(auth, apiKey);
+	    headers.add(auth, key);
 	    HttpEntity request = new HttpEntity(headers);
 	    ResponseEntity<String> response = new RestTemplate().exchange(uri, HttpMethod.GET, request, String.class);
 	    String json = response.getBody();
@@ -92,11 +94,9 @@ public class MatchService {
 	}
 	
 	public List<Match> showNextMatchesByTeam(Integer teamId){
-		String uri = "http://api.football-data.org/v2/teams/" + teamId + "/matches?status=SCHEDULED";
-		String auth = "X-Auth-Token";
-		String apiKey = "f3cafe6d1b40474992616dd3b183d801";
+		String uri = call + "/teams/" + teamId + "/matches?status=SCHEDULED";
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(auth, apiKey);
+	    headers.add(auth, key);
 	    HttpEntity request = new HttpEntity(headers);
 	    ResponseEntity<String> response = new RestTemplate().exchange(uri, HttpMethod.GET, request, String.class);
 	    String json = response.getBody();
@@ -133,11 +133,9 @@ public class MatchService {
 	
 	
 	public Match getMatchWinnerById(Integer matchId){
-		String uri = "http://api.football-data.org/v2/matches/" + matchId;
-		String auth = "X-Auth-Token";
-		String apiKey = "f3cafe6d1b40474992616dd3b183d801";
+		String uri = call + "/matches/" + matchId;
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(auth, apiKey);
+	    headers.add(auth, key);
 	    HttpEntity request = new HttpEntity(headers);
 	    ResponseEntity<String> response = new RestTemplate().exchange(uri, HttpMethod.GET, request, String.class);
 	    String json = response.getBody();
@@ -159,11 +157,9 @@ public class MatchService {
 	}
 	
 	public Match getMatchResultById(Integer matchId){
-		String uri = "http://api.football-data.org/v2/matches/" + matchId;
-		String auth = "X-Auth-Token";
-		String apiKey = "f3cafe6d1b40474992616dd3b183d801";
+		String uri = call + "/matches/" + matchId;
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(auth, apiKey);
+	    headers.add(auth, key);
 	    HttpEntity request = new HttpEntity(headers);
 	    ResponseEntity<String> response = new RestTemplate().exchange(uri, HttpMethod.GET, request, String.class);
 	    String json = response.getBody();
@@ -189,11 +185,9 @@ public class MatchService {
 	public List<Match> showMatchesByDate(String date){ 
 	    //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
 	    //String dateFormat = format.format(date); 
-	    String uri = "http://api.football-data.org/v2/matches?dateFrom="+date+"&dateTo="+date;
-		String auth = "X-Auth-Token";
-		String apiKey = "f3cafe6d1b40474992616dd3b183d801";
+	    String uri = call + "/matches?dateFrom="+date+"&dateTo="+date;
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(auth, apiKey);
+	    headers.add(auth, key);
 	    HttpEntity request = new HttpEntity(headers);
 	    ResponseEntity<String> response = new RestTemplate().exchange(uri, HttpMethod.GET, request, String.class);
 	    String json = response.getBody();
