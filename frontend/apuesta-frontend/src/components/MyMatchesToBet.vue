@@ -29,18 +29,38 @@
                     <a type="checkbox" v-else-if="match.status!='SCHEDULED'">{{match.awayTeam}}</a>
                 </td>
                 <td v-if="match.status=='FINISHED'">
-                  <a type="checkbox" v-if="match.status=='FINISHED'">{{match.result}}</a>
+                  <a type="checkbox" v-if="match.status=='FINISHED' && match.result=='HOME_TEAM'">EQUIPO LOCAL</a>
+                  <a type="checkbox" v-if="match.status=='FINISHED' && match.result=='AWAY_TEAM'">EQUIPO VISITANTE</a>
+                  <a type="checkbox" v-if="match.status=='FINISHED' && match.result=='DRAW'">EMPATE</a>
                 </td>
                 <td v-if="this.playerBets.length!=0">
                   <div v-for= "playerBet in playerBets" v-bind:key= "playerBet.id">
-                    <button v-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result" class="acierto" disabled>
-                      {{playerBet.playerResult}}
+                    <button v-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result && playerBet.playerResult=='HOME_TEAM'" class="acierto" disabled>
+                      EQUIPO LOCAL
                     </button>
-                    <span v-else-if="playerBet.matchId == match.api_id && match.status=='SCHEDULED'" disabled>
-                      {{playerBet.playerResult}}
+                    <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result && playerBet.playerResult=='AWAY_TEAM'" class="acierto" disabled>
+                      EQUIPO VISITANTE
+                    </button>
+                    <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result && playerBet.playerResult=='DRAW'" class="acierto" disabled>
+                      EMPATE
+                    </button>
+                    <span v-else-if="playerBet.matchId == match.api_id && match.status=='SCHEDULED' && playerBet.playerResult=='HOME_TEAM'" disabled>
+                      EQUIPO LOCAL
                     </span>
-                    <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result" class="fallo" disabled>
-                      {{playerBet.playerResult}}
+                    <span v-else-if="playerBet.matchId == match.api_id && match.status=='SCHEDULED' && playerBet.playerResult=='AWAY_TEAM'" disabled>
+                      EQUIPO VISITANTE
+                    </span>
+                    <span v-else-if="playerBet.matchId == match.api_id && match.status=='SCHEDULED' && playerBet.playerResult=='DRAW'" disabled>
+                      EMPATE
+                    </span>
+                    <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result && playerBet.playerResult=='HOME_TEAM'" class="fallo" disabled>
+                      EQUIPO LOCAL
+                    </button>
+                    <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result && playerBet.playerResult=='AWAY_TEAM'" class="fallo" disabled>
+                      EUIPO VISITANTE
+                    </button>
+                    <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result && playerBet.playerResult=='DRAW'" class="fallo" disabled>
+                      EMPATE
                     </button>
                   </div>
                 </td>
