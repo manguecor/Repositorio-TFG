@@ -9,6 +9,7 @@
             <th> EQUIPO VISITANTE</th>
             <th v-if="this.status==true"> RESULTADO</th>
             <th v-if="this.playerBets.length!=0"> MI APUESTA</th>
+            <th v-if="this.playerBets.length!=0 && this.pointCheck==true"> PUNTOS</th>
         </thead>
         <tbody>
             <tr class="#botones.focus" v-for = "match in matches" v-bind:key = "match.id" >
@@ -41,7 +42,18 @@
                     <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result" class="fallo" disabled>
                       {{playerBet.playerResult}}
                     </button>
-                    
+                  </div>
+                </td>
+                <td v-if="this.playerBets.length!=0 && this.pointCheck==true">
+                  <div v-for= "playerBet in playerBets" v-bind:key= "playerBet.id">
+                    <div v-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result" class="aciertoPuntos">
+                      +100
+                    </div>
+                    <div v-else-if="playerBet.matchId == match.api_id && match.status=='SCHEDULED'" disabled>
+                    </div>
+                    <div v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result" class="falloPuntos">
+                      -100
+                    </div>
                   </div>
                 </td>
             </tr>
@@ -56,6 +68,7 @@
             <th> EQUIPO VISITANTE</th>
             <th v-if="this.status==true"> RESULTADO</th>
             <th v-if="this.playerBets.length!=0"> MI APUESTA</th>
+            <th v-if="this.playerBets.length!=0 && this.pointCheck==true"> PUNTOS</th>
         </thead>
         <tbody>
             <tr v-for = "match in matches" v-bind:key = "match.id">
@@ -89,9 +102,33 @@
                     <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult[2] == match.result[2]" class="soloGol" disabled>
                       {{playerBet.playerResult}}
                     </button>
+                    <button v-else-if="playerBet.matchId == match.api_id && (playerBet.playerResult[0]-playerBet.playerResult[2])==(match.result[0]-match.result[2])" class="difGol" disabled>
+                      {{playerBet.playerResult}}
+                    </button>
                     <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result" class="fallo" disabled>
                       {{playerBet.playerResult}}
                     </button>
+                  </div>
+                </td>
+                <td v-if="this.playerBets.length!=0 && this.pointCheck==true">
+                  <div v-for= "playerBet in playerBets" v-bind:key= "playerBet.id">
+                     <div v-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result" class="aciertoPuntos" disabled>
+                      +150
+                    </div>
+                    <div v-else-if="playerBet.matchId == match.api_id && match.status=='SCHEDULED'" disabled>
+                    </div>
+                    <div v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult[0] == match.result[0]" class="soloGolPuntos" disabled>
+                      +50
+                    </div>
+                    <div v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult[2] == match.result[2]" class="soloGolPuntos" disabled>
+                      +50
+                    </div>
+                    <div v-else-if="playerBet.matchId == match.api_id && (playerBet.playerResult[0]-playerBet.playerResult[2])==(match.result[0]-match.result[2])" class="difGolPuntos" disabled>
+                      +75
+                    </div> 
+                    <div v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result" class="falloPuntos" disabled>
+                      -100
+                    </div>
                   </div>
                 </td>
             </tr>
@@ -120,7 +157,8 @@ export default {
       result: [],
       playerBets: [],
       leagueId: null,
-      status: null
+      status: null,
+      pointCheck: false
     }
   },
   methods: {
@@ -136,6 +174,9 @@ export default {
                 this.status = false;
               }
             }
+            let cond = (element) => element.status=='FINISHED';
+            this.pointCheck = this.matches.some(cond);
+            console.log(this.pointCheck);
         })
     },
 
@@ -229,6 +270,7 @@ export default {
         console.log(response);
       });
     }
+
   },
   created() {
         this.getMatches()
@@ -263,6 +305,17 @@ export default {
  }
 
 .soloGol {
+   font: rgb(0, 0, 0);
+   font-weight: bold;
+   width: 140px; 
+   height: 35px; 
+   border: 2px solid #555;
+   background-color: rgb(255, 180, 0);
+   color: black;
+   border-radius: 6px;
+ }
+
+ .difGol {
    font: rgb(0, 0, 0);
    font-weight: bold;
    width: 140px; 
