@@ -1,6 +1,8 @@
 package com.tfg.apuesta.match;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +56,7 @@ public class MatchService {
 	    	Match m = new Match();
 	    	m.setId(Integer.valueOf(object.get("id").toString()));
 	    	m.setCompetition(object.getJSONObject("competition").get("name").toString());
-	    	m.setMatch_date(object.get("utcDate").toString());
+	    	m.setMatch_date(this.changeDateFormat(object.get("utcDate").toString()));
 	    	m.setHomeTeam(object.getJSONObject("homeTeam").get("name").toString());
 	    	m.setAwayTeam(object.getJSONObject("awayTeam").get("name").toString());
 	    	m.setStatus(object.get("status").toString());
@@ -78,7 +80,7 @@ public class MatchService {
 	    	Match m = new Match();
 	    	m.setId(Integer.valueOf(object.get("id").toString()));
 	    	m.setCompetition(object.getJSONObject("competition").get("name").toString());
-	    	m.setMatch_date(object.get("utcDate").toString());
+	    	m.setMatch_date(this.changeDateFormat(object.get("utcDate").toString()));
 	    	m.setHomeTeam(object.getJSONObject("homeTeam").get("name").toString());
 	    	m.setAwayTeam(object.getJSONObject("awayTeam").get("name").toString());
 	    	m.setStatus(object.get("status").toString());
@@ -109,7 +111,7 @@ public class MatchService {
 	    	Match m = new Match();
 	    	m.setId(Integer.valueOf(object.get("id").toString()));
 	    	m.setCompetition(object.getJSONObject("competition").get("name").toString());
-	    	m.setMatch_date(object.get("utcDate").toString());
+	    	m.setMatch_date(this.changeDateFormat(object.get("utcDate").toString()));
 	    	m.setHomeTeam(object.getJSONObject("homeTeam").get("name").toString());
 	    	m.setAwayTeam(object.getJSONObject("awayTeam").get("name").toString());
 	    	m.setStatus(object.get("status").toString());
@@ -150,7 +152,7 @@ public class MatchService {
 	    }
 	    for(int j=0;j<json3.length();j++) {
 	    	m.setResult(json3.getJSONObject("score").get("winner").toString());
-	    	m.setMatch_date(json3.get("utcDate").toString());
+	    	m.setMatch_date(this.changeDateFormat(json3.get("utcDate").toString()));
 	    	m.setStatus(json3.get("status").toString());
 	    }
 	    return m;
@@ -177,7 +179,7 @@ public class MatchService {
 	    String homeTeamGoals = fullTime.get("homeTeam").toString();
 	    String awayTeamGoals = fullTime.get("awayTeam").toString();
 	    m.setResult(homeTeamGoals + "-" + awayTeamGoals);
-	    m.setMatch_date(match.get("utcDate").toString());
+	    m.setMatch_date(this.changeDateFormat(match.get("utcDate").toString()));
 	    m.setStatus(match.get("status").toString());
 	    return m;
 	}
@@ -199,7 +201,7 @@ public class MatchService {
 	    	Match m = new Match();
 	    	m.setId(Integer.valueOf(object.get("id").toString()));
 	    	m.setCompetition(object.getJSONObject("competition").get("name").toString());
-	    	m.setMatch_date(object.get("utcDate").toString());
+	    	m.setMatch_date(this.changeDateFormat(object.get("utcDate").toString()));
 	    	m.setHomeTeam(object.getJSONObject("homeTeam").get("name").toString());
 	    	m.setAwayTeam(object.getJSONObject("awayTeam").get("name").toString());
 	    	m.setStatus(object.get("status").toString());
@@ -210,5 +212,22 @@ public class MatchService {
 	
 	public Match getMatchByAPIId(Integer apiId) {
 		return this.matchRepository.findMatchByAPIId(apiId).get(0);
+	}
+	
+	private String changeDateFormat(String dateJSON) {
+		LocalDate day = LocalDate.parse(dateJSON.substring(0, 10));
+		LocalTime hour = LocalTime.parse(dateJSON.substring(11,19));
+		hour = hour.plusHours(2);
+		if(hour.getHour()==0 || hour.getHour()==1) {
+			day = day.plusDays(1);
+			if(day.getDayOfMonth()==1) {
+				day = day.plusMonths(1);
+				if(day.getMonthValue()==1) {
+					day = day.plusYears(1);
+				}
+			}
+		}
+		String date = day+" "+hour;
+		return date;
 	}
 }

@@ -21,7 +21,8 @@
                 <td> {{match.awayTeam}}</td>
                 <td> {{match.competition}} </td>
                 <td> {{match.match_date}} </td>
-                <td> {{match.status}}</td>
+                <td v-if="match.status=='SCHEDULED'"> PROGRAMADO</td>
+                <td v-else-if="match.status=='FINISHED'"> TERMINADO</td>
                 <td v-if="isAuthenticated"> <a class="btn btn-success" v-if="match.status=='SCHEDULED'" v-on:click="addMatch(match.id)">Añadir partido</a></td>
             </tr>
         </tbody>
