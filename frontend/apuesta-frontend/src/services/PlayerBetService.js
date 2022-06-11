@@ -23,6 +23,10 @@ class PlayerBetService{
     getPlayerBetByBetId(betId){
         return axios.get(PLAYER_BET_API_BASE_URL+`/${betId}`);
     }
+
+    getPlayerBetsByPlayer(playerId) {
+        return axios.get(PLAYER_BET_API_BASE_URL+`/player/${playerId}`);
+    }
 }
 
 export default new PlayerBetService()

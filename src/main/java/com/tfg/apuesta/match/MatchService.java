@@ -213,5 +213,8 @@ public class MatchService {
 	    }
 	    return res;
 	}
-
+	
+	public Match getMatchByAPIId(Integer apiId) {
+		return this.matchRepository.findMatchByAPIId(apiId).get(0);
+	}
 }

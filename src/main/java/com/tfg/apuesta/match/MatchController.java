@@ -55,4 +55,9 @@ public class MatchController {
 	public List<Match> getMatchesByDate(@PathVariable("date") String date){
 		return this.matchService.showMatchesByDate(date);
 	}
+	
+	@GetMapping("/matches/matchAPI/{matchAPIId}")
+	public Match getMatchByMatchId(@PathVariable("matchAPIId") Integer matchAPIId) {
+		return this.matchService.getMatchByAPIId(matchAPIId);
+	}
 }
