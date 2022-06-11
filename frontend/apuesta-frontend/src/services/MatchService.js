@@ -22,6 +22,10 @@ class MatchService{
     getMatchesByDate(date){
         return axios.get(MATCHES_API_BASE_URL + `/${date}/date`);
     }
+
+    getMatchByAPIId(matchAPIId){
+        return axios.get(MATCHES_API_BASE_URL + `/matchAPI/${matchAPIId}`);
+    }
 }
 
 export default new MatchService()

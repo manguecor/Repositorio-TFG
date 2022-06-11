@@ -155,9 +155,9 @@
         </tbody>
     </table>
     </div>
-    <a :href="'/leagues/' + leagueId + '/bets/'"  class="btn btn-success" v-if="this.playerBets.length==0" @click="savePlayerBet()">Realizar apuesta</a>
-    <a style="margin-left: 14px" :href="'/leagues/' + leagueId + '/bets/'" class="btn btn-success" v-if="this.bets.estado=='PENDIENTE' && this.status==true" @click="checkPlayerBet()">Comprobar apuesta</a>
-    <a style="margin-left: 14px" :href="'/leagues/' + leagueId + '/bets/'" class="btn btn-success" v-if="this.bets.estado=='COMPROBADA'" @click="closeBet()">Cerrar apuesta</a>
+    <a :href="'/leagues/' + leagueId + '/bets/'"  class="btn btn-success" v-if="this.playerBets.length==0 && this.status==false" @click="savePlayerBet()">Realizar apuesta</a>
+    <a style="margin-left: 14px" :href="'/leagues/' + leagueId + '/bets/'" class="btn btn-success" v-if="this.bets.estado=='PENDIENTE' && this.status==true" @click="checkPlayerBet()">Cerrar apuesta</a>
+    <a style="margin-left: 14px" :href="'/leagues/' + leagueId + '/bets/'" class="btn btn-success" v-if="this.bets.estado=='COMPROBADA'" @click="closeBet()">Archivar apuesta</a>
     <a style="margin-left: 14px" :href="'/leagues/' + leagueId + '/bets/'" class="btn btn-success">Volver</a>
   </div>
 </template>
@@ -305,7 +305,7 @@ export default {
 .acierto {
    font: rgb(0, 0, 0);
    font-weight: bold;
-   width: 140px; 
+   width: 170px; 
    height: 35px; 
    border: 2px solid #555;
    background-color: rgb(0, 255, 0);
@@ -316,7 +316,7 @@ export default {
 .fallo {
    font: rgb(0, 0, 0);
    font-weight: bold;
-   width: 140px; 
+   width: 170px; 
    height: 35px; 
    border: 2px solid #555;
    background-color: rgb(255, 0, 0);
@@ -327,7 +327,7 @@ export default {
 .soloGol {
    font: rgb(0, 0, 0);
    font-weight: bold;
-   width: 140px; 
+   width: 170px; 
    height: 35px; 
    border: 2px solid #555;
    background-color: rgb(255, 180, 0);
@@ -338,7 +338,7 @@ export default {
  .difGol {
    font: rgb(0, 0, 0);
    font-weight: bold;
-   width: 140px; 
+   width: 170px; 
    height: 35px; 
    border: 2px solid #555;
    background-color: rgb(255, 255, 0);

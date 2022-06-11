@@ -33,19 +33,24 @@
       <tbody>
             <tr v-for= "(player,index) in players" v-bind:key= "player.id">
               <td> {{this.positions[index]}} </td>
-              <td> {{player.client.user.username}} </td>
+              <td> <a :href="'/playerBets/' + player.id">{{player.client.user.username}}</a> </td>
               <td> {{player.points}} </td>
             </tr> 
       </tbody>
     </table>
     </div>
-    
-</div><br><br><br><br><br><br><br><br><br><br><br>
-<div class="botones">
-<router-link :to="'/leagues/' + this.$route.params.leagueId + '/invitation'" class="btn btn-success">Invitar a un amigo</router-link>
-<a style="margin-left: 14px" :href="'/leagues/' + this.$route.params.leagueId + '/bets/record'" class="btn btn-success">Historial de apuestas</a>
-<a style="margin-left: 14px" href="/leagues/myLeagues" class="btn btn-success">Volver</a>
+  <div class="botones">
+   <div class="boton1">
+    <a style="margin-left: 14px" :href="'/leagues/' + this.$route.params.leagueId + '/invitation'" class="btn btn-success">Invitar a un amigo</a>
+    </div>
+    <a style="margin-left: 14px" :href="'/leagues/' + this.$route.params.leagueId + '/bets/record'" class="btn btn-success">Historial de apuestas</a>
+    <a style="margin-left: 14px" href="/leagues/myLeagues" class="btn btn-success">Volver</a>
+  </div>
 </div>
+
+  
+  
+
 </template>
 
 <script>
@@ -107,9 +112,13 @@ export default {
 }
 
 .botones {
-  margin-left: 550px;
+  z-index: 0;
+}
+
+.boton1 {
+  margin-left: 760px;
   position: fixed;
-  padding-bottom: 30px;
+  z-index: 1;
 }
 
 

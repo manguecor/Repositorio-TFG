@@ -20,6 +20,7 @@ import MyInvitation from '@/components/MyInvitation.vue'
 import MyInvitations from '@/components/MyInvitations.vue'
 import MyBetsRecord from '@/components/MyBetsRecord.vue'
 import AllLeagues from '@/components/AllLeagues.vue'
+import MyPlayerBetsByPlayer from '@/components/MyPlayerBetsByPlayer.vue'
 
 const routes = [
   {
@@ -187,7 +188,18 @@ const routes = [
       }
       next();
     },
-  }
+  },
+  {
+    path: '/playerBets/:playerId',
+    name: 'MyPlayerBetsByPlayer',
+    component: MyPlayerBetsByPlayer,
+    beforeEnter: (to, from, next) => {
+      if (!LoginService.isUserLoggedIn()) {
+        next('/login');
+      }
+      next();
+    },
+  },
 ]
 
 const router = createRouter({

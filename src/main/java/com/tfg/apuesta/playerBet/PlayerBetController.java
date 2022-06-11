@@ -205,4 +205,9 @@ public class PlayerBetController {
 		}
 		return res;
 	}
+	
+	@GetMapping("/playerBets/player/{playerId}")
+	public List<PlayerBet> getBetsByPlayer(@PathVariable("playerId") int playerId) {
+		return this.playerBetService.findPlayerBetsByPlayer(playerId);
+	}
 }

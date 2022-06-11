@@ -13,5 +13,9 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
 	
 	@Query("SELECT match FROM Match match WHERE bet.id=:id")
 	public List<Match> findMatchesByBetId(@Param("id") int id);
+	
+	@Query("SELECT DISTINCT match FROM Match match WHERE match.api_id=:apiId")
+	public List<Match> findMatchByAPIId(@Param("apiId") int apiId);
+	
 
 }
