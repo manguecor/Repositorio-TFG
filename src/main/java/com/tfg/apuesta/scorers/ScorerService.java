@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -26,12 +27,19 @@ public class ScorerService {
 		this.scorerRepository = scorerRepository;
 	}
 	
+	@Value("${api.call}")
+	private String call;
+	
+	@Value("${api.auth}")
+	private String auth;
+	
+	@Value("${api.key}")
+	private String key;
+	
 	public List<Scorer> showScorersByCompetition(Integer competitionId){
-		String uri = "http://api.football-data.org/v2/competitions/" + competitionId + "/scorers";
-		String auth = "X-Auth-Token";
-		String apiKey = "f3cafe6d1b40474992616dd3b183d801";
+		String uri = call + "/competitions/" + competitionId + "/scorers";
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add(auth, apiKey);
+	    headers.add(auth, key);
 	    HttpEntity request = new HttpEntity(headers);
 	    ResponseEntity<String> response = new RestTemplate().exchange(uri, HttpMethod.GET, request, String.class);
 	    String json = response.getBody();

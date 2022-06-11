@@ -39,6 +39,7 @@ INSERT INTO matches(api_id,away_team,competition,home_team,match_date,result,sta
 INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (325779,'1-1',2,1);
 INSERT INTO matches(api_id,away_team,competition,home_team,match_date,result,status,bet_id) VALUES (325782,'PSV','Eredivisie','Heracles Almelo',null,'0-2','FINISHED',2);
 INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (325782,'3-3',2,1);
+
 INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (325780,'2-1',2,2);
 INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (325779,'1-4',2,2);
 INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (325782,'0-3',2,2);
@@ -46,6 +47,5 @@ INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (325780,'
 INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (325779,'1-0',2,3);
 INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (325782,'2-2',2,3);
 
-
-
-
+INSERT INTO matches(api_id,away_team,competition,home_team,match_date,result,status,bet_id) VALUES (325781,'Fortuna Sittard','Eredivisie','FC Twente',null,'1-3','FINISHED',2);
+INSERT INTO player_bet(match_id,player_result,bet_id,player_id) VALUES (325781,'0-2',2,1);

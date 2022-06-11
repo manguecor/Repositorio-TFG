@@ -175,7 +175,7 @@ public class PlayerBetController {
 					player.setPoints(player.getPoints()+50);
 				} else if(awayGoal==awayPlayerResult) { //Goles equipo visitante
 					player.setPoints(player.getPoints()+50);
-				} else if(diffGoal==diffPlayerResult) { //Goles equipo visitante
+				} else if(diffGoal==diffPlayerResult) { //Diferencia de goles
 					player.setPoints(player.getPoints()+75);
 				} else {
 					player.setPoints(player.getPoints()-100);

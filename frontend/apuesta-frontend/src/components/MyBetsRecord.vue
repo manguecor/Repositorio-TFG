@@ -12,7 +12,8 @@
             <tr v-for = "bet in bets" v-bind:key = "bet.id">
                 <td v-if="bet.estado=='CERRADA'"> {{bet.description}} </td>
                 <td v-if="bet.estado=='CERRADA'"> {{bet.estado}} </td>
-                <td v-if="bet.estado=='CERRADA'"> {{bet.betType}}</td>
+                <td v-if="bet.estado=='CERRADA' && bet.betType=='WINNER'"> GANADOR </td>
+                <td v-else-if="bet.estado=='CERRADA' && bet.type=='RESULT'"> RESULTADO </td>
                 <td v-if="bet.estado=='CERRADA'"><router-link :to="'/matches/' + bet.id" class="btn btn-success">Ver apuesta</router-link></td>
             </tr>
         </tbody>

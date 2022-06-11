@@ -9,6 +9,7 @@
             <th> EQUIPO VISITANTE</th>
             <th v-if="this.status==true"> RESULTADO</th>
             <th v-if="this.playerBets.length!=0"> MI APUESTA</th>
+            <th v-if="this.playerBets.length!=0 && this.pointCheck==true"> PUNTOS</th>
         </thead>
         <tbody>
             <tr class="#botones.focus" v-for = "match in matches" v-bind:key = "match.id" >
@@ -28,20 +29,51 @@
                     <a type="checkbox" v-else-if="match.status!='SCHEDULED'">{{match.awayTeam}}</a>
                 </td>
                 <td v-if="match.status=='FINISHED'">
-                  <a type="checkbox" v-if="match.status=='FINISHED'">{{match.result}}</a>
+                  <a type="checkbox" v-if="match.status=='FINISHED' && match.result=='HOME_TEAM'">EQUIPO LOCAL</a>
+                  <a type="checkbox" v-if="match.status=='FINISHED' && match.result=='AWAY_TEAM'">EQUIPO VISITANTE</a>
+                  <a type="checkbox" v-if="match.status=='FINISHED' && match.result=='DRAW'">EMPATE</a>
                 </td>
                 <td v-if="this.playerBets.length!=0">
                   <div v-for= "playerBet in playerBets" v-bind:key= "playerBet.id">
-                    <button v-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result" class="acierto" disabled>
-                      {{playerBet.playerResult}}
+                    <button v-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result && playerBet.playerResult=='HOME_TEAM'" class="acierto" disabled>
+                      EQUIPO LOCAL
                     </button>
-                    <span v-else-if="playerBet.matchId == match.api_id && match.status=='SCHEDULED'" disabled>
-                      {{playerBet.playerResult}}
+                    <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result && playerBet.playerResult=='AWAY_TEAM'" class="acierto" disabled>
+                      EQUIPO VISITANTE
+                    </button>
+                    <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result && playerBet.playerResult=='DRAW'" class="acierto" disabled>
+                      EMPATE
+                    </button>
+                    <span v-else-if="playerBet.matchId == match.api_id && match.status=='SCHEDULED' && playerBet.playerResult=='HOME_TEAM'" disabled>
+                      EQUIPO LOCAL
                     </span>
-                    <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result" class="fallo" disabled>
-                      {{playerBet.playerResult}}
+                    <span v-else-if="playerBet.matchId == match.api_id && match.status=='SCHEDULED' && playerBet.playerResult=='AWAY_TEAM'" disabled>
+                      EQUIPO VISITANTE
+                    </span>
+                    <span v-else-if="playerBet.matchId == match.api_id && match.status=='SCHEDULED' && playerBet.playerResult=='DRAW'" disabled>
+                      EMPATE
+                    </span>
+                    <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result && playerBet.playerResult=='HOME_TEAM'" class="fallo" disabled>
+                      EQUIPO LOCAL
                     </button>
-                    
+                    <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result && playerBet.playerResult=='AWAY_TEAM'" class="fallo" disabled>
+                      EUIPO VISITANTE
+                    </button>
+                    <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result && playerBet.playerResult=='DRAW'" class="fallo" disabled>
+                      EMPATE
+                    </button>
+                  </div>
+                </td>
+                <td v-if="this.playerBets.length!=0 && this.pointCheck==true">
+                  <div v-for= "playerBet in playerBets" v-bind:key= "playerBet.id">
+                    <div v-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result" class="aciertoPuntos">
+                      +100
+                    </div>
+                    <div v-else-if="playerBet.matchId == match.api_id && match.status=='SCHEDULED'" disabled>
+                    </div>
+                    <div v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result" class="falloPuntos">
+                      -100
+                    </div>
                   </div>
                 </td>
             </tr>
@@ -56,6 +88,7 @@
             <th> EQUIPO VISITANTE</th>
             <th v-if="this.status==true"> RESULTADO</th>
             <th v-if="this.playerBets.length!=0"> MI APUESTA</th>
+            <th v-if="this.playerBets.length!=0 && this.pointCheck==true"> PUNTOS</th>
         </thead>
         <tbody>
             <tr v-for = "match in matches" v-bind:key = "match.id">
@@ -89,9 +122,33 @@
                     <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult[2] == match.result[2]" class="soloGol" disabled>
                       {{playerBet.playerResult}}
                     </button>
+                    <button v-else-if="playerBet.matchId == match.api_id && (playerBet.playerResult[0]-playerBet.playerResult[2])==(match.result[0]-match.result[2])" class="difGol" disabled>
+                      {{playerBet.playerResult}}
+                    </button>
                     <button v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result" class="fallo" disabled>
                       {{playerBet.playerResult}}
                     </button>
+                  </div>
+                </td>
+                <td v-if="this.playerBets.length!=0 && this.pointCheck==true">
+                  <div v-for= "playerBet in playerBets" v-bind:key= "playerBet.id">
+                     <div v-if="playerBet.matchId == match.api_id && playerBet.playerResult == match.result" class="aciertoPuntos" disabled>
+                      +150
+                    </div>
+                    <div v-else-if="playerBet.matchId == match.api_id && match.status=='SCHEDULED'" disabled>
+                    </div>
+                    <div v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult[0] == match.result[0]" class="soloGolPuntos" disabled>
+                      +50
+                    </div>
+                    <div v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult[2] == match.result[2]" class="soloGolPuntos" disabled>
+                      +50
+                    </div>
+                    <div v-else-if="playerBet.matchId == match.api_id && (playerBet.playerResult[0]-playerBet.playerResult[2])==(match.result[0]-match.result[2])" class="difGolPuntos" disabled>
+                      +75
+                    </div> 
+                    <div v-else-if="playerBet.matchId == match.api_id && playerBet.playerResult != match.result" class="falloPuntos" disabled>
+                      -100
+                    </div>
                   </div>
                 </td>
             </tr>
@@ -120,7 +177,8 @@ export default {
       result: [],
       playerBets: [],
       leagueId: null,
-      status: null
+      status: null,
+      pointCheck: false
     }
   },
   methods: {
@@ -136,6 +194,9 @@ export default {
                 this.status = false;
               }
             }
+            let cond = (element) => element.status=='FINISHED';
+            this.pointCheck = this.matches.some(cond);
+            console.log(this.pointCheck);
         })
     },
 
@@ -229,6 +290,7 @@ export default {
         console.log(response);
       });
     }
+
   },
   created() {
         this.getMatches()
@@ -243,7 +305,7 @@ export default {
 .acierto {
    font: rgb(0, 0, 0);
    font-weight: bold;
-   width: 140px; 
+   width: 170px; 
    height: 35px; 
    border: 2px solid #555;
    background-color: rgb(0, 255, 0);
@@ -254,7 +316,7 @@ export default {
 .fallo {
    font: rgb(0, 0, 0);
    font-weight: bold;
-   width: 140px; 
+   width: 170px; 
    height: 35px; 
    border: 2px solid #555;
    background-color: rgb(255, 0, 0);
@@ -265,7 +327,18 @@ export default {
 .soloGol {
    font: rgb(0, 0, 0);
    font-weight: bold;
-   width: 140px; 
+   width: 170px; 
+   height: 35px; 
+   border: 2px solid #555;
+   background-color: rgb(255, 180, 0);
+   color: black;
+   border-radius: 6px;
+ }
+
+ .difGol {
+   font: rgb(0, 0, 0);
+   font-weight: bold;
+   width: 170px; 
    height: 35px; 
    border: 2px solid #555;
    background-color: rgb(255, 255, 0);
