@@ -1,4 +1,4 @@
-package com.tfg.apuesta.competition;
+package com.tfg.apuesta.scorers;
 
 import java.util.List;
 
@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.tfg.apuesta.scorers.Scorer;
-import com.tfg.apuesta.scorers.ScorerService;
 
 @RestController
 @CrossOrigin("http://localhost:8081/")

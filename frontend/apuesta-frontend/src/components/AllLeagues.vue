@@ -11,8 +11,6 @@
         </thead>
         <tbody>
             <tr v-for = "league in leagues" v-bind:key = "league.id">
-                
-                <!--<td> {{league.id}} </td>-->
                 <td> {{league.name}} </td>
                 <td> {{league.code}} </td>
                 <td> <a :href="'/leagues/' + league.id + '/bets/'" class="btn btn-success">Acceder a la liga</a></td>-
@@ -43,13 +41,10 @@ export default {
         getAllLeagues(){
             LeagueService.listAll().then((response) =>{
                 this.leagues = response.data;
-                console.log(this.leagues)
             });
         },
         delete_league(leagueId){
-            LeagueService.deleteLeague(leagueId).then(data => {
-                console.log(data);
-            });
+            LeagueService.deleteLeague(leagueId);
         }
     },
     created() {

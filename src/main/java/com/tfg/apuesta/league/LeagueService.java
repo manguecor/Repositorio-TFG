@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.tfg.apuesta.player.Player;
-
 @Service
 public class LeagueService {
 	
@@ -39,23 +37,7 @@ public class LeagueService {
 		return this.leagueRepository.findLeagueByCode(code);
 	}
 	
-	/*public Boolean checkPlayerInLeague(League league, Player player) {
-		Boolean res = false;
-		for(Player p: league.getPlayers()) {
-			res = league.getPlayers().contains(p);
-			if(res) {
-				break;
-			}
-		}
-		return res;
-	}*/
-	
 	public Optional<League> findLeagueByName(String name) throws DataAccessException {
 		return this.leagueRepository.findLeagueByName(name);
 	}
-	
-	/*public List<League> findLeaguesByUsername(String username) throws DataAccessException {
-		return this.leagueRepository.findLeaguesByUsername(username);
-	}*/
-
 }

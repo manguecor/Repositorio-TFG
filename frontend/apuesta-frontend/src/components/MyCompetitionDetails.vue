@@ -86,7 +86,6 @@ export default {
         getScorersByCompetition(){
             ScorerService.getScorersByCompetition(this.$route.params.competitionId).then((response) => {
                 this.scorers = response.data;
-                console.log(this.scorers);
             })
         }
     },

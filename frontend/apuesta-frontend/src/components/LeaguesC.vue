@@ -55,10 +55,7 @@ export default {
             
             let comp = false;
             for(let value in this.leagues) {
-                console.log(this.leagues[value].code);
-                console.log(this.league.code);
                 comp = this.leagues[value].code == this.league.code;
-                console.log(comp);
                 if(comp) {
                     break;
                 }
@@ -71,10 +68,9 @@ export default {
             e.preventDefault();
             
             if(this.errors.length==0) {
-                LeagueService.postLeague(this.league).then(data => {
-                    console.log(data);
-                    window.location.href="/leagues/myLeagues";
-                });
+                LeagueService.postLeague(this.league).then(
+                    window.location.href="/leagues/myLeagues"
+                );
             }
             
         },
@@ -82,7 +78,6 @@ export default {
         getLeagues() {
             LeagueService.listAll().then(data => {
                 this.leagues = data.data;
-                console.log(this.leagues);
             })
         }
     },

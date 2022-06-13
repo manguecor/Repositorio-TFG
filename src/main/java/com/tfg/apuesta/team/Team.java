@@ -1,22 +1,15 @@
 package com.tfg.apuesta.team;
 
-import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.tfg.apuesta.competition.Competition;
 import com.tfg.apuesta.configuration.BaseEntity;
 import com.tfg.apuesta.match.Match;
-import com.tfg.apuesta.player.Player;
 import com.tfg.apuesta.standings.Standing;
 
 import lombok.Getter;
@@ -28,19 +21,14 @@ import lombok.Setter;
 @Table(name="teams")
 public class Team extends BaseEntity {
 	
-	@NotNull
 	private String name;
 	
-	//@NotNull
 	private String abreviation;
 	
-	//@NotNull
 	private String initial;
 	
-	//@NotNull
 	private String foundation_year;
 	
-	//@NotNull
 	private String stadium;
 	
 	private String emblemUrl;
