@@ -1,4 +1,3 @@
-INSERT INTO users_authorities(user_username,authorities_id) VALUES ('admin',1);
 INSERT INTO users(username,enabled,password) VALUES ('client1',TRUE,'client');
 INSERT INTO authorities(id,authority) VALUES (2,'client');
 INSERT INTO users_authorities(user_username,authorities_id) VALUES ('client1',2);

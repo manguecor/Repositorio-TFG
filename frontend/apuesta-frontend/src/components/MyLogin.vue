@@ -52,7 +52,7 @@ export default {
 
       let comp = false;
       for(let value in this.clients) {
-        comp = (this.clients[value].user.username == this.username && this.clients[value].user.password == this.password) || (this.username == "admin" && this.password == "admin");
+        comp = (this.clients[value].user.username == this.username && this.clients[value].user.password == this.password);
         if(comp) {
           break;
         }
