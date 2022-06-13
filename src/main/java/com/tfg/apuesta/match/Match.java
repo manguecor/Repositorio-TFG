@@ -1,23 +1,15 @@
 package com.tfg.apuesta.match;
 
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tfg.apuesta.bet.Bet;
-import com.tfg.apuesta.competition.Competition;
 import com.tfg.apuesta.configuration.BaseEntity;
 import com.tfg.apuesta.team.Team;
 
@@ -30,22 +22,15 @@ import lombok.Setter;
 @Table(name = "matches")
 public class Match extends BaseEntity {
 	
-	//@NotNull
-	//@DateTimeFormat(pattern = "dd/MM/yyyy hh:mm")
 	private String match_date;
 	
-	//@NotNull
 	private String status;
 	
-	//@NotNull
 	private String result;
 	
 	@ManyToOne
 	@JsonBackReference(value = "bet-match")
     private Bet bet;
-	
-	/*@ManyToOne
-	private Competition competition;*/
 	
 	private String competition;
 	

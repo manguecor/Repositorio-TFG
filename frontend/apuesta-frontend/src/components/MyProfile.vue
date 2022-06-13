@@ -62,7 +62,6 @@ export default {
     editClient: function(e) {
         e.preventDefault();
         ClientService.editClient(this.client).then((response) => {
-            console.log(response);
             this.client = response.data;
             window.location.href = "/";
         })

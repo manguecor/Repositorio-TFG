@@ -33,10 +33,7 @@ export default {
     },
     methods: {
         join_league(){
-            LeagueService.joinLeague(this.code).then(data => {
-                console.log(data);
-                console.log(this.code);
-            });
+            LeagueService.joinLeague(this.code);
         }
     }  
 }

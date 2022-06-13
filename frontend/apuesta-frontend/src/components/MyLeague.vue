@@ -41,9 +41,7 @@ export default {
     },
     methods: {
         get_league() {
-            LeagueService.getLeague(this.$route.params.leagueId).then(data => {
-                console.log(data);
-            });
+            LeagueService.getLeague(this.$route.params.leagueId);
         }
     },
     created() {

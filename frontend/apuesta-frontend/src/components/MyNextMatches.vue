@@ -35,7 +35,7 @@
             </tr>
         </tbody>
     </table>
-    <a href="/competitions" class="btn btn-success">Volver</a><br><br>
+    <a @click="$router.go(-1)" class="btn btn-success">Volver</a><br><br>
 </div>
 
     

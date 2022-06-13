@@ -84,9 +84,6 @@ export default {
             this.mypoints = this.players[value].points;
           }
         }
-        console.log(this.mypoints);
-        console.log(this.players);
-        console.log(this.positions);
       })
     }
   },
@@ -116,7 +113,7 @@ export default {
 }
 
 .boton1 {
-  margin-left: 760px;
+  margin-left: 340px;
   position: fixed;
   z-index: 1;
 }

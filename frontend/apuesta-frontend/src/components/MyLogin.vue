@@ -2,7 +2,6 @@
 <form @submit="login">
   <section>
     <br><br>
-    <!--<span class="titulos"> INICIAR SESION</span><br>-->
     <img alt="SocialBet logo" src="../assets/logoNuevo.jpg" height="150" width="250">
     <div class="container">
       <br><br>
@@ -23,9 +22,8 @@
       </div>
       <br>
       <p>
-                        <input type="submit" value="Iniciar sesion" class="btn btn-success">
-                    </p>
-      <!--<button class="btn btn-success" type="submit">Iniciar sesión</button>-->
+        <input type="submit" value="Iniciar sesion" class="btn btn-success">
+      </p>
     </div>
   </section>
 </form>
@@ -55,7 +53,6 @@ export default {
       let comp = false;
       for(let value in this.clients) {
         comp = (this.clients[value].user.username == this.username && this.clients[value].user.password == this.password) || (this.username == "admin" && this.password == "admin");
-        console.log(comp);
         if(comp) {
           break;
         }
@@ -73,7 +70,6 @@ export default {
       }
       if(this.errors.length==0) {
           LoginService.postLogin(user).then( (response) => {
-          console.log(response);
           let token = response.data.token;
           let username = response.data.username;
           localStorage.setItem("token", 'Bearer ' + token);
@@ -82,7 +78,6 @@ export default {
 
           LoginService.getUsername(localStorage.getItem("username"));
           })
-          //window.location.href = "/";
           this.$router.push("/loginSuccess");
       } 
       
@@ -91,7 +86,6 @@ export default {
     getClients() {
       ClientService.getClients().then(data => {
         this.clients = data.data;
-        console.log(this.clients);
       })
     }
   },

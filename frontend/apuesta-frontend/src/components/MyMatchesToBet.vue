@@ -186,7 +186,6 @@ export default {
     getMatches() {
         MatchService.getMatchesByBetId(this.$route.params.betId).then((response) => {
             this.matches = response.data;
-            console.log(this.matches);
             for(let value in this.matches){
               if(this.matches[value].status=='FINISHED'){
                 this.status = true;
@@ -196,21 +195,18 @@ export default {
             }
             let cond = (element) => element.status=='FINISHED';
             this.pointCheck = this.matches.some(cond);
-            console.log(this.pointCheck);
         })
     },
 
     getBetByBetId(){
         BetService.getBetByBetId(this.$route.params.betId).then((response) => {
           this.bets = response.data;
-          console.log(this.bets);
         })
     },
 
     getPlayerBetByBetId(){
       PlayerBetService.getPlayerBetByBetId(this.$route.params.betId).then((response) => {
         this.playerBets = response.data;
-        console.log(this.playerBets);
       })
     },
 
@@ -220,7 +216,6 @@ export default {
       if(!matchBet.includes(matchAPIId)){
           matchBet[matchBet.length]=matchAPIId;
           matchBet[matchBet.length]="HOME_TEAM";
-          console.log(matchBet);
       }
     },
     
@@ -230,7 +225,6 @@ export default {
       if(!matchBet.includes(matchAPIId)){    
           matchBet[matchBet.length]=matchAPIId;
           matchBet[matchBet.length]="AWAY_TEAM";
-          console.log(matchBet);
       }
     },
 
@@ -240,15 +234,12 @@ export default {
       if(!matchBet.includes(matchAPIId)){
           matchBet[matchBet.length]=matchAPIId;
           matchBet[matchBet.length]="DRAW";
-          console.log(matchBet);
       }
     },
 
     savePlayerBet(){
       if(this.bets.betType=='WINNER'){
-        PlayerBetService.postPlayerBet(this.matchBet).then((response) => {
-            console.log(response);
-      })
+        PlayerBetService.postPlayerBet(this.matchBet);
       } else if(this.bets.betType=='RESULT'){
         let result = this.result;
         result[0]=this.$route.params.betId;
@@ -257,25 +248,17 @@ export default {
           let awayResult = document.getElementsByName("goalsAwayTeam").item(i).value;
           result[result.length]=homeResult;
           result[result.length]=awayResult;
-          console.log(this.result);
         }
-        PlayerBetService.postPlayerBetResult(this.result).then((response) => {
-          console.log(response);
-          console.log(this.result);
-        })
+        PlayerBetService.postPlayerBetResult(this.result);
       }
       
     },
 
     checkPlayerBet(){
       if(this.bets.betType=='WINNER'){
-        PlayerBetService.checkPlayerBet(this.$route.params.betId).then((response) => {
-          console.log(response);
-      })
+        PlayerBetService.checkPlayerBet(this.$route.params.betId);
       } else if(this.bets.betType=='RESULT'){
-        PlayerBetService.checkPlayerBetResult(this.$route.params.betId).then((response) =>{
-          console.log(response);
-        })
+        PlayerBetService.checkPlayerBetResult(this.$route.params.betId);
       }
     },
 
@@ -286,9 +269,7 @@ export default {
     },
 
     closeBet(){
-      BetService.closeBet(this.$route.params.betId).then((response) => {
-        console.log(response);
-      });
+      BetService.closeBet(this.$route.params.betId);
     }
 
   },

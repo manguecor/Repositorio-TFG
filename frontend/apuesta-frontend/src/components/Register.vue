@@ -3,7 +3,6 @@
    <div class="row2">
             <div class="col-12">
                 <br>
-                <!--<span class="titulos"> REGISTRARSE</span><br>-->
                 <img alt="SocialBet logo" src="../assets/logoNuevo.jpg" height="150" width="250">
                 <br><br>
                 <p v-if="errors.length">
@@ -41,7 +40,6 @@
                    <p>
                         <input type="submit" value="Registrarse" class="btn btn-success">
                     </p>
-                   <!--<a href="/register" @click="checkForm" class="btn btn-success">Registrarse</a>-->
                    <a href="/" class="btn btn-success">Volver</a>
                 </div>
             </div>
@@ -75,11 +73,8 @@ export default {
     methods: {
 
         register: function(e) {
-
             this.errors = [];
-
-            console.log(this.usernames);
-
+            
             for(let value in this.usernames) {
                 if(this.usernames[value]==this.client.user.username) {
                     this.errors.push('El usuario ya existe');
@@ -88,12 +83,10 @@ export default {
 
             e.preventDefault();
 
-            console.log(this.errors.length);
             if(this.errors.length==0) {
-                RegisterService.postRegisterClient(this.client).then(data => {
-                console.log(data);
-                window.location.href = "/login";
-            });
+                RegisterService.postRegisterClient(this.client).then(
+                window.location.href = "/login"
+            );
 
             }   
         },

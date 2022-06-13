@@ -51,9 +51,7 @@ export default {
             let invitation = this.invitation;
             invitation[0] = this.username;
             invitation[1] = this.$route.params.leagueId;
-            InvitationService.postInvitation(this.invitation).then((response) => {
-                console.log(response);
-            })
+            InvitationService.postInvitation(this.invitation);
         }
     }  
 }

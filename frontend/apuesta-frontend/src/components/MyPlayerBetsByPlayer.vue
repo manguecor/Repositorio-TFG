@@ -5,7 +5,7 @@
         <thead>
             <th style="width:35%"> EQUIPO LOCAL </th>
             <th style="width:25%"> EQUIPO VISITANTE </th>
-            <th style="width:20%"> RESULTADO </th>
+            <th style="width:20%" v-if="this.status==true"> RESULTADO </th>
             <th style="width:20%"> APUESTA </th>
         </thead>
         <tbody>
@@ -104,40 +104,21 @@ export default {
             MatchService.getMatchByAPIId(this.playerBets[value].matchId).then((response) => {
             let matches = this.matches;
             this.matches[matches.length] = response.data;
-            console.log(this.playerBets);
+            for(let value in this.matches){
+              if(this.matches[value].status=='FINISHED'){
+                this.status = true;
+              } else {
+                this.status = false;
+              }
+            }
             })
             }
-            /*for(let value in this.playerBets){
-                MatchService.getMatchByAPIId(this.playerBets[value].matchId).then((response) => {
-                console.log(this.playerBets[value].matchId);
-                let matchesAPI = this.matchesAPI;
-                this.matchesAPI[matchesAPI.length] = response.data;
-                console.log(this.matchesAPI);
-                //let matches = this.matches;
-                //this.matches[matches.length] = matchesAPI[value];
-                //console.log(this.matches);
-            })
-            }
-            /*for(let value2 in this.matchesAPI){
-                let matches = this.matches;
-                let matchesAPI = this.matchesAPI;
-                this.matches[matches.length] = matchesAPI[value2][0];
-                console.log(this.matchesAPI[value2][0]);
-            }
-            }
-            console.log(this.matchesAPI);
-            for(let value2 in this.matchesAPI){
-              let matches = this.matches;
-              this.matches[matches.length] = this.matchesAPI[value2][0];
-              console.log(this.matches);
-            }*/
         })
     },
   },
 
   created() {
         this.getPlayerBetsByPlayer()
-        //this.getMatchesById()
     }
 }
 

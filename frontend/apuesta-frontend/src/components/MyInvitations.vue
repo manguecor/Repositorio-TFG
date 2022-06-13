@@ -16,8 +16,7 @@
                 <td> {{invitation.invitingClient}} </td>
                 <td> {{invitation.invitationState}}</td>
                 <td><a href="/invitation/myInvitations" v-if="invitation.invitationState=='PENDIENTE'" @click="acceptInvitation(invitation.id)" class="btn btn-success">Aceptar invitacion</a></td>
-                <td><a href="/invitation/myInvitations" v-if="invitation.invitationState=='PENDIENTE'" @click="declineInvitation(invitation.id)" class="btn btn-success">Rechazar invitacion</a></td>
-                <!--<td><a href="/invitation/myInvitations" v-if="invitation.invitationState!='PENDIENTE'" @click="deleteInvitation(invitation.id)" class="btn btn-success">Borrar invitacion</a></td>--> 
+                <td><a href="/invitation/myInvitations" v-if="invitation.invitationState=='PENDIENTE'" @click="declineInvitation(invitation.id)" class="btn btn-success">Rechazar invitacion</a></td> 
             </tr>
         </tbody>
     </table>
@@ -44,21 +43,15 @@ export default {
     },
 
     acceptInvitation(invitationId) {
-        InvitationService.acceptInvitation(invitationId).then((response) => {
-          console.log(response);
-        })
+        InvitationService.acceptInvitation(invitationId);
     },
 
     declineInvitation(invitationId) {
-        InvitationService.declineInvitation(invitationId).then((response) => {
-          console.log(response);
-        })
+        InvitationService.declineInvitation(invitationId);
     },
 
     deleteInvitation(invitationId) {
-        InvitationService.deleteInvitation(invitationId).then((response) => {
-          console.log(response);
-        })
+        InvitationService.deleteInvitation(invitationId);
     }
   },
   created() {

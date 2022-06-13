@@ -6,7 +6,6 @@
     <br><br>
     <table class="table table-striped">
         <thead>
-            <!--<th> Match Id </th>-->
             <th> EQUIPO LOCAL </th>
             <th> EQUIPO VISITANTE </th>
             <th> COMPETICION </th>
@@ -16,7 +15,6 @@
         </thead>
         <tbody>
             <tr v-for = "match in matches" v-bind:key = "match.id">
-                <!--<td> {{match.id}} </td>-->
                 <td> {{match.homeTeam}}</td>
                 <td> {{match.awayTeam}}</td>
                 <td> {{match.competition}} </td>
@@ -37,7 +35,6 @@
     <div class="form-group" v-if="isAuthenticated">
     <label>Tipo de apuesta:</label>
         <select name="betType" id="betType">
-            <!--<option value="" disabled selected>Seleccione un tipo de apuesta...</option>-->
             <option value="WINNER">Ganador del partido</option>
             <option value="RESULT">Resultado exacto</option>
         </select><br><br>
@@ -55,10 +52,9 @@
     </div>
     <br>
     <div class="form-group" v-if="isAuthenticated">
-        <!--<a href="/" class="btn btn-success" v-on:click="saveBet">Guardar apuesta</a><br><br>-->
         <p>
-                        <input type="submit" value="Guardar apuesta" class="btn btn-success">
-                    </p>
+           <input type="submit" value="Guardar apuesta" class="btn btn-success">
+        </p>
     </div>
     </form>
     <a href="/" class="btn btn-success">Volver</a>
@@ -111,7 +107,6 @@ export default {
                     option.text = this.myLeagues[value];
                     select.append(option);
                 }
-                //console.log(select);
             });
         },
         
@@ -119,7 +114,6 @@ export default {
             let matchesId = this.matchesId;
             if(!matchesId.includes(matchId) && matchesId.length<=5){
                 matchesId[matchesId.length]=matchId;
-                console.log(matchesId);
             }
                  
         },
@@ -141,17 +135,14 @@ export default {
                 matchesId.unshift(leagueName);
                 matchesId.unshift(description);
                 matchesId.unshift(betTypeValue);
-                BetService.postBet(this.matchesId).then((response) => {
-                console.log(this.matchesId);
-                console.log(response);
-                window.location.href = "/";
-                })
+                BetService.postBet(this.matchesId).then(
+                window.location.href = "/"
+                )
             }   
         },
 
         getMatchesByDate(){
             this.date = document.getElementById("date").value;
-            console.log(this.date);
             MatchService.getMatchesByDate(this.date).then((response) => {
                 this.matches = response.data;
             })
