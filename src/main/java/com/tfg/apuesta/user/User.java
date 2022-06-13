@@ -19,17 +19,17 @@ import lombok.Setter;
 @Table(name = "users")
 public class User {
 	@Id
-	@NotEmpty
+	//@NotEmpty
 	@Column(name="username")
 	String username;
 	
-	@NotEmpty
+	//@NotEmpty
 	@Column(name="password")
 	String password;
 	
 	boolean enabled;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Authorities> authorities;
 
 	public String getUsername() {
@@ -63,6 +63,4 @@ public class User {
 	public void setAuthorities(Set<Authorities> authorities) {
 		this.authorities = authorities;
 	}
-	
-	
 }
